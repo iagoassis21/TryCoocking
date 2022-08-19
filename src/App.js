@@ -2,12 +2,13 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch } from 'react-router-dom';
+import Login from './components/Login';
 
 function App() {
   return (
     <div className="screen-size">
       <Switch>
-        <Route exact path="/" />
+        <Route exact path="/" component={ Login } />
         <Route path="/foods" />
         <Route path="/drinks" />
         <Route path="/foods/{id-da-receita}" />
