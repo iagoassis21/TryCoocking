@@ -2,25 +2,18 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch } from 'react-router-dom';
-import MainPage from './pages/MainPage';
+import Recipes from './pages/Recipes';
+import RecipesProvider from './context/RecipesProvider';
 
 function App() {
   return (
     <div className="screen-size">
       <Switch>
         <Route exact path="/" />
-        <Route
-          path="/foods"
-          render={
-            (props) => <MainPage { ...props } pageType="foods" />
-          }
-        />
-        <Route
-          path="/drinks"
-          render={
-            (props) => <MainPage { ...props } pageType="drinks" />
-          }
-        />
+        <RecipesProvider>
+          <Route path="/foods" render={ Recipes } />
+          <Route path="/drinks" render={ Recipes } />
+        </RecipesProvider>
         <Route path="/foods/{id-da-receita}" />
         <Route path="/drinks/{id-da-receita}" />
         <Route path="/foods/{id-da-receita}/in-progress" />
