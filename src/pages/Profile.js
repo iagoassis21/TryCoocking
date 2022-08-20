@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 // import Header from '../components/Header';
-import profileIcon from '../images/profileIcon.svg';
+// import profileIcon from '../images/profileIcon.svg';
 // import Footer from '../components/Footer';
 
 function Profile() {
