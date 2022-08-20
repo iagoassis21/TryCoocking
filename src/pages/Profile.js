@@ -25,10 +25,10 @@ function Profile() {
 
   return (
     <div>
-      <Header
+      {/* <Header
         title="Profile"
         profileIcon={ profileIcon }
-      />
+      /> */}
       <section>
         <p data-testid="profile-email">{emailLocal}</p>
         <Link to="/done-recipes">
@@ -52,7 +52,7 @@ function Profile() {
         </Link>
 
       </section>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
