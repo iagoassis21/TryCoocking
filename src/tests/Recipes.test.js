@@ -32,12 +32,31 @@ describe('Tests of Recipes component.', () => {
     });
   })
 
-    
   it('Should be possible to click the food filter buttons.', async () => {
     render(<RecipesProvider />);
     await waitFor(() => {
       const filterButton = screen.getByRole('button', { name: 'Beef' });
       userEvent.click(filterButton);
+    });
+  })
+
+  it('Should toggle the filter when it\'s clicked.', async () => {
+    render(<RecipesProvider />);
+    await waitFor(() => {
+      const filterButton = screen.getByRole('button', { name: 'Beef' });
+      const firstResult = screen.getAllByRole('heading', { level: 2 })[0];
+      expect(firstResult).toHaveTextContent('Corba');
+      userEvent.click(filterButton);
+    });
+    await waitFor(() => {
+      const filterButton = screen.getByRole('button', { name: 'Beef' });
+      const firstResult = screen.getAllByRole('heading', { level: 2 })[0];
+      expect(firstResult).toHaveTextContent('Beef and Mustard Pie');
+      userEvent.click(filterButton);
+    });
+    await waitFor(() => {
+      const firstResult = screen.getAllByRole('heading', { level: 2 })[0];
+      expect(firstResult).toHaveTextContent('Corba');
     });
   })
 

@@ -5,7 +5,8 @@ import fetchRecipesApi from '../helpers/fetchRecipesApi';
 
 function RecipesProvider() {
   const pageType = window.location.pathname.substring(1);
-  const [loading, setLoading] = useState(true);
+  const [recipeloading, setRecipeloading] = useState(false);
+  const [mainLoading, setMainLoading] = useState(true);
   const [allRecipes, setAllRecipes] = useState([]);
   const [allFilters, setAllFilters] = useState([]);
   const [displayRecipes, setDisplayRecipes] = useState([]);
@@ -33,17 +34,23 @@ function RecipesProvider() {
 
   useEffect(() => {
     const stopLoading = () => {
-      if (allRecipes.length > 0 && allFilters.length > 0) setLoading(false);
+      if (allRecipes.length > 0 && allFilters.length > 0) setMainLoading(false);
     };
     stopLoading();
   }, [allRecipes, allFilters]);
 
   const filterRecipes = async (foodFilter) => {
-    const resultsAmount = 12;
-    const choosedType = `${pageType}Specific`;
-    const apiResults = await
-    fetchRecipesApi(pageType, choosedType, resultsAmount, foodFilter);
-    setDisplayRecipes(apiResults);
+    setRecipeloading(true);
+    if (displayRecipes !== allRecipes) {
+      setDisplayRecipes(allRecipes);
+    } else {
+      const resultsAmount = 12;
+      const choosedType = `${pageType}Specific`;
+      const apiResults = await
+      fetchRecipesApi(pageType, choosedType, resultsAmount, foodFilter);
+      setDisplayRecipes(apiResults);
+    }
+    setRecipeloading(false);
   };
 
   const providerValue = {
@@ -55,11 +62,12 @@ function RecipesProvider() {
     filterRecipes,
     setDisplayRecipes,
     allRecipes,
+    recipeloading,
   };
 
   return (
     <Context.Provider value={ providerValue }>
-      {loading
+      {mainLoading
         ? <h1>Loading...</h1>
         : <Recipes /> }
     </Context.Provider>
