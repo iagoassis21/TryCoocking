@@ -7,17 +7,21 @@ function Recipes() {
   const {
     pageType,
     displayRecipes,
+    recipeloading,
   } = useContext(Context);
 
   return (
     <div className="screen-size">
       <RecipesFilterButtons pageType={ pageType } />
-      {displayRecipes.map((recipe, index) => (
-        <RecipeCard
-          key={ `recipe${index}` }
-          cardInfo={ { recipe, index, pageType } }
-        />
-      ))}
+      {recipeloading
+        ? <h2>Loading...</h2>
+        : (
+          displayRecipes.map((recipe, index) => (
+            <RecipeCard
+              key={ `recipe${index}` }
+              cardInfo={ { recipe, index, pageType } }
+            />
+          )))}
     </div>
   );
 }
