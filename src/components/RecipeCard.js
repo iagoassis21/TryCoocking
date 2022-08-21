@@ -1,19 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 function RecipeCard({ cardInfo }) {
   const { index, recipe, pageType } = cardInfo;
   const imgSrc = () => {
     if (pageType === 'foods') return recipe.strMealThumb;
-    if (pageType === 'drinks') return recipe.strDrinkThumb;
+    return recipe.strDrinkThumb;
   };
   const recipeName = () => {
     if (pageType === 'foods') return recipe.strMeal;
-    if (pageType === 'drinks') return recipe.strDrink;
+    return recipe.strDrink;
+  };
+  const recipeUlr = () => {
+    if (pageType === 'foods') return `${pageType}/${recipe.idMeal}`;
+    return `${pageType}/${recipe.idDrink}`;
   };
 
   return (
-    <div data-testid={ `${index}-recipe-card` }>
+    <Link
+      data-testid={ `${index}-recipe-card` }
+      to={ recipeUlr() }
+    >
+      <h1>{pageType}</h1>
       <h2 data-testid={ `${index}-card-name` }>{ recipeName() }</h2>
       <img
         src={ imgSrc() }
@@ -21,7 +30,7 @@ function RecipeCard({ cardInfo }) {
         alt="Recipe."
         className="main-page-recipe-img"
       />
-    </div>
+    </Link>
   );
 }
 
