@@ -8,7 +8,6 @@ function Login(props) {
 
   const validateEmail = () => {
     const regexEmail = /^\w+([/.-]?\w+)*@\w+([/.-]?\w+)*(\.\w{2,3})+$/;
-
     return !!(email.match(regexEmail));
   };
 
