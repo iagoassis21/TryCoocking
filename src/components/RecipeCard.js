@@ -22,7 +22,6 @@ function RecipeCard({ cardInfo }) {
       data-testid={ `${index}-recipe-card` }
       to={ recipeUlr() }
     >
-      <h1>{pageType}</h1>
       <h2 data-testid={ `${index}-card-name` }>{ recipeName() }</h2>
       <img
         src={ imgSrc() }
