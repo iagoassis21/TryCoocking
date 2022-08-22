@@ -3,6 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import RecipesProvider from '../context/RecipesProvider';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from '../helpers/renderWithRouter';
+import App from '../App';
 
 describe('Tests of Recipes component.', () => {
   delete global.window.location;
@@ -14,7 +15,8 @@ describe('Tests of Recipes component.', () => {
 
   // Testes seguintes usam o pathname "/foods" 
   it('Should display five different food buttons filters.', async () => {
-    renderWithRouter(<RecipesProvider />);
+    const { history } = renderWithRouter(<App />);
+    history.push('/foods');
     await waitFor(() => {
       expect(screen.getByRole('button', { name: 'Beef' })).toBeDefined();
       expect(screen.getByRole('button', { name: 'Breakfast' })).toBeDefined();
@@ -25,7 +27,8 @@ describe('Tests of Recipes component.', () => {
   })
   
   it('Should display 12 different food recipes.', async () => {
-    renderWithRouter(<RecipesProvider />);
+    const { history } = renderWithRouter(<App />);
+    history.push('/foods');
     await waitFor(() => {
       const allFoodRecipes = screen.getAllByAltText('Recipe.');
       expect(allFoodRecipes).toHaveLength(12);
@@ -33,7 +36,8 @@ describe('Tests of Recipes component.', () => {
   })
 
   it('Should be possible to click the food filter buttons.', async () => {
-    renderWithRouter(<RecipesProvider />);
+    const { history } = renderWithRouter(<App />);
+    history.push('/foods');
     await waitFor(() => {
       const firstFilterButton = screen.getByRole('button', { name: 'Beef' });
       const allFilterButton = screen.getByRole('button', { name: 'All' });
@@ -43,7 +47,8 @@ describe('Tests of Recipes component.', () => {
   })
 
   it('Should toggle the filter when it\'s clicked.', async () => {
-    renderWithRouter(<RecipesProvider />);
+    const { history } = renderWithRouter(<App />);
+    history.push('/foods');
     await waitFor(() => {
       const filterButton = screen.getByRole('button', { name: 'Beef' });
       const firstResult = screen.getAllByRole('heading', { level: 2 })[0];
@@ -67,7 +72,8 @@ describe('Tests of Recipes component.', () => {
     global.window.location = {
       pathname: '/drinks',
     };
-    renderWithRouter(<RecipesProvider />);
+    const { history } = renderWithRouter(<App />);
+    history.push('/foods');
     await waitFor(() => {
       const expectedHref = 'http://localhost/drinks/15997';
       const firstLink = screen.getAllByRole('link')[0];
@@ -76,7 +82,8 @@ describe('Tests of Recipes component.', () => {
   })
   
   it('Should display five different drink buttons filters.', async () => {
-    renderWithRouter(<RecipesProvider />);
+    const { history } = renderWithRouter(<App />);
+    history.push('/foods');
     await waitFor(() => {
       expect(screen.getByRole('button', { name: 'Ordinary Drink' })).toBeDefined();
       expect(screen.getByRole('button', { name: 'Cocktail' })).toBeDefined();
@@ -87,7 +94,8 @@ describe('Tests of Recipes component.', () => {
   })
 
   it('Should display 12 different drink recipes.', async () => {
-    renderWithRouter(<RecipesProvider />);
+    const { history } = renderWithRouter(<App />);
+    history.push('/foods');
     await waitFor(() => {
       const allFoodRecipes = screen.getAllByAltText('Recipe.');
       expect(allFoodRecipes).toHaveLength(12);
@@ -95,7 +103,8 @@ describe('Tests of Recipes component.', () => {
   })
 
   it('Should be possible to click the drink filter buttons.', async () => {
-    renderWithRouter(<RecipesProvider />);
+    const { history } = renderWithRouter(<App />);
+    history.push('/foods');
     await waitFor(() => {
       const filterButton = screen.getByRole('button', { name: 'Ordinary Drink' });
       userEvent.click(filterButton);

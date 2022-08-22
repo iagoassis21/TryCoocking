@@ -1,18 +1,21 @@
 import React, { useContext } from 'react';
-import RecipeCard from '../components/RecipeCard';
 import RecipesFilterButtons from '../components/RecipesFilterButtons';
+import RecipeCard from '../components/RecipeCard';
 import Context from '../context/Context';
 
 function Recipes() {
   const {
     pageType,
-    displayRecipes,
+    mainLoading,
     recipeloading,
+    displayRecipes,
   } = useContext(Context);
 
   return (
     <div className="screen-size">
-      <RecipesFilterButtons pageType={ pageType } />
+      {mainLoading
+        ? <h1>Loading...</h1>
+        : <RecipesFilterButtons pageType={ pageType } />}
       {recipeloading
         ? <h2>Loading...</h2>
         : (

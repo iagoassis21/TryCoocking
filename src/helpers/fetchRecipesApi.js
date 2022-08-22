@@ -26,4 +26,19 @@ const fetchRecipesApi = async (pageType, fetchType, resultsAmount, specificFilte
   return json.drinks.slice(0, maxAmount);
 };
 
+export async function fetchRecipesById(pageType, recipeId) {
+  const foodsById = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`;
+  const drinksById = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${recipeId}`;
+
+  let choosedEndPoint = '';
+  if (pageType === 'foods') choosedEndPoint = foodsById;
+  if (pageType === 'drinks') choosedEndPoint = drinksById;
+
+  const fetchApi = await fetch(choosedEndPoint);
+  const json = await fetchApi.json();
+
+  if (pageType === 'foods') return json.meals[0];
+  return json.drinks[0];
+}
+
 export default fetchRecipesApi;

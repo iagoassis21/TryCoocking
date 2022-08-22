@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 function RecipeCard({ cardInfo }) {
   const { index, recipe, pageType } = cardInfo;
+
   const imgSrc = () => {
     if (pageType === 'foods') return recipe.strMealThumb;
     return recipe.strDrinkThumb;
