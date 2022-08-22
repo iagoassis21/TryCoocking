@@ -4,7 +4,7 @@ import Context from './Context';
 
 function Provider({ children }) {
   return (
-    <Context.Provider value={ context }>
+    <Context.Provider value="context">
       {children}
     </Context.Provider>
   );
