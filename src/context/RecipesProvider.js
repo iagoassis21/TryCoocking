@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Recipes from '../pages/Recipes';
+import PropTypes from 'prop-types';
 import Context from './Context';
 import fetchRecipesApi from '../helpers/fetchRecipesApi';
 
-function RecipesProvider() {
+function RecipesProvider({ children }) {
   const pageType = window.location.pathname.substring(1);
   const [recipeloading, setRecipeloading] = useState(false);
   const [mainLoading, setMainLoading] = useState(true);
@@ -14,21 +14,25 @@ function RecipesProvider() {
 
   useEffect(() => {
     const getRecipes = async () => {
-      const resultsAmount = 12;
-      const choosedType = `${pageType}Recipes`;
-      const apiResults = await fetchRecipesApi(pageType, choosedType, resultsAmount);
-      setAllRecipes(apiResults);
-      setDisplayRecipes(apiResults);
+      if (pageType === 'foods' || pageType === 'drinks') {
+        const resultsAmount = 12;
+        const choosedType = `${pageType}Recipes`;
+        const apiResults = await fetchRecipesApi(pageType, choosedType, resultsAmount);
+        setAllRecipes(apiResults);
+        setDisplayRecipes(apiResults);
+      }
     };
     getRecipes();
   }, []);
 
   useEffect(() => {
     const getFilters = async () => {
-      const resultsAmount = 5;
-      const choosedType = `${pageType}Filters`;
-      const apiResults = await fetchRecipesApi(pageType, choosedType, resultsAmount);
-      setAllFilters(apiResults);
+      if (pageType === 'foods' || pageType === 'drinks') {
+        const resultsAmount = 5;
+        const choosedType = `${pageType}Filters`;
+        const apiResults = await fetchRecipesApi(pageType, choosedType, resultsAmount);
+        setAllFilters(apiResults);
+      }
     };
     getFilters();
   }, []);
@@ -56,24 +60,30 @@ function RecipesProvider() {
   };
 
   const providerValue = {
+    mainLoading,
     pageType,
     displayRecipes,
-    setAllRecipes,
     allFilters,
+    recipeloading,
+    allRecipes,
+    setAllRecipes,
     setAllFilters,
     filterRecipes,
     setDisplayRecipes,
-    allRecipes,
-    recipeloading,
   };
 
   return (
     <Context.Provider value={ providerValue }>
-      {mainLoading
-        ? <h1>Loading...</h1>
-        : <Recipes /> }
+      {children}
     </Context.Provider>
   );
 }
+
+RecipesProvider.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+};
 
 export default RecipesProvider;
