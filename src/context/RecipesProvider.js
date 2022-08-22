@@ -9,6 +9,7 @@ function RecipesProvider() {
   const [mainLoading, setMainLoading] = useState(true);
   const [allRecipes, setAllRecipes] = useState([]);
   const [allFilters, setAllFilters] = useState([]);
+  const [currFilter, setCurrFilter] = useState('');
   const [displayRecipes, setDisplayRecipes] = useState([]);
 
   useEffect(() => {
@@ -41,7 +42,7 @@ function RecipesProvider() {
 
   const filterRecipes = async (foodFilter) => {
     setRecipeloading(true);
-    if (displayRecipes !== allRecipes) {
+    if (displayRecipes !== allRecipes && currFilter === foodFilter) {
       setDisplayRecipes(allRecipes);
     } else {
       const resultsAmount = 12;
@@ -49,6 +50,7 @@ function RecipesProvider() {
       const apiResults = await
       fetchRecipesApi(pageType, choosedType, resultsAmount, foodFilter);
       setDisplayRecipes(apiResults);
+      setCurrFilter(foodFilter);
     }
     setRecipeloading(false);
   };
