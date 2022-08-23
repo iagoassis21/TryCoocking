@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Context from '../context/Context';
 import getRecipes from '../helpers/getRecipes';
 
 export default function SearchBar() {
-  const { setDisplayRecipes, searchValue } = useContext(Context);
+  const { displayRecipes, setDisplayRecipes, searchValue } = useContext(Context);
   const [type, setType] = useState('');
-  const { location: { pathname } } = useHistory();
-
+  const history = useHistory();
+  const { location: { pathname } } = history;
   const verifyAlert = () => {
     if (type === 'first-letter' && searchValue.length > 1) {
       global.alert('Your search must have only 1 (one) character');
@@ -20,6 +20,17 @@ export default function SearchBar() {
     if (recipes) setDisplayRecipes(recipes);
     else setDisplayRecipes([]);
   };
+
+  const redirectTo = (path) => {
+    if (path === '/foods') history.push(`/foods/${displayRecipes[0].idMeal}`);
+    else history.push(`/drinks/${displayRecipes[0].idDrink}`);
+  };
+
+  useEffect(() => {
+    if (displayRecipes.length === 1) {
+      redirectTo(pathname);
+    }
+  }, [displayRecipes]);
 
   return (
     <form>
