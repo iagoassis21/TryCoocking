@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import Context from './Context';
-import { fetchRecipesById } from '../helpers/fetchRecipesApi';
+import fetchRecipesApi, { fetchRecipesById } from '../helpers/fetchRecipesApi';
 
 function RecipeDetailsProvider({ children }) {
   const [pageType, setPageType] = useState(undefined);
@@ -14,6 +14,7 @@ function RecipeDetailsProvider({ children }) {
   const [recipeVideo, setRecipeVideo] = useState(undefined);
   const [ingredientList, SetIngredientList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [recommendations, setRecommendations] = useState([]);
   const { recipeId } = useParams();
 
   const loadIngredients = (recipeInfo, maxAmount) => {
@@ -52,6 +53,14 @@ function RecipeDetailsProvider({ children }) {
     setRecipeInstructions(recipeInfo.strInstructions);
   };
 
+  const getRecommendation = async () => {
+    const maxAmount = 6;
+    const recomType = pageType === 'foods' ? 'drinks' : 'foods';
+    const fetchType = `${recomType}Recipes`;
+    const recommendationList = await fetchRecipesApi(recomType, fetchType, maxAmount);
+    setRecommendations(recommendationList);
+  };
+
   useEffect(() => {
     const loadPageType = () => {
       if (!pageType) {
@@ -63,6 +72,7 @@ function RecipeDetailsProvider({ children }) {
         }
       }
       if (pageType && recipeId) loadRecipeInfo();
+      if (pageType && !recommendations.length) getRecommendation();
     };
     loadPageType();
   }, [pageType, recipeId]);
@@ -76,6 +86,7 @@ function RecipeDetailsProvider({ children }) {
 
   const providerValue = {
     loading,
+    pageType,
     recipeId,
     recipeTitle,
     recipeImage,
@@ -84,6 +95,7 @@ function RecipeDetailsProvider({ children }) {
     recipeVideo,
     recipeAlcohol,
     ingredientList,
+    recommendations,
   };
 
   return (

@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import Context from '../context/Context';
+import RecipeCard from './RecipeCard';
 
 function RecipeDetailsCard() {
   const {
+    pageType,
     recipeTitle,
     recipeImage,
     recipeCategory,
@@ -10,6 +12,7 @@ function RecipeDetailsCard() {
     recipeVideo,
     recipeAlcohol,
     ingredientList,
+    recommendations,
   } = useContext(Context);
   return (
     <div>
@@ -47,10 +50,21 @@ function RecipeDetailsCard() {
           data-testid="video"
         />
       )}
-      {/* WIP */}
-      <div>
+      <div data-testid="0-recomendation-card">
         <h3>Receitas recomendadas</h3>
-        <p data-testid="0-recomendation-card">Card 1</p>
+        {recommendations.length && recommendations.map((recommendation, index) => {
+          const recommendationInfo = {
+            index,
+            recipe: recommendation,
+            pageType: pageType === 'foods' ? 'drinks' : 'foods',
+          };
+          return (
+            <RecipeCard
+              key={ `recipe${index}` }
+              cardInfo={ recommendationInfo }
+            />
+          );
+        })}
       </div>
     </div>
   );
