@@ -7,13 +7,13 @@ import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import Recipes from './pages/Recipes';
 import RecipesProvider from './context/RecipesProvider';
+import Login from './components/Login';
 
 function App() {
   return (
     <div className="screen-size">
       <Switch>
-        <Route exact path="/" />
-
+        <Route exact path="/" component={ Login } />
         <Route exact path="/foods">
           <RecipesProvider>
             <Recipes />
@@ -33,6 +33,7 @@ function App() {
         <Route exact path="/profile" component={ Profile } />
         <Route exact path="/done-recipes" component={ DoneRecipes } />
         <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
+
       </Switch>
     </div>
   );
