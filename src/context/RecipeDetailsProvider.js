@@ -6,7 +6,6 @@ import { fetchRecipesById } from '../helpers/fetchRecipesApi';
 
 function RecipeDetailsProvider({ children }) {
   const [pageType, setPageType] = useState(undefined);
-  const [currRecipe, setCurrRecipe] = useState(undefined);
   const [recipeTitle, setRecipeTitle] = useState(undefined);
   const [recipeImage, setRecipeImage] = useState(undefined);
   const [recipeCategory, setRecipeCategory] = useState(undefined);
@@ -17,17 +16,56 @@ function RecipeDetailsProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const { recipeId } = useParams();
 
+  const loadIngredients = (recipeInfo, maxAmount) => {
+    const maxIngredients = maxAmount;
+    let allIngredients = [];
+    for (let index = 1; index <= maxIngredients; index += 1) {
+      const ingredient = `${recipeInfo[`strIngredient${index}`]}`;
+      const measure = `${recipeInfo[`strMeasure${index}`]}`;
+      const recipeText = `${ingredient} - ${measure}`;
+      if (ingredient !== 'null' && ingredient !== '' && measure !== 'null') {
+        allIngredients = [...allIngredients, recipeText];
+      }
+      if (ingredient !== 'null' && measure === 'null') {
+        allIngredients = [...allIngredients, ingredient];
+      }
+    }
+    SetIngredientList(allIngredients);
+  };
+
+  const loadRecipeInfo = async () => {
+    const recipeInfo = await fetchRecipesById(pageType, recipeId);
+    if (pageType && pageType === 'foods') {
+      const maxIngredientsAmount = 20;
+      setRecipeTitle(recipeInfo.strMeal);
+      setRecipeImage(recipeInfo.strMealThumb);
+      setRecipeVideo(recipeInfo.strYoutube.replace('watch?v=', 'embed/'));
+      loadIngredients(recipeInfo, maxIngredientsAmount);
+    } else {
+      const maxIngredientsAmount = 15;
+      setRecipeTitle(recipeInfo.strDrink);
+      setRecipeImage(recipeInfo.strDrinkThumb);
+      setRecipeAlcohol(recipeInfo.strAlcoholic);
+      loadIngredients(recipeInfo, maxIngredientsAmount);
+    }
+    setRecipeCategory(recipeInfo.strCategory);
+    setRecipeInstructions(recipeInfo.strInstructions);
+  };
+
   useEffect(() => {
     const loadPageType = () => {
-      const isPageTypeFood = window.location.pathname.includes('food');
-      if (isPageTypeFood) {
-        setPageType('foods');
-      } else {
-        setPageType('drinks');
+      if (!pageType) {
+        const isPageTypeFood = window.location.pathname.includes('food');
+        if (isPageTypeFood) {
+          setPageType('foods');
+        } else {
+          setPageType('drinks');
+        }
       }
+      if (pageType && recipeId) loadRecipeInfo();
     };
     loadPageType();
-  }, []);
+  }, [pageType, recipeId]);
 
   useEffect(() => {
     const endLoading = () => {
@@ -36,49 +74,8 @@ function RecipeDetailsProvider({ children }) {
     endLoading();
   }, [ingredientList]);
 
-  useEffect(() => {
-    const loadIngredients = () => {
-      if (currRecipe) {
-        const maxIngredients = 20;
-        let allIngredients = [];
-        for (let index = 1; index <= maxIngredients; index += 1) {
-          const ingredient = `${currRecipe[`strIngredient${index}`]}`;
-          const measure = `${currRecipe[`strMeasure${index}`]}`;
-          const recipeInfo = `${ingredient} - ${measure}`;
-          if (ingredient && ingredient !== 'null' && ingredient !== 'undefined') {
-            allIngredients = [...allIngredients, recipeInfo];
-          }
-        }
-        SetIngredientList(allIngredients);
-      }
-    };
-    loadIngredients();
-  }, [currRecipe]);
-
-  useEffect(() => {
-    const getRecipeInfo = async () => {
-      if (pageType) {
-        const recipeInfo = await fetchRecipesById(pageType, recipeId);
-        if (pageType && pageType === 'foods') {
-          setRecipeTitle(recipeInfo.strMeal);
-          setRecipeImage(recipeInfo.strMealThumb);
-          setRecipeVideo(recipeInfo.strYoutube);
-        } else {
-          setRecipeTitle(recipeInfo.strDrink);
-          setRecipeImage(recipeInfo.strDrinkThumb);
-          setRecipeAlcohol(recipeInfo.strAlcoholic);
-        }
-        setRecipeCategory(recipeInfo.strCategory);
-        setRecipeInstructions(recipeInfo.strInstructions);
-        setCurrRecipe(recipeInfo);
-      }
-    };
-    getRecipeInfo();
-  }, [pageType]);
-
   const providerValue = {
     loading,
-    currRecipe,
     recipeId,
     recipeTitle,
     recipeImage,
