@@ -11,6 +11,7 @@ function RecipesProvider({ children }) {
   const [allFilters, setAllFilters] = useState([]);
   const [currFilter, setCurrFilter] = useState('');
   const [displayRecipes, setDisplayRecipes] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     const getRecipes = async () => {
@@ -66,10 +67,12 @@ function RecipesProvider({ children }) {
     allFilters,
     recipeloading,
     allRecipes,
+    searchValue,
     setAllRecipes,
     setAllFilters,
     filterRecipes,
     setDisplayRecipes,
+    setSearchValue,
   };
 
   return (
