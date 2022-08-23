@@ -12,11 +12,20 @@ function App() {
   return (
     <div className="screen-size">
       <Switch>
-        <RecipesProvider>
-          <Route path="/foods" render={ Recipes } />
-          <Route path="/drinks" render={ Recipes } />
-        </RecipesProvider>
         <Route exact path="/" />
+
+        <Route exact path="/foods">
+          <RecipesProvider>
+            <Recipes />
+          </RecipesProvider>
+        </Route>
+
+        <Route exact path="/drinks">
+          <RecipesProvider>
+            <Recipes />
+          </RecipesProvider>
+        </Route>
+
         <Route exact path="/foods/:id-da-receita" />
         <Route exact path="/drinks/:id-da-receita" />
         <Route exact path="/foods/:id-da-receita/in-progress" />

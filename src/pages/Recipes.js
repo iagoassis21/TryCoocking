@@ -1,18 +1,25 @@
 import React, { useContext } from 'react';
-import RecipeCard from '../components/RecipeCard';
 import RecipesFilterButtons from '../components/RecipesFilterButtons';
+import RecipeCard from '../components/RecipeCard';
 import Context from '../context/Context';
+import Header from '../components/Header';
 
 function Recipes() {
   const {
     pageType,
-    displayRecipes,
+    mainLoading,
     recipeloading,
+    displayRecipes,
   } = useContext(Context);
+
+  const pageTitle = () => pageType[0].toUpperCase() + pageType.substring(1);
 
   return (
     <div className="screen-size">
-      <RecipesFilterButtons pageType={ pageType } />
+      <Header title={ pageTitle() } />
+      {mainLoading
+        ? <h1>Loading...</h1>
+        : <RecipesFilterButtons pageType={ pageType } />}
       {recipeloading
         ? <h2>Loading...</h2>
         : (
