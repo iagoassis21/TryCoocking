@@ -23,10 +23,9 @@ function RecipeInProgress({ drink = false }) {
     getRecipeList();
   }, []);
 
-  const dereguejhonson = Object.keys(recipe || {})
-    .filter((brinbols) => brinbols.includes('strIngredient') && (recipe[brinbols]))
-    .map((xesque) => recipe[xesque]);
-  console.log(recipe);
+  const recipeIngredients = Object.keys(recipe || {})
+    .filter((key) => key.includes('strIngredient') && (recipe[key]))
+    .map((item) => recipe[item]);
 
   const drinkRecipe = (
     <div>
@@ -101,7 +100,7 @@ function RecipeInProgress({ drink = false }) {
       }
 
       {
-        dereguejhonson.map((ingredients, index) => (
+        recipeIngredients.map((ingredients, index) => (
           <p
             data-testid={ `${index}-ingredient-step` }
             key={ index }
