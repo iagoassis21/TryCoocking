@@ -24,7 +24,7 @@ describe('Test Page - Login', () => {
     expect(btnEnter).toBeDefined();
     expect(btnEnter).toBeDisabled();
   });
-  test('Type in Inputs', () => {
+  test.only('Type in Inputs', () => {
     renderWithRouter(<App />)
     const emailInput = screen.getByPlaceholderText(/email/i);
     const passInput = screen.getByPlaceholderText(/senha/i);
@@ -43,6 +43,7 @@ describe('Test Page - Login', () => {
 
     userEvent.type(emailInput, 'kauan.s.leite@gmail.com')
     userEvent.type(passInput, '1234567')
+    console.log(btnEnter);
     userEvent.click(btnEnter);
 
     const userStorage = localStorage.getItem('user');
