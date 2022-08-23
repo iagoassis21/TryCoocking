@@ -22,7 +22,9 @@ function Recipes() {
           displayRecipes.map((recipe, index) => (
             <RecipeCard
               key={ `recipe${index}` }
-              cardInfo={ { recipe, index, pageType } }
+              recipe={ recipe }
+              type={ pageType }
+              index={ index }
             />
           )))}
     </div>

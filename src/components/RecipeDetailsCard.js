@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import Context from '../context/Context';
-import RecipeCard from './RecipeCard';
+import RecipesCarousel from './RecipesCarousel';
 
 function RecipeDetailsCard() {
   const {
-    pageType,
     recipeTitle,
     recipeImage,
     recipeCategory,
@@ -12,8 +11,8 @@ function RecipeDetailsCard() {
     recipeVideo,
     recipeAlcohol,
     ingredientList,
-    recommendations,
   } = useContext(Context);
+
   return (
     <div>
       <h2 data-testid="recipe-title">{recipeTitle}</h2>
@@ -50,22 +49,8 @@ function RecipeDetailsCard() {
           data-testid="video"
         />
       )}
-      <div data-testid="0-recomendation-card">
-        <h3>Receitas recomendadas</h3>
-        {recommendations.length && recommendations.map((recommendation, index) => {
-          const recommendationInfo = {
-            index,
-            recipe: recommendation,
-            pageType: pageType === 'foods' ? 'drinks' : 'foods',
-          };
-          return (
-            <RecipeCard
-              key={ `recipe${index}` }
-              cardInfo={ recommendationInfo }
-            />
-          );
-        })}
-      </div>
+
+      <RecipesCarousel />
     </div>
   );
 }

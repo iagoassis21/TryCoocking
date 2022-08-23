@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import Context from './Context';
 import fetchRecipesApi, { fetchRecipesById } from '../helpers/fetchRecipesApi';
 
@@ -15,6 +15,7 @@ function RecipeDetailsProvider({ children }) {
   const [ingredientList, SetIngredientList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [recommendations, setRecommendations] = useState([]);
+  const history = useHistory();
   const { recipeId } = useParams();
 
   const loadIngredients = (recipeInfo, maxAmount) => {
@@ -84,6 +85,11 @@ function RecipeDetailsProvider({ children }) {
     endLoading();
   }, [ingredientList]);
 
+  const changePage = (newPathname) => {
+    history.push(newPathname);
+    window.location.reload();
+  };
+
   const providerValue = {
     loading,
     pageType,
@@ -96,6 +102,7 @@ function RecipeDetailsProvider({ children }) {
     recipeAlcohol,
     ingredientList,
     recommendations,
+    changePage,
   };
 
   return (

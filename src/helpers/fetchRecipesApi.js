@@ -38,7 +38,7 @@ export async function fetchRecipesById(pageType, recipeId) {
 
   const fetchApi = await fetch(choosedEndPoint);
   const json = await fetchApi.json();
-  console.log(json);
+
   if (pageType === 'foods') return json.meals[0];
   return json.drinks[0];
 }
