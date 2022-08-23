@@ -12,7 +12,7 @@ function Recipes() {
   } = useContext(Context);
 
   return (
-    <div className="screen-size">
+    <div>
       {mainLoading
         ? <h1>Loading...</h1>
         : <RecipesFilterButtons pageType={ pageType } />}

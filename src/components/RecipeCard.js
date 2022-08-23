@@ -28,7 +28,7 @@ function RecipeCard({ cardInfo }) {
         src={ imgSrc() }
         data-testid={ `${index}-card-img` }
         alt="Recipe."
-        className="main-page-recipe-img"
+        className="small-img"
       />
     </Link>
   );

@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
 import Context from '../context/Context';
+import RecipeDetailsCard from '../components/RecipeDetailsCard';
 
 function RecipeDetails() {
   const {
     loading,
   } = useContext(Context);
   return (
-    <div className="screen-size">
+    <div>
       { loading
         ? <h1>Loading...</h1>
-        : <p>WIP</p> }
+        : <RecipeDetailsCard /> }
     </div>
   );
 }
