@@ -9,7 +9,7 @@ import RecipeDetailsProvider from './context/RecipeDetailsProvider';
 
 function App() {
   return (
-    <div className="screen-size">
+    <div>
       <Switch>
         <Route exact path="/foods">
           <RecipesProvider>

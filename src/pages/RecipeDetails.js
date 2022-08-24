@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import Context from '../context/Context';
 import RecipeDetailsCard from '../components/RecipeDetailsCard';
+import RecipesCarousel from '../components/RecipesCarousel';
 
 function RecipeDetails() {
   const {
@@ -10,7 +11,19 @@ function RecipeDetails() {
     <div>
       { loading
         ? <h1>Loading...</h1>
-        : <RecipeDetailsCard /> }
+        : (
+          <div>
+            <RecipeDetailsCard />
+            <RecipesCarousel />
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              className="start-recipe-button"
+            >
+              Start Recipe
+            </button>
+          </div>
+        )}
     </div>
   );
 }

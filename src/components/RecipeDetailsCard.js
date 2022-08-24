@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import Context from '../context/Context';
-import RecipesCarousel from './RecipesCarousel';
 
 function RecipeDetailsCard() {
   const {
@@ -14,7 +13,7 @@ function RecipeDetailsCard() {
   } = useContext(Context);
 
   return (
-    <div>
+    <>
       <h2 data-testid="recipe-title">{recipeTitle}</h2>
       <p data-testid="recipe-category">
         {recipeCategory}
@@ -38,8 +37,8 @@ function RecipeDetailsCard() {
       <p data-testid="instructions">{recipeInstructions}</p>
       {recipeVideo && (
         <iframe
-          width="560"
-          height="315"
+          width="360"
+          height="200"
           src={ recipeVideo }
           title="YouTube video player"
           frameBorder="0"
@@ -49,9 +48,7 @@ function RecipeDetailsCard() {
           data-testid="video"
         />
       )}
-
-      <RecipesCarousel />
-    </div>
+    </>
   );
 }
 
