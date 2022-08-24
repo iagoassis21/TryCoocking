@@ -46,6 +46,7 @@ body {
 
 .start-recipe-button {
   bottom: 0;
+  left: 0;
   padding: 10px;
   position: fixed;
   width: 100%;
