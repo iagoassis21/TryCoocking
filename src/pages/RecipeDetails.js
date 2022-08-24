@@ -1,17 +1,13 @@
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 import Context from '../context/Context';
 import RecipeDetailsCard from '../components/RecipeDetailsCard';
 import RecipesCarousel from '../components/RecipesCarousel';
+import RecipeDetailsButtons from '../components/RecipeDetailsButtons';
 
 function RecipeDetails() {
   const {
     loading,
-    recipeId,
-    pageType,
   } = useContext(Context);
-
-  const history = useHistory();
 
   return (
     <div>
@@ -21,28 +17,7 @@ function RecipeDetails() {
           <div>
             <RecipeDetailsCard />
             <RecipesCarousel />
-            <button
-              type="button"
-              data-testid="share-btn"
-            >
-              Compartilhar
-            </button>
-
-            <button
-              type="button"
-              data-testid="favorite-btn"
-            >
-              Favoritar
-            </button>
-
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-              className="start-recipe-button"
-              onClick={ () => history.push(`/${pageType}/${recipeId}/in-progress`) }
-            >
-              Start Recipe
-            </button>
+            <RecipeDetailsButtons />
           </div>
         )}
     </div>

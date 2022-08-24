@@ -15,6 +15,7 @@ function RecipeDetailsProvider({ children }) {
   const [ingredientList, SetIngredientList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [recommendations, setRecommendations] = useState([]);
+  const [finishedRecipe, setFinishedRecipe] = useState(false);
   const history = useHistory();
   const { recipeId } = useParams();
 
@@ -35,8 +36,18 @@ function RecipeDetailsProvider({ children }) {
     SetIngredientList(allIngredients);
   };
 
+  const checkFinished = () => {
+    const finishedRecipes = localStorage.getItem('doneRecipes');
+    if (finishedRecipes === null) return false;
+    const alreadyFinished = JSON.parse(finishedRecipes)
+      .find((recipe) => recipe.id === recipeId);
+    if (alreadyFinished) setFinishedRecipe(true);
+    return false;
+  };
+
   const loadRecipeInfo = async () => {
     const recipeInfo = await fetchRecipesById(pageType, recipeId);
+    checkFinished();
     if (pageType && pageType === 'foods') {
       const maxIngredientsAmount = 20;
       setRecipeTitle(recipeInfo.strMeal);
@@ -102,7 +113,9 @@ function RecipeDetailsProvider({ children }) {
     recipeAlcohol,
     ingredientList,
     recommendations,
+    finishedRecipe,
     changePage,
+    checkFinished,
   };
 
   return (
