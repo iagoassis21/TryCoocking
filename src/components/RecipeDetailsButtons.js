@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../context/Context';
 import shareIcon from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function RecipeDetailsButtons() {
   const {
@@ -12,6 +14,7 @@ function RecipeDetailsButtons() {
     handleCopy,
     copiedMessageTimer,
     handleFavorite,
+    favoritedRecipe,
   } = useContext(Context);
 
   const history = useHistory();
@@ -30,10 +33,14 @@ function RecipeDetailsButtons() {
 
       <button
         type="button"
-        data-testid="favorite-btn"
-        onClick={ () => handleFavorite() }
+        onClick={ () => handleFavorite(favoritedRecipe) }
+        src={ favoritedRecipe ? blackHeartIcon : whiteHeartIcon }
       >
-        Favoritar
+        <img
+          data-testid="favorite-btn"
+          src={ favoritedRecipe ? blackHeartIcon : whiteHeartIcon }
+          alt="Favorited icon."
+        />
       </button>
 
       { !finishedRecipe && (

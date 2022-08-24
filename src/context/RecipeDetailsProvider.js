@@ -18,6 +18,7 @@ function RecipeDetailsProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [recommendations, setRecommendations] = useState([]);
   const [finishedRecipe, setFinishedRecipe] = useState(false);
+  const [favoritedRecipe, setFavoritedRecipe] = useState(false);
   const [copiedMessageTimer, setCopiedMessageTimer] = useState(0);
   const history = useHistory();
   const { recipeId } = useParams();
@@ -44,8 +45,23 @@ function RecipeDetailsProvider({ children }) {
     if (finishedRecipes === null) return false;
     const alreadyFinished = JSON.parse(finishedRecipes)
       .find((recipe) => recipe.id === recipeId);
-    if (alreadyFinished) setFinishedRecipe(true);
-    return false;
+    if (alreadyFinished) {
+      setFinishedRecipe(true);
+    } else {
+      setFinishedRecipe(false);
+    }
+  };
+
+  const checkFavorited = () => {
+    const favoritedRecipes = localStorage.getItem('favoriteRecipes');
+    if (favoritedRecipes === null) return false;
+    const alreadyFavorited = JSON.parse(favoritedRecipes)
+      .find((recipe) => recipe.id === recipeId);
+    if (alreadyFavorited) {
+      setFavoritedRecipe(true);
+    } else {
+      setFavoritedRecipe(false);
+    }
   };
 
   const startedRecipe = () => {
@@ -62,6 +78,7 @@ function RecipeDetailsProvider({ children }) {
   const loadRecipeInfo = async () => {
     const recipeInfo = await fetchRecipesById(pageType, recipeId);
     checkFinished();
+    checkFavorited();
     if (pageType && pageType === 'foods') {
       const maxIngredientsAmount = 20;
       setRecipeTitle(recipeInfo.strMeal);
@@ -130,25 +147,36 @@ function RecipeDetailsProvider({ children }) {
     copy(window.location.href);
   };
 
-  const handleFavorite = () => {
-    const removeLastLetter = -1;
-    const favoritedRecipe = {
-      id: recipeId,
-      type: pageType.slice(0, removeLastLetter),
-      nationality: recipeArea || '',
-      category: recipeCategory || '',
-      alcoholicOrNot: recipeAlcohol || '',
-      name: recipeTitle,
-      image: recipeImage,
-    };
-    if (localStorage.getItem('favoriteRecipes') === null) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([favoritedRecipe]));
+  const deleteFavorite = () => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const newFavorites = JSON.stringify(favorites.filter((fav) => fav.id !== recipeId));
+    localStorage.setItem('favoriteRecipes', newFavorites);
+  };
+
+  const handleFavorite = (favorited) => {
+    if (favorited) {
+      deleteFavorite();
     } else {
-      const oldData = localStorage.getItem('favoriteRecipes');
-      const recuperedData = JSON.parse(oldData);
-      const newArray = [...recuperedData, favoritedRecipe];
-      localStorage.setItem('favoriteRecipes', JSON.stringify(newArray));
+      const removeLastLetter = -1;
+      const recipeToFavorite = {
+        id: recipeId,
+        type: pageType.slice(0, removeLastLetter),
+        nationality: recipeArea || '',
+        category: recipeCategory || '',
+        alcoholicOrNot: recipeAlcohol || '',
+        name: recipeTitle,
+        image: recipeImage,
+      };
+      if (localStorage.getItem('favoriteRecipes') === null) {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([recipeToFavorite]));
+      } else {
+        const oldData = localStorage.getItem('favoriteRecipes');
+        const recuperedData = JSON.parse(oldData);
+        const newArray = [...recuperedData, recipeToFavorite];
+        localStorage.setItem('favoriteRecipes', JSON.stringify(newArray));
+      }
     }
+    checkFavorited();
   };
 
   const providerValue = {
@@ -165,6 +193,7 @@ function RecipeDetailsProvider({ children }) {
     recommendations,
     finishedRecipe,
     copiedMessageTimer,
+    favoritedRecipe,
     changePage,
     checkFinished,
     startedRecipe,
