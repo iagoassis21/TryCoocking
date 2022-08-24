@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useParams, useHistory } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import Context from './Context';
 import fetchRecipesApi, { fetchRecipesById } from '../helpers/fetchRecipesApi';
 
@@ -16,6 +17,7 @@ function RecipeDetailsProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [recommendations, setRecommendations] = useState([]);
   const [finishedRecipe, setFinishedRecipe] = useState(false);
+  const [copiedMessageTimer, setCopiedMessageTimer] = useState(0);
   const history = useHistory();
   const { recipeId } = useParams();
 
@@ -112,6 +114,20 @@ function RecipeDetailsProvider({ children }) {
     window.location.reload();
   };
 
+  useEffect(() => {
+    if (!copiedMessageTimer) return;
+    const aSecond = 1000;
+    const cooldown = setInterval(() => setCopiedMessageTimer(copiedMessageTimer - 1),
+      aSecond);
+    return () => clearInterval(cooldown);
+  }, [copiedMessageTimer]);
+
+  const handleCopy = () => {
+    const fiveSeconds = 5;
+    setCopiedMessageTimer(fiveSeconds);
+    copy(window.location.href);
+  };
+
   const providerValue = {
     loading,
     pageType,
@@ -125,9 +141,11 @@ function RecipeDetailsProvider({ children }) {
     ingredientList,
     recommendations,
     finishedRecipe,
+    copiedMessageTimer,
     changePage,
     checkFinished,
     startedRecipe,
+    handleCopy,
   };
 
   return (

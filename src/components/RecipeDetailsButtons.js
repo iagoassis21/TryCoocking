@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../context/Context';
+import shareIcon from '../images/shareIcon.svg';
 
 function RecipeDetailsButtons() {
   const {
@@ -8,6 +9,8 @@ function RecipeDetailsButtons() {
     pageType,
     finishedRecipe,
     startedRecipe,
+    handleCopy,
+    copiedMessageTimer,
   } = useContext(Context);
 
   const history = useHistory();
@@ -19,8 +22,9 @@ function RecipeDetailsButtons() {
       <button
         type="button"
         data-testid="share-btn"
+        onClick={ () => handleCopy() }
       >
-        Compartilhar
+        <img src={ shareIcon } alt="Share icon." />
       </button>
 
       <button
@@ -31,14 +35,20 @@ function RecipeDetailsButtons() {
       </button>
 
       { !finishedRecipe && (
-        <button
-          type="button"
-          data-testid="start-recipe-btn"
-          className="start-recipe-button"
-          onClick={ () => history.push(`/${pageType}/${recipeId}/in-progress`) }
-        >
-          { startRecipeText }
-        </button>
+        <div className="start-recipe-btn-container">
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            className="start-recipe-button"
+            onClick={ () => history.push(`/${pageType}/${recipeId}/in-progress`) }
+          >
+            { startRecipeText }
+          </button>
+        </div>
+      )}
+
+      { copiedMessageTimer > 0 && (
+        <p className="copied-message">Link copied!</p>
       )}
     </div>
   );
