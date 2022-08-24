@@ -11,6 +11,7 @@ function RecipeDetailsProvider({ children }) {
   const [recipeImage, setRecipeImage] = useState(undefined);
   const [recipeCategory, setRecipeCategory] = useState(undefined);
   const [recipeInstructions, setRecipeInstructions] = useState(undefined);
+  const [recipeArea, setRecipeArea] = useState(undefined);
   const [recipeAlcohol, setRecipeAlcohol] = useState(undefined);
   const [recipeVideo, setRecipeVideo] = useState(undefined);
   const [ingredientList, SetIngredientList] = useState([]);
@@ -65,6 +66,7 @@ function RecipeDetailsProvider({ children }) {
       const maxIngredientsAmount = 20;
       setRecipeTitle(recipeInfo.strMeal);
       setRecipeImage(recipeInfo.strMealThumb);
+      setRecipeArea(recipeInfo.strArea);
       setRecipeVideo(recipeInfo.strYoutube.replace('watch?v=', 'embed/'));
       loadIngredients(recipeInfo, maxIngredientsAmount);
     } else {
@@ -128,6 +130,27 @@ function RecipeDetailsProvider({ children }) {
     copy(window.location.href);
   };
 
+  const handleFavorite = () => {
+    const removeLastLetter = -1;
+    const favoritedRecipe = {
+      id: recipeId,
+      type: pageType.slice(0, removeLastLetter),
+      nationality: recipeArea || '',
+      category: recipeCategory || '',
+      alcoholicOrNot: recipeAlcohol || '',
+      name: recipeTitle,
+      image: recipeImage,
+    };
+    if (localStorage.getItem('favoriteRecipes') === null) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([favoritedRecipe]));
+    } else {
+      const oldData = localStorage.getItem('favoriteRecipes');
+      const recuperedData = JSON.parse(oldData);
+      const newArray = [...recuperedData, favoritedRecipe];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newArray));
+    }
+  };
+
   const providerValue = {
     loading,
     pageType,
@@ -146,6 +169,7 @@ function RecipeDetailsProvider({ children }) {
     checkFinished,
     startedRecipe,
     handleCopy,
+    handleFavorite,
   };
 
   return (

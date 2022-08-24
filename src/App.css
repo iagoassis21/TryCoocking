@@ -59,7 +59,7 @@ body {
 
 .copied-message {
   background-color: red;
-  bottom: 0;
+  bottom: 30px;
   left: 0;
   position: fixed;
   text-align: center;

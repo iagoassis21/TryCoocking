@@ -11,6 +11,7 @@ function RecipeDetailsButtons() {
     startedRecipe,
     handleCopy,
     copiedMessageTimer,
+    handleFavorite,
   } = useContext(Context);
 
   const history = useHistory();
@@ -30,6 +31,7 @@ function RecipeDetailsButtons() {
       <button
         type="button"
         data-testid="favorite-btn"
+        onClick={ () => handleFavorite() }
       >
         Favoritar
       </button>
