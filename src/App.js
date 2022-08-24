@@ -19,20 +19,30 @@ function App() {
             <Recipes />
           </RecipesProvider>
         </Route>
-
         <Route exact path="/drinks">
           <RecipesProvider>
             <Recipes />
           </RecipesProvider>
         </Route>
-
+        <Route exact path="/profile">
+          <RecipesProvider>
+            <Profile />
+          </RecipesProvider>
+        </Route>
         <Route exact path="/foods/:id-da-receita" />
         <Route exact path="/drinks/:id-da-receita" />
         <Route exact path="/foods/:id-da-receita/in-progress" />
         <Route exact path="/drinks/:id-da-receita/in-progress" />
-        <Route exact path="/profile" component={ Profile } />
-        <Route exact path="/done-recipes" component={ DoneRecipes } />
-        <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
+        <Route exact path="/done-recipes">
+          <RecipesProvider>
+            <DoneRecipes />
+          </RecipesProvider>
+        </Route>
+        <Route exact path="/favorite-recipes">
+          <RecipesProvider>
+            <FavoriteRecipes />
+          </RecipesProvider>
+        </Route>
 
       </Switch>
     </div>

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 import Context from './Context';
 import fetchRecipesApi from '../helpers/fetchRecipesApi';
 
 function RecipesProvider({ children }) {
-  const pageType = window.location.pathname.substring(1);
+  const { pathname } = useLocation();
+  const [pageType] = useState(pathname.substring(1));
   const [recipeloading, setRecipeloading] = useState(false);
   const [mainLoading, setMainLoading] = useState(true);
   const [allRecipes, setAllRecipes] = useState([]);

@@ -4,20 +4,27 @@ import Context from '../context/Context';
 import getRecipes from '../helpers/getRecipes';
 
 export default function SearchBar() {
-  const { displayRecipes, setDisplayRecipes, searchValue } = useContext(Context);
+  const { mainLoading, displayRecipes,
+    setDisplayRecipes, searchValue } = useContext(Context);
   const [type, setType] = useState('');
   const history = useHistory();
   const { location: { pathname } } = history;
-  const verifyAlert = () => {
+
+  const createAlertNoRecipes = () => {
+    global.alert('Sorry, we haven\'t found any recipes for these filters.');
+  };
+
+  const createFirstLetterAlert = () => {
     if (type === 'first-letter' && searchValue.length > 1) {
       global.alert('Your search must have only 1 (one) character');
     }
   };
 
   const setSearch = async () => {
-    verifyAlert();
+    createFirstLetterAlert();
+    const maxLength = 12;
     const recipes = await getRecipes(type, searchValue, pathname);
-    if (recipes) setDisplayRecipes(recipes);
+    if (recipes) setDisplayRecipes(recipes.slice(0, maxLength));
     else setDisplayRecipes([]);
   };
 
@@ -29,6 +36,8 @@ export default function SearchBar() {
   useEffect(() => {
     if (displayRecipes.length === 1) {
       redirectTo(pathname);
+    } else if (displayRecipes.length === 0 && !mainLoading) {
+      createAlertNoRecipes();
     }
   }, [displayRecipes]);
 
