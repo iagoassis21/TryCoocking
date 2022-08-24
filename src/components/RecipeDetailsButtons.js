@@ -7,9 +7,12 @@ function RecipeDetailsButtons() {
     recipeId,
     pageType,
     finishedRecipe,
+    startedRecipe,
   } = useContext(Context);
 
   const history = useHistory();
+
+  const startRecipeText = startedRecipe() ? 'Continue Recipe' : 'Start Recipe';
 
   return (
     <div>
@@ -33,9 +36,8 @@ function RecipeDetailsButtons() {
           data-testid="start-recipe-btn"
           className="start-recipe-button"
           onClick={ () => history.push(`/${pageType}/${recipeId}/in-progress`) }
-          // disabled={ checkRecipeStatus() }
         >
-          Start Recipe
+          { startRecipeText }
         </button>
       )}
     </div>

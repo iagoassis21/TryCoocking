@@ -45,6 +45,17 @@ function RecipeDetailsProvider({ children }) {
     return false;
   };
 
+  const startedRecipe = () => {
+    const inProgressRecipes = localStorage.getItem('inProgressRecipes');
+    if (inProgressRecipes === null) return false;
+    if (pageType === 'foods') {
+      const alreadyStarted = Object.keys(JSON.parse(inProgressRecipes).meals);
+      return alreadyStarted.includes(recipeId);
+    }
+    const alreadyStarted = Object.keys(JSON.parse(inProgressRecipes).cocktails);
+    return alreadyStarted.includes(recipeId);
+  };
+
   const loadRecipeInfo = async () => {
     const recipeInfo = await fetchRecipesById(pageType, recipeId);
     checkFinished();
@@ -116,6 +127,7 @@ function RecipeDetailsProvider({ children }) {
     finishedRecipe,
     changePage,
     checkFinished,
+    startedRecipe,
   };
 
   return (
