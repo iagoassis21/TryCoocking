@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import Context from '../context/Context';
 
 function Login(props) {
   const [isValid, setValid] = useState(true);
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+  const {
+    setPageType,
+  } = useContext(Context);
 
   const validateEmail = () => {
     const regexEmail = /^\w+([/.-]?\w+)*@\w+([/.-]?\w+)*(\.\w{2,3})+$/;
@@ -32,9 +36,8 @@ function Login(props) {
     localStorage.setItem('user', JSON.stringify({ email }));
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
-
+    setPageType('foods');
     const { history } = props;
-
     history.push('/foods');
   };
 
