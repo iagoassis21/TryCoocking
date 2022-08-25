@@ -1,31 +1,38 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Carousel from 'react-bootstrap/Carousel';
-import Context from '../context/Context';
+import { useHistory } from 'react-router-dom';
 
-function RecipesCarousel() {
+function RecipesCarousel({ carouselInfo }) {
+  const history = useHistory();
+
   const {
-    pageType,
+    detailsPageType,
     recommendations,
-    changePage,
-  } = useContext(Context);
+  } = carouselInfo;
 
   const firstItemSet = 0;
   const secondItemSet = 2;
   const thirdItemSet = 4;
 
   const getRecommendationsNameKey = (index) => {
-    if (pageType === 'foods') return recommendations[index].strDrink;
+    if (detailsPageType === 'foods') return recommendations[index].strDrink;
     return recommendations[index].strMeal;
   };
 
   const recommendationsImgKey = (index) => {
-    if (pageType === 'foods') return recommendations[index].strDrinkThumb;
+    if (detailsPageType === 'foods') return recommendations[index].strDrinkThumb;
     return recommendations[index].strMealThumb;
   };
 
   const recipeUlr = (recipe) => {
-    if (pageType === 'foods') return `/drinks/${recipe.idDrink}`;
+    if (detailsPageType === 'foods') return `/drinks/${recipe.idDrink}`;
     return `/foods/${recipe.idMeal}`;
+  };
+
+  const changePage = (newPathname) => {
+    history.push(newPathname);
+    window.location.reload();
   };
 
   const carouselItem = (index) => (
@@ -79,5 +86,12 @@ function RecipesCarousel() {
     </div>
   );
 }
+
+RecipesCarousel.propTypes = {
+  carouselInfo: PropTypes.shape({
+    detailsPageType: PropTypes.string.isRequired,
+    recommendations: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+};
 
 export default RecipesCarousel;

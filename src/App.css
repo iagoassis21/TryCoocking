@@ -81,6 +81,19 @@ body {
 }
 */
 
+.footer {
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  left: 0;
+  position: fixed;
+  right: 0;
+}
+
+.usedIngredient {
+  text-decoration: line-through;
+}
+
 .meals > .logo {
   animation: shake 1.5s infinite ease;
   color: aliceblue;

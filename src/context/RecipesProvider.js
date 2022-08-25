@@ -6,13 +6,14 @@ import fetchRecipesApi from '../helpers/fetchRecipesApi';
 
 function RecipesProvider({ children }) {
   const { pathname } = useLocation();
-  const [pageType] = useState(pathname.substring(1));
+  const [pageType, setPageType] = useState(pathname.substring(1));
   const [recipeloading, setRecipeloading] = useState(false);
   const [mainLoading, setMainLoading] = useState(true);
   const [allRecipes, setAllRecipes] = useState([]);
   const [allFilters, setAllFilters] = useState([]);
   const [currFilter, setCurrFilter] = useState('');
   const [displayRecipes, setDisplayRecipes] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     const getRecipes = async () => {
@@ -25,7 +26,7 @@ function RecipesProvider({ children }) {
       }
     };
     getRecipes();
-  }, []);
+  }, [pageType]);
 
   useEffect(() => {
     const getFilters = async () => {
@@ -37,7 +38,7 @@ function RecipesProvider({ children }) {
       }
     };
     getFilters();
-  }, []);
+  }, [pageType]);
 
   useEffect(() => {
     const stopLoading = () => {
@@ -68,10 +69,13 @@ function RecipesProvider({ children }) {
     allFilters,
     recipeloading,
     allRecipes,
+    searchValue,
     setAllRecipes,
     setAllFilters,
     filterRecipes,
     setDisplayRecipes,
+    setSearchValue,
+    setPageType,
   };
 
   return (

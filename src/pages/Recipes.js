@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import RecipesFilterButtons from '../components/RecipesFilterButtons';
 import RecipeCard from '../components/RecipeCard';
 import Context from '../context/Context';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function Recipes() {
   const {
@@ -11,8 +13,11 @@ function Recipes() {
     displayRecipes,
   } = useContext(Context);
 
+  const pageTitle = () => pageType[0].toUpperCase() + pageType.substring(1);
+
   return (
-    <div>
+    <div className="screen-size">
+      <Header title={ pageTitle() } />
       {mainLoading
         ? <h1>Loading...</h1>
         : <RecipesFilterButtons pageType={ pageType } />}
@@ -27,6 +32,7 @@ function Recipes() {
               index={ index }
             />
           )))}
+      <Footer />
     </div>
   );
 }

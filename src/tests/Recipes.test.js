@@ -109,4 +109,4 @@ describe('Tests of Recipes component.', () => {
       userEvent.click(filterButton);
     });
   })
-})
+});

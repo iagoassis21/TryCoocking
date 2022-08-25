@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
-import Context from '../context/Context';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-function RecipeDetailsCard() {
+function RecipeDetailsCard({ recipeInfo }) {
   const {
     recipeTitle,
     recipeImage,
@@ -10,7 +10,7 @@ function RecipeDetailsCard() {
     recipeVideo,
     recipeAlcohol,
     ingredientList,
-  } = useContext(Context);
+  } = recipeInfo;
 
   return (
     <>
@@ -51,5 +51,17 @@ function RecipeDetailsCard() {
     </>
   );
 }
+
+RecipeDetailsCard.propTypes = {
+  recipeInfo: PropTypes.shape({
+    recipeTitle: PropTypes.string.isRequired,
+    recipeImage: PropTypes.string.isRequired,
+    recipeCategory: PropTypes.string.isRequired,
+    recipeVideo: PropTypes.string,
+    recipeAlcohol: PropTypes.string,
+    recipeInstructions: PropTypes.string,
+    ingredientList: PropTypes.arrayOf(PropTypes.string.isRequired),
+  }).isRequired,
+};
 
 export default RecipeDetailsCard;
