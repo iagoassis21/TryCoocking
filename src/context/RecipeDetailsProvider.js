@@ -23,22 +23,7 @@ function RecipeDetailsProvider({ children }) {
   const history = useHistory();
   const { recipeId } = useParams();
 
-  const loadIngredients = (recipeInfo, maxAmount) => {
-    const maxIngredients = maxAmount;
-    let allIngredients = [];
-    for (let index = 1; index <= maxIngredients; index += 1) {
-      const ingredient = `${recipeInfo[`strIngredient${index}`]}`;
-      const measure = `${recipeInfo[`strMeasure${index}`]}`;
-      const recipeText = `${ingredient} - ${measure}`;
-      if (ingredient !== 'null' && ingredient !== '' && measure !== 'null') {
-        allIngredients = [...allIngredients, recipeText];
-      }
-      if (ingredient !== 'null' && measure === 'null') {
-        allIngredients = [...allIngredients, ingredient];
-      }
-    }
-    SetIngredientList(allIngredients);
-  };
+  // Start Recipe Button
 
   const checkFinished = () => {
     const finishedRecipes = localStorage.getItem('doneRecipes');
@@ -49,18 +34,6 @@ function RecipeDetailsProvider({ children }) {
       setFinishedRecipe(true);
     } else {
       setFinishedRecipe(false);
-    }
-  };
-
-  const checkFavorited = () => {
-    const favoritedRecipes = localStorage.getItem('favoriteRecipes');
-    if (favoritedRecipes === null) return false;
-    const alreadyFavorited = JSON.parse(favoritedRecipes)
-      .find((recipe) => recipe.id === recipeId);
-    if (alreadyFavorited) {
-      setFavoritedRecipe(true);
-    } else {
-      setFavoritedRecipe(false);
     }
   };
 
@@ -75,62 +48,23 @@ function RecipeDetailsProvider({ children }) {
     return alreadyStarted.includes(recipeId);
   };
 
-  const loadRecipeInfo = async () => {
-    const recipeInfo = await fetchRecipesById(pageType, recipeId);
-    checkFinished();
-    checkFavorited();
-    if (pageType && pageType === 'foods') {
-      const maxIngredientsAmount = 20;
-      setRecipeTitle(recipeInfo.strMeal);
-      setRecipeImage(recipeInfo.strMealThumb);
-      setRecipeArea(recipeInfo.strArea);
-      setRecipeVideo(recipeInfo.strYoutube.replace('watch?v=', 'embed/'));
-      loadIngredients(recipeInfo, maxIngredientsAmount);
-    } else {
-      const maxIngredientsAmount = 15;
-      setRecipeTitle(recipeInfo.strDrink);
-      setRecipeImage(recipeInfo.strDrinkThumb);
-      setRecipeAlcohol(recipeInfo.strAlcoholic);
-      loadIngredients(recipeInfo, maxIngredientsAmount);
-    }
-    setRecipeCategory(recipeInfo.strCategory);
-    setRecipeInstructions(recipeInfo.strInstructions);
-  };
+  // End start Recipe Button
 
-  const getRecommendation = async () => {
-    const maxAmount = 6;
-    const recomType = pageType === 'foods' ? 'drinks' : 'foods';
-    const fetchType = `${recomType}Recipes`;
-    const recommendationList = await fetchRecipesApi(recomType, fetchType, maxAmount);
-    setRecommendations(recommendationList);
-  };
-
-  useEffect(() => {
-    const loadPageType = () => {
-      if (!pageType) {
-        const isPageTypeFood = window.location.pathname.includes('food');
-        if (isPageTypeFood) {
-          setPageType('foods');
-        } else {
-          setPageType('drinks');
-        }
-      }
-      if (pageType && recipeId) loadRecipeInfo();
-      if (pageType && !recommendations.length) getRecommendation();
-    };
-    loadPageType();
-  }, [pageType, recipeId]);
-
-  useEffect(() => {
-    const endLoading = () => {
-      if (ingredientList.length) setLoading(false);
-    };
-    endLoading();
-  }, [ingredientList]);
+  // Carousel
 
   const changePage = (newPathname) => {
     history.push(newPathname);
     window.location.reload();
+  };
+
+  // End Carousel
+
+  // Copy Url
+
+  const handleCopy = () => {
+    const fiveSeconds = 5;
+    setCopiedMessageTimer(fiveSeconds);
+    copy(window.location.href);
   };
 
   useEffect(() => {
@@ -141,16 +75,24 @@ function RecipeDetailsProvider({ children }) {
     return () => clearInterval(cooldown);
   }, [copiedMessageTimer]);
 
-  const handleCopy = () => {
-    const fiveSeconds = 5;
-    setCopiedMessageTimer(fiveSeconds);
-    copy(window.location.href);
-  };
+  // End copy Url
 
   const deleteFavorite = () => {
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const newFavorites = JSON.stringify(favorites.filter((fav) => fav.id !== recipeId));
     localStorage.setItem('favoriteRecipes', newFavorites);
+  };
+
+  const checkFavorited = () => {
+    const favoritedRecipes = localStorage.getItem('favoriteRecipes');
+    if (favoritedRecipes === null) return false;
+    const alreadyFavorited = JSON.parse(favoritedRecipes)
+      .find((recipe) => recipe.id === recipeId);
+    if (alreadyFavorited) {
+      setFavoritedRecipe(true);
+    } else {
+      setFavoritedRecipe(false);
+    }
   };
 
   const handleFavorite = (favorited) => {
@@ -178,6 +120,80 @@ function RecipeDetailsProvider({ children }) {
     }
     checkFavorited();
   };
+
+  // Trigger on page load
+
+  useEffect(() => {
+    const endLoading = () => {
+      if (ingredientList.length) setLoading(false);
+    };
+    endLoading();
+  }, [ingredientList]);
+
+  const loadIngredients = (recipeInfo, maxAmount) => {
+    const maxIngredients = maxAmount;
+    let allIngredients = [];
+    for (let index = 1; index <= maxIngredients; index += 1) {
+      const ingredient = `${recipeInfo[`strIngredient${index}`]}`;
+      const measure = `${recipeInfo[`strMeasure${index}`]}`;
+      const recipeText = `${ingredient} - ${measure}`;
+      if (ingredient !== 'null' && ingredient !== '' && measure !== 'null') {
+        allIngredients = [...allIngredients, recipeText];
+      }
+      if (ingredient !== 'null' && measure === 'null') {
+        allIngredients = [...allIngredients, ingredient];
+      }
+    }
+    SetIngredientList(allIngredients);
+  };
+
+  const getRecommendation = async () => {
+    const maxAmount = 6;
+    const recomType = pageType === 'foods' ? 'drinks' : 'foods';
+    const fetchType = `${recomType}Recipes`;
+    const recommendationList = await fetchRecipesApi(recomType, fetchType, maxAmount);
+    setRecommendations(recommendationList);
+  };
+
+  const loadRecipeInfo = async () => {
+    const recipeInfo = await fetchRecipesById(pageType, recipeId);
+    checkFinished();
+    checkFavorited();
+    if (pageType && pageType === 'foods') {
+      const maxIngredientsAmount = 20;
+      setRecipeTitle(recipeInfo.strMeal);
+      setRecipeImage(recipeInfo.strMealThumb);
+      setRecipeArea(recipeInfo.strArea);
+      setRecipeVideo(recipeInfo.strYoutube.replace('watch?v=', 'embed/'));
+      loadIngredients(recipeInfo, maxIngredientsAmount);
+    } else {
+      const maxIngredientsAmount = 15;
+      setRecipeTitle(recipeInfo.strDrink);
+      setRecipeImage(recipeInfo.strDrinkThumb);
+      setRecipeAlcohol(recipeInfo.strAlcoholic);
+      loadIngredients(recipeInfo, maxIngredientsAmount);
+    }
+    setRecipeCategory(recipeInfo.strCategory);
+    setRecipeInstructions(recipeInfo.strInstructions);
+  };
+
+  useEffect(() => {
+    const loadPageType = () => {
+      if (!pageType) {
+        const isPageTypeFood = window.location.pathname.includes('food');
+        if (isPageTypeFood) {
+          setPageType('foods');
+        } else {
+          setPageType('drinks');
+        }
+      }
+      if (pageType && recipeId) loadRecipeInfo();
+      if (pageType && !recommendations.length) getRecommendation();
+    };
+    loadPageType();
+  }, [pageType, recipeId]);
+
+  // End of trigger on page load
 
   const providerValue = {
     loading,
