@@ -3,6 +3,7 @@ import RecipesFilterButtons from '../components/RecipesFilterButtons';
 import RecipeCard from '../components/RecipeCard';
 import Context from '../context/Context';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function Recipes() {
   const {
@@ -28,6 +29,7 @@ function Recipes() {
               cardInfo={ { recipe, index, pageType } }
             />
           )))}
+      <Footer />
     </div>
   );
 }
