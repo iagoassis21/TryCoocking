@@ -1,20 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import '../App.css';
+import { useHistory } from 'react-router-dom';
 import mealIcon from '../images/mealIcon.svg';
 import drinkIcon from '../images/drinkIcon.svg';
 
 function Footer() {
+  const history = useHistory();
+  const changePage = (newPathname) => {
+    history.push(newPathname);
+    window.location.reload();
+  };
   return (
     <nav data-testid="footer" className="footer">
-      <Link to="/foods">
+      <button type="button" onClick={ () => changePage('foods') }>
         <img src={ mealIcon } alt={ mealIcon } data-testid="food-bottom-btn" />
-      </Link>
-      <Link to="/drinks">
+      </button>
+      <button type="button" onClick={ () => changePage('drinks') }>
         <img src={ drinkIcon } alt={ drinkIcon } data-testid="drinks-bottom-btn" />
-      </Link>
+      </button>
     </nav>
   );
 }
-
 export default Footer;

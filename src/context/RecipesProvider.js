@@ -6,7 +6,7 @@ import fetchRecipesApi from '../helpers/fetchRecipesApi';
 
 function RecipesProvider({ children }) {
   const { pathname } = useLocation();
-  const [pageType] = useState(pathname.substring(1));
+  const [pageType, setPageType] = useState(pathname.substring(1));
   const [recipeloading, setRecipeloading] = useState(false);
   const [mainLoading, setMainLoading] = useState(true);
   const [allRecipes, setAllRecipes] = useState([]);
@@ -14,7 +14,6 @@ function RecipesProvider({ children }) {
   const [currFilter, setCurrFilter] = useState('');
   const [displayRecipes, setDisplayRecipes] = useState([]);
   const [searchValue, setSearchValue] = useState('');
-
   useEffect(() => {
     const getRecipes = async () => {
       if (pageType === 'foods' || pageType === 'drinks') {
@@ -26,8 +25,7 @@ function RecipesProvider({ children }) {
       }
     };
     getRecipes();
-  }, []);
-
+  }, [pageType]);
   useEffect(() => {
     const getFilters = async () => {
       if (pageType === 'foods' || pageType === 'drinks') {
@@ -38,7 +36,7 @@ function RecipesProvider({ children }) {
       }
     };
     getFilters();
-  }, []);
+  }, [pageType]);
 
   useEffect(() => {
     const stopLoading = () => {
@@ -70,6 +68,7 @@ function RecipesProvider({ children }) {
     recipeloading,
     allRecipes,
     searchValue,
+    setPageType,
     setAllRecipes,
     setAllFilters,
     filterRecipes,

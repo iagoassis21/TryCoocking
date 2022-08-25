@@ -76,6 +76,50 @@ function RecipeInProgress({ drink = false }) {
       </label>
     ));
 
+  // const checkFavorited = () => {
+  //   const favoritedRecipes = localStorage.getItem('favoriteRecipes');
+  //   if (favoritedRecipes === null) return false;
+  //   const alreadyFavorited = JSON.parse(favoritedRecipes)
+  //     .find((recipe) => recipe.id === recipeId);
+  //   if (alreadyFavorited) {
+  //     setFavoritedRecipe(true);
+  //   } else {
+  //     setFavoritedRecipe(false);
+  //   }
+  // };
+
+  // const deleteFavorite = () => {
+  //   const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  //   const newFavorites = JSON.stringify(favorites.filter((fav) => fav.id !== recipeId));
+  //   localStorage.setItem('favoriteRecipes', newFavorites);
+  // };
+
+  // const handleFavorite = (favorited) => {
+  //   if (favorited) {
+  //     deleteFavorite();
+  //   } else {
+  //     const removeLastLetter = -1;
+  //     const recipeToFavorite = {
+  //       id: recipeId,
+  //       type: pageType.slice(0, removeLastLetter),
+  //       nationality: recipeArea || '',
+  //       category: recipeCategory || '',
+  //       alcoholicOrNot: recipeAlcohol || '',
+  //       name: recipeTitle,
+  //       image: recipeImage,
+  //     };
+  //     if (localStorage.getItem('favoriteRecipes') === null) {
+  //       localStorage.setItem('favoriteRecipes', JSON.stringify([recipeToFavorite]));
+  //     } else {
+  //       const oldData = localStorage.getItem('favoriteRecipes');
+  //       const recuperedData = JSON.parse(oldData);
+  //       const newArray = [...recuperedData, recipeToFavorite];
+  //       localStorage.setItem('favoriteRecipes', JSON.stringify(newArray));
+  //     }
+  //   }
+  //   checkFavorited();
+  // };
+
   const clipBoardCopy = (
     <span>Link copied!</span>
   );
