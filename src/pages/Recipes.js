@@ -14,7 +14,6 @@ function Recipes() {
   } = useContext(Context);
 
   const pageTitle = () => pageType[0].toUpperCase() + pageType.substring(1);
-
   return (
     <div className="screen-size">
       <Header title={ pageTitle() } />
