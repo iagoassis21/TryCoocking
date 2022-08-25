@@ -3,6 +3,7 @@ import RecipesFilterButtons from '../components/RecipesFilterButtons';
 import RecipeCard from '../components/RecipeCard';
 import Context from '../context/Context';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function Recipes() {
   const {
@@ -13,7 +14,6 @@ function Recipes() {
   } = useContext(Context);
 
   const pageTitle = () => pageType[0].toUpperCase() + pageType.substring(1);
-
   return (
     <div className="screen-size">
       <Header title={ pageTitle() } />
@@ -29,6 +29,7 @@ function Recipes() {
               cardInfo={ { recipe, index, pageType } }
             />
           )))}
+      <Footer />
     </div>
   );
 }

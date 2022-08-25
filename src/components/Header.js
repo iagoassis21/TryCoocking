@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
+import Context from '../context/Context';
 
 export default function Header({ title, icons }) {
   const [enableSearch, setEnableSearch] = useState(false);
   const history = useHistory();
+  const { searchValue, setSearchValue } = useContext(Context);
 
   const createProfileIcon = () => (
     <button type="button" onClick={ () => history.push('/profile') }>
@@ -33,8 +36,14 @@ export default function Header({ title, icons }) {
       }
       {
         enableSearch
-        && <input data-testid="search-input" type="text" />
+        && <input
+          data-testid="search-input"
+          type="text"
+          onChange={ (e) => setSearchValue(e.target.value) }
+          value={ searchValue }
+        />
       }
+      <SearchBar />
     </header>
   );
 }
