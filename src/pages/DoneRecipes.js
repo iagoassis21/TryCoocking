@@ -1,57 +1,102 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
-
-const mockItem = [{
-  index: '0',
-  thumb: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
-  recipeName: 'Corba',
-  category: 'Side',
-  date: '23/08/2022',
-  tagName: 'Pasta',
-}];
+import mockItem from './mockItensDone';
+import { mapItensFood, mapItensDrinks } from '../helpers/mapItensDone';
 
 function DoneRecipes() {
-  const { index, thumb, recipeName, category, date, tagName } = mockItem[0];
+  const [filter, setFilter] = useState();
+  const findNone = 'Nenhuma Receita Concluida!';
+
+  const filterButtons = ({ target }) => {
+    const { name } = target;
+    switch (name) {
+    case 'all':
+      setFilter();
+      break;
+    case 'food':
+      setFilter('food');
+      break;
+    case 'drinks':
+      setFilter('drinks');
+      break;
+    default:
+      break;
+    }
+  };
+
+  const showItens = (infoFiltro) => {
+    if (infoFiltro === undefined) {
+      return mockItem.length !== 0 ? (
+        <div>
+          {
+            mockItem
+              .map((element) => (
+                element.type === 'food' ? (
+                  mapItensFood(element)
+                ) : mapItensDrinks(element)))
+          }
+        </div>
+      ) : <h4>{ findNone }</h4>;
+    }
+    if (infoFiltro === 'food') {
+      return mockItem.length !== 0 ? (
+        <div>
+          {
+            mockItem
+              .filter(
+                (element) => (element.type === 'food'),
+              )
+              .map((element) => (mapItensFood(element)))
+          }
+        </div>
+      ) : <h4>{ findNone }</h4>;
+    }
+    if (infoFiltro === 'drinks') {
+      return mockItem.length !== 0 ? (
+        <div>
+          {
+            mockItem
+              .filter(
+                (element) => (element.type === 'drinks'),
+              )
+              .map((element) => mapItensDrinks(element))
+          }
+        </div>
+      ) : <h4>{ findNone }</h4>;
+    }
+  };
+
   return (
     <div>
       <Header title="Done Recipes" icons={ { profile: true, search: false } } />
-      <button type="button" data-testid="filter-by-all-btn">
+      {/* Filters */}
+      <button
+        type="button"
+        name="all"
+        data-testid="filter-by-all-btn"
+        onClick={ filterButtons }
+      >
         All
       </button>
-      <button type="button" data-testid="filter-by-food-btn">
+      <button
+        type="button"
+        name="food"
+        data-testid="filter-by-food-btn"
+        onClick={ filterButtons }
+      >
         Food
       </button>
-      <button type="button" data-testid="filter-by-drink-btn">
+      <button
+        type="button"
+        name="drinks"
+        data-testid="filter-by-drink-btn"
+        onClick={ filterButtons }
+      >
         Drinks
       </button>
 
-      <img src={ thumb } alt={ recipeName } data-testid={ `${index}-horizontal-image` } />
-      <h4 data-testid={ `${index}-horizontal-top-text` }>
-        Categoria:
-        {' '}
-        {category}
-      </h4>
-      <h4 data-testid={ `${index}-horizontal-name` }>
-        Nome Receita:
-        {' '}
-        {recipeName}
-      </h4>
-      <h4 data-testid={ `${index}-horizontal-done-date` }>
-        Data:
-        {' '}
-        {date}
-      </h4>
-      <button
-        type="button"
-        data-testid={ `${index}-horizontal-share-btn` }
-      >
-        Compartilhar
-      </button>
-      <h4 data-testid={ `${index}-${tagName}-horizontal-tag` }>
-        Tags:
-        {' '}
-        {tagName}
-      </h4>
+      {/* Map Itens */}
+      {showItens(filter)}
 
     </div>
   );
