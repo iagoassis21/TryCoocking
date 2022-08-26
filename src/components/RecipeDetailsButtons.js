@@ -3,21 +3,15 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
+import FavoriteButton from './FavoriteButton';
 
 function RecipeDetailsButtons({ buttonsInfo }) {
   const [copiedMessageTimer, setCopiedMessageTimer] = useState(0);
-  const [favoritedRecipe, setFavoritedRecipe] = useState(false);
 
   const {
     recipeId,
     detailsPageType,
-    recipeArea,
-    recipeCategory,
-    recipeAlcohol,
-    recipeTitle,
-    recipeImage,
+    currRecipe,
   } = buttonsInfo;
 
   const history = useHistory();
@@ -43,50 +37,6 @@ function RecipeDetailsButtons({ buttonsInfo }) {
     return (alreadyFinished);
   };
 
-  const deleteFavorite = () => {
-    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const newFavorites = JSON.stringify(favorites.filter((fav) => fav.id !== recipeId));
-    localStorage.setItem('favoriteRecipes', newFavorites);
-  };
-
-  const checkFavorited = () => {
-    const favoritedRecipes = localStorage.getItem('favoriteRecipes');
-    if (favoritedRecipes === null) return false;
-    const alreadyFavorited = JSON.parse(favoritedRecipes)
-      .find((recipe) => recipe.id === recipeId);
-    if (alreadyFavorited) {
-      setFavoritedRecipe(true);
-    } else {
-      setFavoritedRecipe(false);
-    }
-  };
-
-  const handleFavorite = (favorited) => {
-    if (favorited) {
-      deleteFavorite();
-    } else {
-      const removeLastLetter = -1;
-      const recipeToFavorite = {
-        id: recipeId,
-        type: detailsPageType.slice(0, removeLastLetter),
-        nationality: recipeArea || '',
-        category: recipeCategory || '',
-        alcoholicOrNot: recipeAlcohol || '',
-        name: recipeTitle,
-        image: recipeImage,
-      };
-      if (localStorage.getItem('favoriteRecipes') === null) {
-        localStorage.setItem('favoriteRecipes', JSON.stringify([recipeToFavorite]));
-      } else {
-        const oldData = localStorage.getItem('favoriteRecipes');
-        const recuperedData = JSON.parse(oldData);
-        const newArray = [...recuperedData, recipeToFavorite];
-        localStorage.setItem('favoriteRecipes', JSON.stringify(newArray));
-      }
-    }
-    checkFavorited();
-  };
-
   const handleCopy = () => {
     const fiveSeconds = 5;
     setCopiedMessageTimer(fiveSeconds);
@@ -101,10 +51,6 @@ function RecipeDetailsButtons({ buttonsInfo }) {
     return () => clearInterval(cooldown);
   }, [copiedMessageTimer]);
 
-  useEffect(() => {
-    checkFavorited();
-  }, []);
-
   return (
     <div>
       <button
@@ -115,16 +61,11 @@ function RecipeDetailsButtons({ buttonsInfo }) {
         <img src={ shareIcon } alt="Share icon." />
       </button>
 
-      <button
-        type="button"
-        onClick={ () => handleFavorite(favoritedRecipe) }
-      >
-        <img
-          data-testid="favorite-btn"
-          src={ favoritedRecipe ? blackHeartIcon : whiteHeartIcon }
-          alt="Favorited icon."
-        />
-      </button>
+      <FavoriteButton
+        recipeObj={ currRecipe }
+        isDrink={ detailsPageType === 'drinks' }
+      />
+
       { !checkFinished() && (
         <div className="start-recipe-btn-container">
           <button
@@ -149,11 +90,7 @@ RecipeDetailsButtons.propTypes = {
   buttonsInfo: PropTypes.shape({
     recipeId: PropTypes.string.isRequired,
     detailsPageType: PropTypes.string.isRequired,
-    recipeCategory: PropTypes.string.isRequired,
-    recipeTitle: PropTypes.string.isRequired,
-    recipeImage: PropTypes.string.isRequired,
-    recipeArea: PropTypes.string,
-    recipeAlcohol: PropTypes.string,
+    currRecipe: PropTypes.objectOf(PropTypes.string),
   }).isRequired,
 };
 

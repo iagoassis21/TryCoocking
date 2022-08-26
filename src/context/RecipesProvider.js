@@ -14,6 +14,7 @@ function RecipesProvider({ children }) {
   const [currFilter, setCurrFilter] = useState('');
   const [displayRecipes, setDisplayRecipes] = useState([]);
   const [searchValue, setSearchValue] = useState('');
+
   useEffect(() => {
     const getRecipes = async () => {
       if (pageType === 'foods' || pageType === 'drinks') {
