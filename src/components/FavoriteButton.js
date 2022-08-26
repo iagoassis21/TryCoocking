@@ -39,7 +39,7 @@ function FavoriteButton({ recipeObj, isDrink }) {
     const favoritedRecipes = localStorage.getItem('favoriteRecipes');
     if (favoritedRecipes !== null) {
       const alreadyFavorited = JSON.parse(favoritedRecipes)
-        .find((recipe) => recipe.id === idDrink || idMeal);
+        .find((recipe) => recipe.id === idDrink || recipe.id === idMeal);
       if (alreadyFavorited) {
         setFavoritedRecipe(true);
       } else {

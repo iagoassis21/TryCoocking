@@ -9,6 +9,7 @@ describe('Tests of RecipesDetails component.', () => {
   global.window = Object.create(window);
   global.window.location = {
     reload: jest.fn(),
+    pathname: '/foods',
   };
 
   it('Should display an load when the component is open.', () => {
