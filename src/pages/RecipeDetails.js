@@ -75,7 +75,6 @@ function RecipeDetails() {
 
   useEffect(() => {
     const loadPageType = () => {
-      console.log(location.pathname);
       if (location.pathname.includes('/foods')) {
         setDetailsPageType('foods');
       } else {

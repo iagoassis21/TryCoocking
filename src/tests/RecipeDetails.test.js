@@ -8,7 +8,6 @@ describe('Tests of RecipesDetails component.', () => {
   delete global.window.location;
   global.window = Object.create(window);
   global.window.location = {
-    pathname: '/foods',
     reload: jest.fn(),
   };
 
@@ -91,36 +90,38 @@ describe('Tests of RecipesDetails component.', () => {
       userEvent.click(continueButton);
     });
   });
-
-  it('Should be possible to click the drink recommendation cards.', async () => {
+  
+  it('Should display the GG details page', async () => {
     const { history } = renderWithRouter(<App />);
-    history.push('/foods/52977');
+    history.push('/drinks/15997');
     await waitFor(() => {
-      const ggCard = screen.getByTestId('0-recomendation-card');
-      const a1Card = screen.getByTestId('1-recomendation-card');
-      userEvent.click(ggCard);
-      expect(window.location.reload).toHaveBeenCalled();
-      userEvent.click(a1Card);
-      expect(window.location.reload).toHaveBeenCalled();
+      screen.debug();
+      const foodTitle = screen.getByRole('heading', { level: 2 });
+      expect(foodTitle).toHaveTextContent('GG');
     });
   });
-
-  // it('Should display the GG details page', async () => {
-  //   delete global.window.location;
-  //   global.window = Object.create(window);
-  //   global.window.location = {
-  //     pathname: '/drinks/15997',
-  //     reload: jest.fn(),
-  //   };
-  //   const { history } = renderWithRouter(<RecipeDetails />);
-  //   history.push('/drinks/15997');
-  //   await waitFor(() => {
-  //     const foodTitle = screen.getByRole('heading', { level: 2 });
-  //     expect(foodTitle).toHaveTextContent('GG');
-  //   });
-  // });
+  
+    it('Should be possible to click the drink recommendation cards.', async () => {
+      delete global.window.location;
+      global.window = Object.create(window);
+      global.window.location = {
+        pathname: '/drinks/15997',
+        reload: jest.fn(),
+      };
+      const { history } = renderWithRouter(<App />);
+      history.push('/foods/52977');
+      await waitFor(() => {
+        const ggCard = screen.getByTestId('0-recomendation-card');
+        const a1Card = screen.getByTestId('1-recomendation-card');
+        userEvent.click(ggCard);
+        expect(window.location.reload).toHaveBeenCalled();
+        userEvent.click(a1Card);
+        expect(window.location.reload).toHaveBeenCalled();
+      });
+    });
   
   // it('Should be possible to click the food recommendation cards.', async () => {
+  //   console.log(window.location.pathname);
   //   const { history } = renderWithRouter(<App />);
   //   history.push('/drinks/15997');
   //   await waitFor(() => {
