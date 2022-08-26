@@ -15,7 +15,16 @@ function App() {
     <div>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route exact path="/foods" component={ Recipes } />
+        <Route
+          exact
+          path="/foods"
+          component={ () => <Recipes pagePath="foods" /> }
+        />
+        <Route
+          exact
+          path="/drinks"
+          component={ () => <Recipes pagePath="drinks" /> }
+        />
         <Route exact path="/drinks" component={ Recipes } />
         <Route exact path="/foods/:recipeId" component={ RecipeDetails } />
         <Route exact path="/drinks/:recipeId" component={ RecipeDetails } />

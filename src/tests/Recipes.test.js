@@ -2,35 +2,38 @@ import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from '../helpers/renderWithRouter';
+import Recipes from '../pages/Recipes';
 import App from '../App';
 
 describe('Tests of Recipes component.', () => {
-  delete global.window.location;
-  global.window = Object.create(window);
+  // delete global.window.location;
+  // global.window = Object.create(window);
 
-  global.window.location = {
-    pathname: '/foods',
-  };
+  // global.window.location = {
+  //   pathname: '/foods',
+  // };
 
   // Testes seguintes usam o pathname "/foods" 
   it('Should display five different food buttons filters.', async () => {
     const { history } = renderWithRouter(<App />);
     history.push('/foods');
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Beef' })).toBeDefined();
-      expect(screen.getByRole('button', { name: 'Breakfast' })).toBeDefined();
-      expect(screen.getByRole('button', { name: 'Chicken' })).toBeDefined();
-      expect(screen.getByRole('button', { name: 'Dessert' })).toBeDefined();
-      expect(screen.getByRole('button', { name: 'Goat' })).toBeDefined();
+      expect(screen.findByRole('button', { name: 'Beef' })).toBeDefined();
+      expect(screen.findByRole('button', { name: 'Breakfast' })).toBeDefined();
+      expect(screen.findByRole('button', { name: 'Chicken' })).toBeDefined();
+      expect(screen.findByRole('button', { name: 'Dessert' })).toBeDefined();
+      expect(screen.findByRole('button', { name: 'Goat' })).toBeDefined();
     });
   })
   
-  it('Should display 12 different food recipes.', async () => {
-    const { history } = renderWithRouter(<App />);
-    history.push('/foods');
+  it.only('Should display 12 different food recipes.', async () => {
+    const { history } = renderWithRouter(<Recipes pagePath="drinks" />);
+    history.push('/drinks');
     await waitFor(() => {
-      const allFoodRecipes = screen.getAllByAltText('Recipe.');
-      expect(allFoodRecipes).toHaveLength(12);
+      // const allFoodRecipes = screen.getByTestId('11-card-img');
+      // expect(allFoodRecipes).toBeDefined();
+      expect(screen.findByText('Corba')).toBeDefined();
+      screen.debug()
     });
   })
 
