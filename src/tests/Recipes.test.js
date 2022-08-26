@@ -26,14 +26,12 @@ describe('Tests of Recipes component.', () => {
     });
   })
   
-  it.only('Should display 12 different food recipes.', async () => {
+  it('Should display 12 different food recipes.', async () => {
     const { history } = renderWithRouter(<Recipes pagePath="drinks" />);
     history.push('/drinks');
     await waitFor(() => {
-      // const allFoodRecipes = screen.getByTestId('11-card-img');
-      // expect(allFoodRecipes).toBeDefined();
-      expect(screen.findByText('Corba')).toBeDefined();
-      screen.debug()
+      const allFoodRecipes = screen.getByTestId('11-card-img');
+      expect(allFoodRecipes).toBeDefined();
     });
   })
 

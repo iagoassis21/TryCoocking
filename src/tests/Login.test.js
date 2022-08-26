@@ -2,15 +2,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from '../App';
 import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
+import renderWithRouter from '../helpers/renderWithRouter';
 import userEvent from '@testing-library/user-event'
-
-const renderWithRouter = (component) => {
-  const history = createMemoryHistory();
-  return ({
-    ...render(<Router history={ history }>{component}</Router>), history,
-  });
-};
 
 describe('Test Page - Login', () => {
   test('Inputs and Button', () => {
@@ -24,7 +17,7 @@ describe('Test Page - Login', () => {
     expect(btnEnter).toBeDefined();
     expect(btnEnter).toBeDisabled();
   });
-  test.only('Type in Inputs', () => {
+  test('Type in Inputs', () => {
     renderWithRouter(<App />)
     const emailInput = screen.getByPlaceholderText(/email/i);
     const passInput = screen.getByPlaceholderText(/senha/i);
@@ -35,6 +28,7 @@ describe('Test Page - Login', () => {
 
     expect(btnEnter).toBeEnabled();
   });
+
     test('Enter in App', () => {
     renderWithRouter(<App />)
     const emailInput = screen.getByPlaceholderText(/email/i);
@@ -43,7 +37,6 @@ describe('Test Page - Login', () => {
 
     userEvent.type(emailInput, 'kauan.s.leite@gmail.com')
     userEvent.type(passInput, '1234567')
-    console.log(btnEnter);
     userEvent.click(btnEnter);
 
     const userStorage = localStorage.getItem('user');
