@@ -22,5 +22,4 @@ function Footer() {
     </nav>
   );
 }
-
 export default Footer;

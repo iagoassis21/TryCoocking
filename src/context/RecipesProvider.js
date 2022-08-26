@@ -14,7 +14,6 @@ function RecipesProvider({ children }) {
   const [currFilter, setCurrFilter] = useState('');
   const [displayRecipes, setDisplayRecipes] = useState([]);
   const [searchValue, setSearchValue] = useState('');
-
   useEffect(() => {
     const getRecipes = async () => {
       if (pageType === 'foods' || pageType === 'drinks') {
@@ -27,7 +26,6 @@ function RecipesProvider({ children }) {
     };
     getRecipes();
   }, [pageType]);
-
   useEffect(() => {
     const getFilters = async () => {
       if (pageType === 'foods' || pageType === 'drinks') {
@@ -70,12 +68,12 @@ function RecipesProvider({ children }) {
     recipeloading,
     allRecipes,
     searchValue,
+    setPageType,
     setAllRecipes,
     setAllFilters,
     filterRecipes,
     setDisplayRecipes,
     setSearchValue,
-    setPageType,
   };
 
   return (

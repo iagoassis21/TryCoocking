@@ -40,7 +40,6 @@ function Login(props) {
     setPageType('foods');
 
     const { history } = props;
-
     history.push('/foods');
   };
 
