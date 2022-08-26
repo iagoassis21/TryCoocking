@@ -2,19 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function RecipeCard({ cardInfo }) {
-  const { index, recipe, pageType } = cardInfo;
+function RecipeCard({ index, recipe, type }) {
   const imgSrc = () => {
-    if (pageType === 'foods') return recipe.strMealThumb;
+    if (type === 'foods') return recipe.strMealThumb;
     return recipe.strDrinkThumb;
   };
   const recipeName = () => {
-    if (pageType === 'foods') return recipe.strMeal;
+    if (type === 'foods') return recipe.strMeal;
     return recipe.strDrink;
   };
   const recipeUlr = () => {
-    if (pageType === 'foods') return `${pageType}/${recipe.idMeal}`;
-    return `${pageType}/${recipe.idDrink}`;
+    if (type === 'foods') return `/${type}/${recipe.idMeal}`;
+    return `/${type}/${recipe.idDrink}`;
   };
 
   return (
@@ -27,18 +26,16 @@ function RecipeCard({ cardInfo }) {
         src={ imgSrc() }
         data-testid={ `${index}-card-img` }
         alt="Recipe."
-        className="main-page-recipe-img"
+        className="small-img"
       />
     </Link>
   );
 }
 
 RecipeCard.propTypes = {
-  cardInfo: PropTypes.shape({
-    index: PropTypes.number.isRequired,
-    pageType: PropTypes.string.isRequired,
-    recipe: PropTypes.objectOf(PropTypes.string).isRequired,
-  }).isRequired,
+  index: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
+  recipe: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default RecipeCard;

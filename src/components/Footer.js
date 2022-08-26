@@ -10,6 +10,7 @@ function Footer() {
     history.push(newPathname);
     window.location.reload();
   };
+
   return (
     <nav data-testid="footer" className="footer">
       <button type="button" onClick={ () => changePage('foods') }>

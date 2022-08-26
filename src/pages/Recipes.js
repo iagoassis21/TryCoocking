@@ -13,9 +13,7 @@ function Recipes() {
     displayRecipes,
   } = useContext(Context);
 
-  const pageTitle = () => (pageType
-    ? pageType[0].toUpperCase() + pageType.substring(1)
-    : 'Foods');
+  const pageTitle = () => pageType[0].toUpperCase() + pageType.substring(1);
 
   return (
     <div className="screen-size">
@@ -29,7 +27,9 @@ function Recipes() {
           displayRecipes.map((recipe, index) => (
             <RecipeCard
               key={ `recipe${index}` }
-              cardInfo={ { recipe, index, pageType } }
+              recipe={ recipe }
+              type={ pageType }
+              index={ index }
             />
           )))}
       <Footer />
