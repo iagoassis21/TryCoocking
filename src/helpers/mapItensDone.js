@@ -18,6 +18,7 @@ export const mapItensFood = (element) => (
         src={ element.image }
         alt=""
         data-testid={ `${element.id}-horizontal-image` }
+        className="main-page-recipe-img"
       />
     </Link>
 
@@ -66,6 +67,7 @@ export const mapItensDrinks = (element) => (
         src={ element.image }
         alt=""
         data-testid={ `${element.id}-horizontal-image` }
+        className="main-page-recipe-img"
       />
       <h2
         data-testid={ `data-testid="${element.id}-horizontal-name"` }
