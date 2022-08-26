@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import RecipeDetailsCard from '../components/RecipeDetailsCard';
 import RecipesCarousel from '../components/RecipesCarousel';
 import RecipeDetailsButtons from '../components/RecipeDetailsButtons';
 import fetchRecipesApi, { fetchRecipesById } from '../helpers/fetchRecipesApi';
 
 function RecipeDetails() {
+  const location = useLocation();
   const [detailsPageType, setDetailsPageType] = useState(undefined);
   const [recipeTitle, setRecipeTitle] = useState(undefined);
   const [recipeImage, setRecipeImage] = useState(undefined);
@@ -73,8 +75,8 @@ function RecipeDetails() {
 
   useEffect(() => {
     const loadPageType = () => {
-      const isPageTypeFood = window.location.pathname.includes('food');
-      if (isPageTypeFood) {
+      console.log(location.pathname);
+      if (location.pathname.includes('/foods')) {
         setDetailsPageType('foods');
       } else {
         setDetailsPageType('drinks');
