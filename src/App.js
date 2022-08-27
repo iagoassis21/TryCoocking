@@ -28,7 +28,11 @@ function App() {
         <Route exact path="/drinks" component={ Recipes } />
         <Route exact path="/foods/:recipeId" component={ RecipeDetails } />
         <Route exact path="/drinks/:recipeId" component={ RecipeDetails } />
-        <Route exact path="/foods/:id/in-progress" component={ RecipeInProgress } />
+        <Route
+          exact
+          path="/foods/:id/in-progress"
+          render={ () => <RecipeInProgress drink={ false } /> }
+        />
         <Route
           exact
           path="/drinks/:id/in-progress"

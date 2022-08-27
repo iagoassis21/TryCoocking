@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { drinkRecipeList, mealRecipeList } from '../helpers/fetchRecipeListApi';
 import '../App.css';
-import xincaraclabin from '../helpers/localStorageIngredients';
+import setIngredientLocalStorage from '../helpers/localStorageIngredients';
+import FavoriteButton from '../components/FavoriteButton';
+import FinishRecipeButton from '../components/FinishRecipeButton';
 
 const copy = require('clipboard-copy');
 
-function RecipeInProgress({ drink = false }) {
+function RecipeInProgress({ drink }) {
   const { id } = useParams();
   const [recipe, setRecipe] = useState([]);
   const [ingredient, setCheckedIngredient] = useState([]);
   const [shareRecipe, setShareRecipe] = useState('');
-  const history = useHistory();
 
   useEffect(() => {
     if (drink) {
       const getDrinkRecipeList = async () => {
         const results = await drinkRecipeList(id);
-        setRecipe(results.drinks[0]);
+        const getArrDrinks = results.drinks[0];
+        setRecipe(getArrDrinks);
       };
       getDrinkRecipeList();
       if (!JSON.parse(localStorage.getItem('inProgressRecipes'))) {
@@ -34,7 +36,8 @@ function RecipeInProgress({ drink = false }) {
 
     const getMealRecipeList = async () => {
       const results = await mealRecipeList(id);
-      setRecipe(results.meals[0]);
+      const getArrMeals = results.meals[0];
+      setRecipe(getArrMeals);
     };
     getMealRecipeList();
     if (!JSON.parse(localStorage.getItem('inProgressRecipes'))) {
@@ -49,15 +52,16 @@ function RecipeInProgress({ drink = false }) {
 
   const handleCheckIngredient = (e) => {
     if (ingredient.includes(e.target.id)) {
-      const dullen = ingredient
+      const filterCheckedIngredient = ingredient
         .filter((markedIngredient) => markedIngredient !== e.target.id);
-      xincaraclabin(drink, { [id]: dullen });
-      return setCheckedIngredient(dullen);
+      setIngredientLocalStorage(drink, { [id]: filterCheckedIngredient });
+      return setCheckedIngredient(filterCheckedIngredient);
     }
     setCheckedIngredient([...ingredient, e.target.id]);
-    const beckenjhonsons = { [id]: [...ingredient, e.target.id] };
-    xincaraclabin(drink, beckenjhonsons);
+    const objIngredientLocalStorage = { [id]: [...ingredient, e.target.id] };
+    setIngredientLocalStorage(drink, objIngredientLocalStorage);
   };
+
   const recipeIngredients = Object.keys(recipe || {})
     .filter((key) => key.includes('strIngredient') && (recipe[key]))
     .map((item) => recipe[item]).map((validIngredient) => (
@@ -75,11 +79,14 @@ function RecipeInProgress({ drink = false }) {
         {validIngredient}
       </label>
     ));
-
+  const handleDisableBtn = () => {
+    const checkFinishedIngredients = ingredient.length !== recipeIngredients.length;
+    return checkFinishedIngredients;
+  };
   const clipBoardCopy = (
     <span>Link copied!</span>
   );
-
+  if (recipe.length === 0) return <p>Loading...</p>;
   const drinkRecipe = (
     <div>
       <img
@@ -102,22 +109,17 @@ function RecipeInProgress({ drink = false }) {
       {
         shareRecipe ? clipBoardCopy : ''
       }
-      <button
-        type="button"
-        data-testid="favorite-btn"
-      >
-        Favorite Recipe
-      </button>
+      <FavoriteButton
+        recipeObj={ recipe }
+        isDrink
+      />
       <p data-testid="recipe-category">{recipe.strCategory}</p>
       <p data-testid="instructions">{recipe.strInstructions}</p>
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-        disabled={ ingredient.length !== recipeIngredients.length }
-        onClick={ () => { history.push('/done-recipes'); } }
-      >
-        Finish Recipe
-      </button>
+      <FinishRecipeButton
+        recipeObj={ recipe }
+        isDrink
+        doneIngredients={ handleDisableBtn() }
+      />
     </div>
   );
   const mealRecipe = (
@@ -142,27 +144,21 @@ function RecipeInProgress({ drink = false }) {
       {
         shareRecipe ? clipBoardCopy : ''
       }
-      <button
-        type="button"
-        data-testid="favorite-btn"
-      >
-        Favorite Recipe
-      </button>
+      <FavoriteButton
+        recipeObj={ recipe }
+        isDrink={ false }
+      />
       <p data-testid="recipe-category">{recipe.strCategory}</p>
       <p data-testid="instructions">{recipe.strInstructions}</p>
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-        disabled={ ingredient.length !== recipeIngredients.length }
-        onClick={ () => { history.push('/done-recipes'); } }
-      >
-        Finish Recipe
-      </button>
+      <FinishRecipeButton
+        recipeObj={ recipe }
+        isDrink={ false }
+        doneIngredients={ handleDisableBtn() }
+      />
     </div>
   );
   return (
     <div>
-
       {
         drink ? drinkRecipe : mealRecipe
       }

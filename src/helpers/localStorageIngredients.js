@@ -1,4 +1,4 @@
-const xincaraclabin = (drink, object) => {
+const setIngredientLocalStorage = (drink, object) => {
   if (!JSON.parse(localStorage.getItem('inProgressRecipes'))) {
     return localStorage.setItem('inProgressRecipes',
       JSON.stringify({ cocktails: {}, meals: {} }));
@@ -14,4 +14,4 @@ const xincaraclabin = (drink, object) => {
     JSON.stringify(setNewMealsIngredients));
 };
 
-export default xincaraclabin;
+export default setIngredientLocalStorage;
