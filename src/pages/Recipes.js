@@ -6,7 +6,7 @@ import Context from '../context/Context';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-function Recipes({ pagePath = '/foods' }) {
+function Recipes({ pagePath }) {
   const {
     pageType,
     mainLoading,
@@ -26,10 +26,9 @@ function Recipes({ pagePath = '/foods' }) {
   return (
     <div className="screen-size">
       <Header title={ pageTitle() } />
-      <p>{pageType}</p>
       {mainLoading
         ? <h1>Loading...</h1>
-        : <RecipesFilterButtons pageType={ pageType } />}
+        : <RecipesFilterButtons />}
       {recipeloading
         ? <h2>Loading...</h2>
         : (
