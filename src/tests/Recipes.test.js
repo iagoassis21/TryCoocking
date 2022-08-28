@@ -3,12 +3,10 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from '../helpers/renderWithRouter';
 import Recipes from '../pages/Recipes';
-import App from '../App';
 import RecipesProvider from '../context/RecipesProvider';
 
 describe('Tests of Recipes component.', () => {
   it('Should display five different food buttons filters.', async () => {
-    // renderWithRouter(<RecipesProvider><Recipes pagePath="foods" /></RecipesProvider>);
     renderWithRouter(<Recipes pagePath="foods" />);
     await waitFor(() => {
       expect(screen.getByRole('button', { name: /beef/i })).toBeDefined();
@@ -95,7 +93,6 @@ describe('Tests of Recipes component.', () => {
       const firstFilterButton = screen.getByRole('button', { name: /ordinary drink/i });
       expect(screen.getByRole('heading', { name: /gg/i }));
       userEvent.click(firstFilterButton);
-      screen.debug()
     });
     await waitFor(() => {
       const allFilterButton = screen.getByRole('button', { name: /all/i });
