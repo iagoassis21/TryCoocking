@@ -52,19 +52,21 @@ function RecipeDetailsButtons({ buttonsInfo }) {
   }, [copiedMessageTimer]);
 
   return (
-    <div>
-      <button
-        type="button"
-        data-testid="share-btn"
-        onClick={ () => handleCopy() }
-      >
-        <img src={ shareIcon } alt="Share icon." />
-      </button>
+    <>
+      <div className="recipe-details-utils">
+        <button
+          type="button"
+          data-testid="share-btn"
+          onClick={ () => handleCopy() }
+        >
+          <img src={ shareIcon } alt="Share icon." />
+        </button>
 
-      <FavoriteButton
-        recipeObj={ currRecipe }
-        isDrink={ detailsPageType === 'drinks' }
-      />
+        <FavoriteButton
+          recipeObj={ currRecipe }
+          isDrink={ detailsPageType === 'drinks' }
+        />
+      </div>
 
       { !checkFinished() && (
         <div className="start-recipe-btn-container">
@@ -82,7 +84,7 @@ function RecipeDetailsButtons({ buttonsInfo }) {
       { copiedMessageTimer > 0 && (
         <p className="copied-message">Link copied!</p>
       )}
-    </div>
+    </>
   );
 }
 

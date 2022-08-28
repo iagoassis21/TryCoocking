@@ -12,11 +12,19 @@ function Footer() {
   };
 
   return (
-    <nav data-testid="footer" className="footer">
-      <button type="button" onClick={ () => changePage('foods') }>
+    <nav data-testid="footer" className="main-footer">
+      <button
+        type="button"
+        onClick={ () => changePage('foods') }
+        className="footer-button"
+      >
         <img src={ mealIcon } alt={ mealIcon } data-testid="food-bottom-btn" />
       </button>
-      <button type="button" onClick={ () => changePage('drinks') }>
+      <button
+        type="button"
+        onClick={ () => changePage('drinks') }
+        className="footer-button"
+      >
         <img src={ drinkIcon } alt={ drinkIcon } data-testid="drinks-bottom-btn" />
       </button>
     </nav>

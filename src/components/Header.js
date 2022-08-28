@@ -26,7 +26,7 @@ export default function Header({ title, icons }) {
     </button>);
 
   return (
-    <header>
+    <header className="main-header">
       <h1 data-testid="page-title">{ title }</h1>
       {
         icons.profile && createProfileIcon()

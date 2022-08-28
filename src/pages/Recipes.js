@@ -24,24 +24,28 @@ function Recipes({ pagePath }) {
   );
 
   return (
-    <div className="screen-size">
+    <>
       <Header title={ pageTitle() } />
-      {mainLoading
-        ? <h1>Loading...</h1>
-        : <RecipesFilterButtons />}
-      {recipeloading
-        ? <h2>Loading...</h2>
-        : (
-          displayRecipes.map((recipe, index) => (
-            <RecipeCard
-              key={ `recipe${index}` }
-              recipe={ recipe }
-              type={ pageType }
-              index={ index }
-            />
-          )))}
-      <Footer />
-    </div>
+      <div className="recipes-container">
+        {mainLoading
+          ? <h1>Loading...</h1>
+          : <RecipesFilterButtons />}
+        <div className="recipe-cards-container">
+          {recipeloading
+            ? <h2>Loading...</h2>
+            : (
+              displayRecipes.map((recipe, index) => (
+                <RecipeCard
+                  key={ `recipe${index}` }
+                  recipe={ recipe }
+                  type={ pageType }
+                  index={ index }
+                />
+              )))}
+        </div>
+        <Footer />
+      </div>
+    </>
   );
 }
 

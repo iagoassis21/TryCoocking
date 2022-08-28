@@ -1,0 +1,27 @@
+.profile-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  /* Padding bottom igual a altura do footer para evitar esconder conteúdo */
+  padding-bottom: 46px;
+  padding-top: 30px;
+  text-align: center;
+}
+
+.profile-buttons-container {
+  background-color: red;
+  display: flex;
+  flex-wrap: wrap;
+  width: 360px;
+}
+
+.recipes-buttons button {
+  padding: 15px;
+  width: 180px;
+}
+
+.logout-button {
+  padding: 5px;
+  width: 360px;
+}

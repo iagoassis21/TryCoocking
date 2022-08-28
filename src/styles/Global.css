@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.screen-size {
+  min-height: 640px;
+  width: 360px;
+}
+
+.main-header {
+  background-color: white;
+  border-bottom: 1px solid black;
+}
+
+.main-footer {
+  background-color: white;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  width: 360px;
+}
+
+.footer-button {
+  background-color: transparent;
+  border: none;
+  border-top: 1px solid black;
+  padding: 5px 0;
+  width: 50%;
+}
