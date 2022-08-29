@@ -40,19 +40,6 @@
   z-index: 1;
 }
 
-.copied-message {
-  background-color: black;
-  color: white;
-  left: 50%;
-  padding: 10px;
-  position: fixed;
-  text-align: center;
-  top: 25px;
-  transform: translateX(-50%);
-  width: 200px;
-  z-index: 2;
-}
-
 /* Carousel */
 .Carousel {
   padding-bottom: 80px;

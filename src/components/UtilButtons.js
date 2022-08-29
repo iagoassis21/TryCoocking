@@ -99,9 +99,14 @@ function UtilButtons({ recipeObj, isDrink, copyText }) {
         />
       </button>
 
-      { copiedMessageTimer > 0 && (
-        <p className="copied-message">Link copied!</p>
-      )}
+      <p
+        className={ `copied-message ${copiedMessageTimer > 0
+          ? ''
+          : 'hidden'
+        }` }
+      >
+        Link copied!
+      </p>
     </div>
   );
 }
