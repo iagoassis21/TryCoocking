@@ -29,10 +29,6 @@
 }
 */
 
-.usedIngredient {
-  text-decoration: line-through;
-}
-
 .meals > .logo {
   animation: shake 1.5s infinite ease;
   color: aliceblue;

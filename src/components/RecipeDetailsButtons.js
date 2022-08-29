@@ -61,13 +61,11 @@ function RecipeDetailsButtons({ buttonsInfo }) {
         >
           <img src={ shareIcon } alt="Share icon." />
         </button>
-
         <FavoriteButton
           recipeObj={ currRecipe }
           isDrink={ detailsPageType === 'drinks' }
         />
       </div>
-
       { !checkFinished() && (
         <div className="start-recipe-btn-container">
           <button

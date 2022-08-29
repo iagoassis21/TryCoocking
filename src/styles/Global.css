@@ -23,6 +23,8 @@
 }
 
 .header-buttons-container {
+  display: flex;
+  flex-direction: row-reverse;
   width: 50%;
 }
 

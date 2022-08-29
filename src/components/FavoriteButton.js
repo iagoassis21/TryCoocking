@@ -4,8 +4,6 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function FavoriteButton({ recipeObj, isDrink }) {
-  const [favoritedRecipe, setFavoritedRecipe] = useState(false);
-
   const {
     strArea,
     idDrink,
@@ -17,6 +15,17 @@ function FavoriteButton({ recipeObj, isDrink }) {
     idMeal,
     strMealThumb,
   } = recipeObj;
+
+  const checkFavorited = () => {
+    const favoritedRecipes = localStorage.getItem('favoriteRecipes');
+    if (favoritedRecipes !== null) {
+      const alreadyFavorited = JSON.parse(favoritedRecipes)
+        .find((recipe) => recipe.id === idDrink || recipe.id === idMeal);
+      return alreadyFavorited;
+    }
+    return false;
+  };
+  const [favoritedRecipe, setFavoritedRecipe] = useState(checkFavorited());
 
   const favoriteShape = {
     id: isDrink ? idDrink : idMeal,
@@ -35,19 +44,6 @@ function FavoriteButton({ recipeObj, isDrink }) {
     localStorage.setItem('favoriteRecipes', newFavorites);
   };
 
-  const checkFavorited = () => {
-    const favoritedRecipes = localStorage.getItem('favoriteRecipes');
-    if (favoritedRecipes !== null) {
-      const alreadyFavorited = JSON.parse(favoritedRecipes)
-        .find((recipe) => recipe.id === idDrink || recipe.id === idMeal);
-      if (alreadyFavorited) {
-        setFavoritedRecipe(true);
-      } else {
-        setFavoritedRecipe(false);
-      }
-    }
-  };
-
   const handleFavorite = (favorited) => {
     if (favorited) {
       deleteFavorite();
@@ -59,7 +55,7 @@ function FavoriteButton({ recipeObj, isDrink }) {
       const newArray = [...recuperedData, favoriteShape];
       localStorage.setItem('favoriteRecipes', JSON.stringify(newArray));
     }
-    checkFavorited();
+    setFavoritedRecipe((prev) => !prev);
   };
 
   useEffect(() => {
@@ -67,18 +63,16 @@ function FavoriteButton({ recipeObj, isDrink }) {
   }, []);
 
   return (
-    <div>
-      <button
-        type="button"
-        onClick={ () => handleFavorite(favoritedRecipe) }
-      >
-        <img
-          data-testid="favorite-btn"
-          src={ favoritedRecipe ? blackHeartIcon : whiteHeartIcon }
-          alt="Favorited icon."
-        />
-      </button>
-    </div>
+    <button
+      type="button"
+      onClick={ () => handleFavorite(favoritedRecipe) }
+    >
+      <img
+        data-testid="favorite-btn"
+        src={ favoritedRecipe ? blackHeartIcon : whiteHeartIcon }
+        alt="Favorited icon."
+      />
+    </button>
   );
 }
 
