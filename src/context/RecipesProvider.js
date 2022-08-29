@@ -4,7 +4,7 @@ import Context from './Context';
 import fetchRecipesApi from '../helpers/fetchRecipesApi';
 
 function RecipesProvider({ children }) {
-  const [pageType, setPageType] = useState('foods');
+  const [pageType, setPageType] = useState('');
   const [recipeloading, setRecipeloading] = useState(false);
   const [mainLoading, setMainLoading] = useState(true);
   const [allRecipes, setAllRecipes] = useState([]);
@@ -25,6 +25,7 @@ function RecipesProvider({ children }) {
     };
     getRecipes();
   }, [pageType]);
+
   useEffect(() => {
     const getFilters = async () => {
       if (pageType === 'foods' || pageType === 'drinks') {
@@ -45,7 +46,6 @@ function RecipesProvider({ children }) {
   }, [allRecipes, allFilters]);
 
   const filterRecipes = async (foodFilter) => {
-    console.log('called');
     setRecipeloading(true);
     if (displayRecipes !== allRecipes && currFilter === foodFilter) {
       setDisplayRecipes(allRecipes);

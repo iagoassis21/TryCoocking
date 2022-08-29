@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import RecipeDetailsCard from '../components/RecipeDetailsCard';
 import RecipeDetailsButtons from '../components/RecipeDetailsButtons';
 import RecipesCarousel from '../components/RecipesCarousel';
 import fetchRecipesApi, { fetchRecipesById } from '../helpers/fetchRecipesApi';
 
-function RecipeDetails() {
-  const location = useLocation();
-  const [detailsPageType, setDetailsPageType] = useState(undefined);
+function RecipeDetails({ pagePath }) {
+  const [detailsPageType] = useState(pagePath);
   const [recipeTitle, setRecipeTitle] = useState(undefined);
   const [recipeImage, setRecipeImage] = useState(undefined);
   const [recipeCategory, setRecipeCategory] = useState(undefined);
@@ -77,11 +76,6 @@ function RecipeDetails() {
 
   useEffect(() => {
     const loadPageType = () => {
-      if (location.pathname.includes('/foods')) {
-        setDetailsPageType('foods');
-      } else {
-        setDetailsPageType('drinks');
-      }
       if (detailsPageType && recipeId) loadRecipeInfo();
       if (detailsPageType && !recommendations.length) getRecommendation();
     };
@@ -128,5 +122,9 @@ function RecipeDetails() {
     </div>
   );
 }
+
+RecipeDetails.propTypes = {
+  pagePath: PropTypes.string.isRequired,
+};
 
 export default RecipeDetails;
