@@ -8,7 +8,7 @@ import Header from '../components/Header';
 
 describe('testing the Header component', () => {
   it('should test if the pieces of header are in the document', () => {
-    renderWithRouter(<Header />);
+    renderWithRouter(<Header title='Foods'/>);
     const expectedTitle = screen.getByTestId('page-title');
     const profileBtn = screen.getByTestId('profile-top-btn');
     const searchBtn = screen.getByTestId('search-top-btn');
@@ -17,14 +17,14 @@ describe('testing the Header component', () => {
     expect(searchBtn).toBeInTheDocument();
   });
   it('should test the profile button', () => {
-    const { history } = renderWithRouter(<Header />);
+    const { history } = renderWithRouter(<Header title='Foods' />);
     const profileBtn = screen.getByTestId('profile-top-btn');
     userEvent.click(profileBtn);
     const { location: { pathname } } = history;
     expect(pathname).toBe('/profile');
   })
   it('should test the search button', () => {
-    renderWithRouter(<Header />);
+    renderWithRouter(<Header title='Foods' />);
     const searchBtn = screen.getByTestId('search-top-btn');
     expect(screen.queryByTestId('search-input')).toBeNull();
     userEvent.click(searchBtn);

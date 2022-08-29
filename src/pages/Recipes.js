@@ -5,6 +5,7 @@ import RecipeCard from '../components/RecipeCard';
 import Context from '../context/Context';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import SearchBar from '../components/SearchBar';
 
 function Recipes({ pagePath }) {
   const {
@@ -27,6 +28,7 @@ function Recipes({ pagePath }) {
     <>
       <Header title={ pageTitle() } />
       <div className="recipes-container">
+        <SearchBar />
         {mainLoading
           ? <h1>Loading...</h1>
           : <RecipesFilterButtons />}
