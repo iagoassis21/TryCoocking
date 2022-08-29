@@ -27,19 +27,6 @@
   padding: 15px;
 }
 
-.recipe-details-utils {
-  display: flex;
-  width: 360px;
-}
-
-.recipe-details-utils button {
-  background-color: transparent;
-  border: none;
-  height: 50px;
-  padding: 5px 0;
-  width: 180px;
-}
-
 .start-recipe-button {
   background-color: white;
   border: none;

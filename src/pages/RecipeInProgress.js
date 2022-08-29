@@ -4,19 +4,14 @@ import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { drinkRecipeList, mealRecipeList } from '../helpers/fetchRecipeListApi';
 import '../App.css';
 import setIngredientLocalStorage from '../helpers/localStorageIngredients';
-import FavoriteButton from '../components/FavoriteButton';
+import UtilButtons from '../components/UtilButtons';
 import FinishRecipeButton from '../components/FinishRecipeButton';
-import shareIcon from '../images/shareIcon.svg';
 import '../styles/RecipeInProgress.css';
-
-const copy = require('clipboard-copy');
 
 function RecipeInProgress({ drink }) {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
   const [ingredient, setCheckedIngredient] = useState([]);
-  const [shareRecipe, setShareRecipe] = useState('');
-
   const type = drink ? 'Drink' : 'Meal';
   const url = drink ? 'drinks' : 'foods';
 
@@ -93,9 +88,6 @@ function RecipeInProgress({ drink }) {
     const checkFinishedIngredients = ingredient.length !== recipeIngredients.length;
     return checkFinishedIngredients;
   };
-  const clipBoardCopy = (
-    <span>Link copied!</span>
-  );
   if (Object.keys(recipe).length === 0) return <p>Loading...</p>;
   return (
     <div>
@@ -111,25 +103,11 @@ function RecipeInProgress({ drink }) {
           <h2 data-testid="recipe-title">{recipe[`str${type}`]}</h2>
         </div>
       </header>
-      <div className="recipe-inprogress-utils">
-        <button
-          type="button"
-          data-testid="share-btn"
-          onClick={ () => {
-            setShareRecipe(true);
-            copy(`http://localhost:3000/${url}/${id}`);
-          } }
-        >
-          <img src={ shareIcon } alt="Share icon." />
-        </button>
-        {
-          shareRecipe ? clipBoardCopy : ''
-        }
-        <FavoriteButton
-          recipeObj={ recipe }
-          isDrink={ drink }
-        />
-      </div>
+      <UtilButtons
+        recipeObj={ recipe }
+        isDrink={ drink }
+        copyText={ `http://localhost:3000/${url}/${id}` }
+      />
       <p
         data-testid="instructions"
         className="recipe-inprogress-instructions"

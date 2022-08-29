@@ -18,18 +18,6 @@
   width: 360px;
 }
 
-.recipe-inprogress-utils {
-  display: flex;
-}
-
-.recipe-inprogress-utils button {
-  background-color: transparent;
-  border: none;
-  height: 40px;
-  padding: 5px;
-  width: 50%;
-}
-
 .recipe-inprogress-instructions {
   padding: 15px;
   padding-top: 30px;
