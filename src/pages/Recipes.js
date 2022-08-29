@@ -1,26 +1,36 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import RecipesFilterButtons from '../components/RecipesFilterButtons';
 import RecipeCard from '../components/RecipeCard';
 import Context from '../context/Context';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import SearchBar from '../components/SearchBar';
 
-function Recipes() {
+function Recipes({ pagePath }) {
   const {
     pageType,
     mainLoading,
     recipeloading,
     displayRecipes,
+    setPageType,
   } = useContext(Context);
 
-  const pageTitle = () => pageType[0].toUpperCase() + pageType.substring(1);
+  useEffect(() => {
+    setPageType(pagePath);
+  }, []);
+
+  const pageTitle = () => (
+    pageType[0] ? pageType[0].toUpperCase() + pageType.substring(1) : 'Foods'
+  );
 
   return (
     <div className="screen-size">
       <Header title={ pageTitle() } />
+      <SearchBar />
       {mainLoading
         ? <h1>Loading...</h1>
-        : <RecipesFilterButtons pageType={ pageType } />}
+        : <RecipesFilterButtons />}
       {recipeloading
         ? <h2>Loading...</h2>
         : (
@@ -36,5 +46,9 @@ function Recipes() {
     </div>
   );
 }
+
+Recipes.propTypes = {
+  pagePath: PropTypes.string.isRequired,
+};
 
 export default Recipes;

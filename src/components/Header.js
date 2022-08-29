@@ -3,7 +3,6 @@ import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import SearchBar from './SearchBar';
 import Context from '../context/Context';
 
 export default function Header({ title, icons }) {
@@ -43,7 +42,6 @@ export default function Header({ title, icons }) {
           value={ searchValue }
         />
       }
-      <SearchBar />
     </header>
   );
 }

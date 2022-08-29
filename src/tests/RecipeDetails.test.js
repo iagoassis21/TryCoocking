@@ -9,6 +9,7 @@ describe('Tests of RecipesDetails component.', () => {
   global.window = Object.create(window);
   global.window.location = {
     reload: jest.fn(),
+    pathname: '/foods',
   };
 
   it('Should display an load when the component is open.', () => {
@@ -95,7 +96,6 @@ describe('Tests of RecipesDetails component.', () => {
     const { history } = renderWithRouter(<App />);
     history.push('/drinks/15997');
     await waitFor(() => {
-      screen.debug();
       const foodTitle = screen.getByRole('heading', { level: 2 });
       expect(foodTitle).toHaveTextContent('GG');
     });
@@ -120,14 +120,16 @@ describe('Tests of RecipesDetails component.', () => {
       });
     });
   
-  // it('Should be possible to click the food recommendation cards.', async () => {
-  //   console.log(window.location.pathname);
-  //   const { history } = renderWithRouter(<App />);
-  //   history.push('/drinks/15997');
-  //   await waitFor(() => {
-  //     const corbaCard = screen.getByTestId('0-recomendation-card'); 
-  //     userEvent.click(corbaCard);
-  //     expect(window.location.reload).toHaveBeenCalled();
-  //   });
-  // });
+  it('Should be possible to click the food recommendation cards.', async () => {
+    const { history } = renderWithRouter(<App />);
+    history.push('/drinks/15997');
+    await waitFor(() => {
+      const corbaCard = screen.getByTestId('0-recomendation-card'); 
+      const burekCard = screen.getByTestId('1-recomendation-card'); 
+      userEvent.click(corbaCard);
+      expect(window.location.reload).toHaveBeenCalled();
+      userEvent.click(burekCard);
+      expect(window.location.reload).toHaveBeenCalled();
+    });
+  });
 });
