@@ -22,8 +22,7 @@ const fetchRecipesApi = async (pageType, fetchType, resultsAmount, specificFilte
   const fetchApi = await fetch(choosedEndPoint);
   const json = await fetchApi.json();
 
-  if (pageType === 'foods') return json.meals.slice(0, maxAmount);
-  return json.drinks.slice(0, maxAmount);
+  return json?.meals?.slice(0, maxAmount) || json?.drinks?.slice(0, maxAmount);
 };
 
 // pageType: "foods" ou "drinks", dependendo da URL

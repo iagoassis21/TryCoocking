@@ -35,7 +35,11 @@ function App() {
           path="/drinks/:recipeId"
           component={ () => <RecipeDetails pagePath="drinks" /> }
         />
-        <Route exact path="/foods/:id/in-progress" component={ RecipeInProgress } />
+        <Route
+          exact
+          path="/foods/:id/in-progress"
+          render={ () => <RecipeInProgress drink={ false } /> }
+        />
         <Route
           exact
           path="/drinks/:id/in-progress"

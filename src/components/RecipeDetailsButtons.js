@@ -60,7 +60,6 @@ function RecipeDetailsButtons({ buttonsInfo }) {
       >
         <img src={ shareIcon } alt="Share icon." />
       </button>
-
       <FavoriteButton
         recipeObj={ currRecipe }
         isDrink={ detailsPageType === 'drinks' }
