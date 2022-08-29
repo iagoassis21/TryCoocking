@@ -2,10 +2,12 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  gap: 30px;
+  height: 640px;
 
   /* Padding bottom igual a altura do footer para evitar esconder conteúdo */
   padding-bottom: 46px;
-  padding-top: 30px;
+  padding-top: 60px;
   text-align: center;
 }
 
@@ -16,12 +18,7 @@
   width: 360px;
 }
 
-.recipes-buttons button {
-  padding: 15px;
-  width: 180px;
-}
-
-.logout-button {
+.profile-container button {
   padding: 5px;
   width: 360px;
 }

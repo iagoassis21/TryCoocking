@@ -9,8 +9,54 @@
 }
 
 .main-header {
-  background-color: white;
   border-bottom: 1px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  min-height: 65px;
+}
+
+.main-header h1 {
+  padding-top: 5px;
+  text-align: center;
+  width: 50%;
+}
+
+.header-buttons-container {
+  width: 50%;
+}
+
+.header-buttons-container button {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  width: 50%;
+}
+
+.header-search-bar {
+  padding: 5px;
+  text-align: center;
+  width: 360px;
+}
+
+.header-raidos {
+  align-items: center;
+  background-color: white;
+  display: flex;
+  height: 40px;
+  justify-content: space-evenly;
+  width: 360px;
+}
+
+.header-raidos label {
+  display: flex;
+  gap: 5px;
+  margin: 0;
+}
+
+.header-search-button {
+  padding: 5px;
+  width: 360px;
 }
 
 .main-footer {

@@ -3,6 +3,10 @@
   width: 360px;
 }
 
+.recipe-details-header img {
+  width: 100%;
+}
+
 .recipe-details-header .recipe-title {
   background-image: linear-gradient(180deg, transparent 0%, white 100%);
   display: flex;

@@ -28,18 +28,16 @@ function Profile() {
       <Header title="Profile" icons={ { profile: true, search: false } } />
       <section className="profile-container">
         <p data-testid="profile-email">{emailLocal}</p>
-        <div className="recipes-buttons">
-          <Link to="/done-recipes">
-            <button type="button" data-testid="profile-done-btn">
-              Done Recipes
-            </button>
-          </Link>
-          <Link to="/favorite-recipes">
-            <button type="button" data-testid="profile-favorite-btn">
-              Favorite Recipes
-            </button>
-          </Link>
-        </div>
+        <Link to="/done-recipes">
+          <button type="button" data-testid="profile-done-btn">
+            Done Recipes
+          </button>
+        </Link>
+        <Link to="/favorite-recipes">
+          <button type="button" data-testid="profile-favorite-btn">
+            Favorite Recipes
+          </button>
+        </Link>
         <Link to="/">
           <button
             type="button"

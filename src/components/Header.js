@@ -27,12 +27,14 @@ export default function Header({ title, icons }) {
   return (
     <header className="main-header">
       <h1 data-testid="page-title">{ title }</h1>
-      {
-        icons.profile && createProfileIcon()
-      }
-      {
-        icons.search && createSearchIcon()
-      }
+      <div className="header-buttons-container">
+        {
+          icons.profile && createProfileIcon()
+        }
+        {
+          icons.search && createSearchIcon()
+        }
+      </div>
       {
         enableSearch
         && <input
@@ -40,6 +42,7 @@ export default function Header({ title, icons }) {
           type="text"
           onChange={ (e) => setSearchValue(e.target.value) }
           value={ searchValue }
+          className="header-search-bar"
         />
       }
     </header>
