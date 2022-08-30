@@ -1,81 +1,105 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
-import shareIcon from '../images/shareIcon.svg';
+import { mapItensFood, mapItensDrinks } from '../helpers/mapItensDone';
 import '../styles/DoneRecipes.css';
 
-export default function DoneRecipes() {
+function DoneRecipes() {
+  const [filter, setFilter] = useState();
+  const [showCopy, setShowCopy] = useState(false);
+  const findNone = 'Nenhuma Receita Concluida!';
+
+  const doneItensLocal = JSON.parse(localStorage.getItem('doneRecipes'));
+
+  const filterButtons = ({ target }) => {
+    const { name } = target;
+    if (name === 'all') setFilter();
+    if (name === 'food') setFilter('food');
+    if (name === 'drinks') setFilter('drinks');
+  };
+
+  const showItens = (infoFiltro) => {
+    if (infoFiltro === undefined) {
+      return doneItensLocal !== null ? (
+        <div>
+          {
+            doneItensLocal
+              .map((element, index) => (
+                element.type === 'food' ? (
+                  mapItensFood(element, index, setShowCopy)
+                ) : mapItensDrinks(element, index, setShowCopy)))
+          }
+        </div>
+      ) : <h4>{ findNone }</h4>;
+    }
+    if (infoFiltro === 'food') {
+      return doneItensLocal !== null ? (
+        <div>
+          {
+            doneItensLocal
+              .filter(
+                (element) => (element.type === 'food'),
+              )
+              .map((element, index) => (
+                mapItensFood(element, index, setShowCopy)
+              ))
+          }
+        </div>
+      ) : <h4>{ findNone }</h4>;
+    }
+    if (infoFiltro === 'drinks') {
+      return doneItensLocal !== null ? (
+        <div>
+          {
+            doneItensLocal
+              .filter(
+                (element) => (element.type === 'drink'),
+              )
+              .map((element, index) => (mapItensDrinks(element, index, setShowCopy)))
+          }
+        </div>
+      ) : <h4>{ findNone }</h4>;
+    }
+  };
+
   return (
     <div className="done-recipes-container">
       <Header title="Done Recipes" icons={ { profile: true, search: false } } />
-      {/* MOCK */}
+      {/* Filters */}
       <div className="done-recipes-buttons">
-        <button type="button">All</button>
-        <button type="button">Food</button>
-        <button type="button">Drinks</button>
+        <button
+          type="button"
+          name="all"
+          data-testid="filter-by-all-btn"
+          onClick={ filterButtons }
+        >
+          All
+        </button>
+        <button
+          type="button"
+          name="food"
+          data-testid="filter-by-food-btn"
+          onClick={ filterButtons }
+        >
+          Food
+        </button>
+        <button
+          type="button"
+          name="drinks"
+          data-testid="filter-by-drink-btn"
+          onClick={ filterButtons }
+        >
+          Drinks
+        </button>
       </div>
-      <div className="done-recipes-card">
-        <img
-          src="https://www.themealdb.com/images/media/meals/cuio7s1555492979.jpg"
-          alt="Mock"
-          className="recipe-image"
-        />
-        <div className="recipe-info">
-          <div className="recipe-info-header">
-            <p className="recipe-proprieties">Kenyan - BBQ,Meat</p>
-            <img src={ shareIcon } alt="Mock" />
-          </div>
-          <h2>Mbuzi Choma (Roasted Goat)</h2>
-          <p>Streetfood, Onthego</p>
-          <p>29/08/2022</p>
-        </div>
-      </div>
-      <div className="done-recipes-card">
-        <img
-          src="https://www.thecocktaildb.com/images/media/drink/apneom1504370294.jpg"
-          alt="Mock"
-          className="recipe-image"
-        />
-        <div className="recipe-info">
-          <div className="recipe-info-header">
-            <p className="recipe-proprieties">Alcoholic</p>
-            <img src={ shareIcon } alt="Mock" />
-          </div>
-          <h2>Kir</h2>
-          <p>31/08/2022</p>
-        </div>
-      </div>
-      <div className="done-recipes-card">
-        <img
-          src="https://www.themealdb.com/images/media/meals/cuio7s1555492979.jpg"
-          alt="Mock"
-          className="recipe-image"
-        />
-        <div className="recipe-info">
-          <div className="recipe-info-header">
-            <p className="recipe-proprieties">Kenyan - BBQ,Meat</p>
-            <img src={ shareIcon } alt="Mock" />
-          </div>
-          <h2>Mbuzi Choma (Roasted Goat)</h2>
-          <p>Streetfood, Onthego</p>
-          <p>30/08/2022</p>
-        </div>
-      </div>
-      <div className="done-recipes-card">
-        <img
-          src="https://www.thecocktaildb.com/images/media/drink/apneom1504370294.jpg"
-          alt="Mock"
-          className="recipe-image"
-        />
-        <div className="recipe-info">
-          <div className="recipe-info-header">
-            <p className="recipe-proprieties">Alcoholic</p>
-            <img src={ shareIcon } alt="Mock" />
-          </div>
-          <h2>Kir</h2>
-          <p>28/08/2022</p>
-        </div>
-      </div>
-      {/* END MOCK */}
+
+      {/* Map Itens */}
+      {showItens(filter)}
+
+      {
+        showCopy ? <h4>Link copied!</h4> : null
+      }
     </div>
   );
 }
+
+export default DoneRecipes;
