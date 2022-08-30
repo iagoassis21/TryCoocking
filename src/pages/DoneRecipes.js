@@ -1,65 +1,59 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
-import mockItem from './mockItensDone';
 import { mapItensFood, mapItensDrinks } from '../helpers/mapItensDone';
 
 function DoneRecipes() {
   const [filter, setFilter] = useState();
+  const [showCopy, setShowCopy] = useState(false);
   const findNone = 'Nenhuma Receita Concluida!';
+
+  const doneItensLocal = JSON.parse(localStorage.getItem('doneRecipes'));
 
   const filterButtons = ({ target }) => {
     const { name } = target;
-    switch (name) {
-    case 'all':
-      setFilter();
-      break;
-    case 'food':
-      setFilter('food');
-      break;
-    case 'drinks':
-      setFilter('drinks');
-      break;
-    default:
-      break;
-    }
+    if (name === 'all') setFilter();
+    if (name === 'food') setFilter('food');
+    if (name === 'drinks') setFilter('drinks');
   };
 
   const showItens = (infoFiltro) => {
     if (infoFiltro === undefined) {
-      return mockItem.length !== 0 ? (
+      return doneItensLocal !== null ? (
         <div>
           {
-            mockItem
-              .map((element) => (
+            doneItensLocal
+              .map((element, index) => (
                 element.type === 'food' ? (
-                  mapItensFood(element)
-                ) : mapItensDrinks(element)))
+                  mapItensFood(element, index, setShowCopy)
+                ) : mapItensDrinks(element, index, setShowCopy)))
           }
         </div>
       ) : <h4>{ findNone }</h4>;
     }
     if (infoFiltro === 'food') {
-      return mockItem.length !== 0 ? (
+      return doneItensLocal !== null ? (
         <div>
           {
-            mockItem
+            doneItensLocal
               .filter(
                 (element) => (element.type === 'food'),
               )
-              .map((element) => (mapItensFood(element)))
+              .map((element, index) => (
+                mapItensFood(element, index, setShowCopy)
+              ))
           }
         </div>
       ) : <h4>{ findNone }</h4>;
     }
     if (infoFiltro === 'drinks') {
-      return mockItem.length !== 0 ? (
+      return doneItensLocal !== null ? (
         <div>
           {
-            mockItem
+            doneItensLocal
               .filter(
-                (element) => (element.type === 'drinks'),
+                (element) => (element.type === 'drink'),
               )
-              .map((element) => mapItensDrinks(element))
+              .map((element, index) => (mapItensDrinks(element, index, setShowCopy)))
           }
         </div>
       ) : <h4>{ findNone }</h4>;
@@ -98,6 +92,9 @@ function DoneRecipes() {
       {/* Map Itens */}
       {showItens(filter)}
 
+      {
+        showCopy ? <h4>Link copied!</h4> : null
+      }
     </div>
   );
 }
