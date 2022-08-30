@@ -39,6 +39,7 @@ export default function SearchBar() {
     } else if (displayRecipes.length === 0 && !mainLoading) {
       createAlertNoRecipes();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayRecipes]);
 
   return (

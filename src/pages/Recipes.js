@@ -18,6 +18,7 @@ function Recipes({ pagePath }) {
 
   useEffect(() => {
     setPageType(pagePath);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const pageTitle = () => (
