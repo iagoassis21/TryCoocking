@@ -34,7 +34,7 @@ export default function SearchBar() {
   };
 
   useEffect(() => {
-    if (displayRecipes.length === 1) {
+    if (displayRecipes.length === 1 && (searchValue && type)) {
       redirectTo(pathname);
     } else if (displayRecipes.length === 0 && !mainLoading) {
       createAlertNoRecipes();

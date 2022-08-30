@@ -1,84 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import FavoriteCard from '../components/FavoriteCard';
 import Header from '../components/Header';
 import '../styles/FavoriteRecipes.css';
-import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 export default function FavoriteRecipes() {
+  const [favorites, setFavorites] = useState([]);
+  const [filter, setFilter] = useState('all');
+
+  const applyFilter = () => (filter === 'all'
+    ? favorites
+    : favorites.filter(({ type }) => type === filter));
+
+  useEffect(() => {
+    setFavorites(JSON.parse(localStorage.getItem('favoriteRecipes')));
+  }, []);
+
+  const filteredFavorites = applyFilter();
+
   return (
     <div className="favorite-recipes-container">
       <Header title="Favorite Recipes" icons={ { profile: true, search: false } } />
-      {/* MOCK */}
       <div className="favorite-recipes-buttons">
-        <button type="button">All</button>
-        <button type="button">Food</button>
-        <button type="button">Drinks</button>
+        <button
+          data-testid="filter-by-all-btn"
+          type="button"
+          onClick={ () => setFilter('all') }
+        >
+          All
+        </button>
+        <button
+          data-testid="filter-by-food-btn"
+          type="button"
+          onClick={ () => setFilter('food') }
+        >
+          Foods
+        </button>
+        <button
+          data-testid="filter-by-drink-btn"
+          type="button"
+          onClick={ () => setFilter('drink') }
+        >
+          Drinks
+        </button>
       </div>
 
-      <div className="favorite-recipes-card">
-        <img
-          src="https://www.themealdb.com/images/media/meals/cuio7s1555492979.jpg"
-          alt="Mock"
-          className="recipe-image"
-        />
-        <div className="recipe-info">
-          <p>Kenyan - BBQ,Meat</p>
-          <h2>Mbuzi Choma (Roasted Goat)</h2>
-          <div className="util-buttons">
-            <img src={ shareIcon } alt="Mock" />
-            <img src={ whiteHeartIcon } alt="Mock" />
-          </div>
-        </div>
-      </div>
-
-      <div className="favorite-recipes-card">
-        <img
-          src="https://www.thecocktaildb.com/images/media/drink/apneom1504370294.jpg"
-          alt="Mock"
-          className="recipe-image"
-        />
-        <div className="recipe-info">
-          <p>Alcoholic</p>
-          <h2>Kir</h2>
-          <div className="util-buttons">
-            <img src={ shareIcon } alt="Mock" />
-            <img src={ whiteHeartIcon } alt="Mock" />
-          </div>
-        </div>
-      </div>
-
-      <div className="favorite-recipes-card">
-        <img
-          src="https://www.themealdb.com/images/media/meals/cuio7s1555492979.jpg"
-          alt="Mock"
-          className="recipe-image"
-        />
-        <div className="recipe-info">
-          <p>Kenyan - BBQ,Meat</p>
-          <h2>Mbuzi Choma (Roasted Goat)</h2>
-          <div className="util-buttons">
-            <img src={ shareIcon } alt="Mock" />
-            <img src={ whiteHeartIcon } alt="Mock" />
-          </div>
-        </div>
-      </div>
-
-      <div className="favorite-recipes-card">
-        <img
-          src="https://www.thecocktaildb.com/images/media/drink/apneom1504370294.jpg"
-          alt="Mock"
-          className="recipe-image"
-        />
-        <div className="recipe-info">
-          <p>Alcoholic</p>
-          <h2>Kir</h2>
-          <div className="util-buttons">
-            <img src={ shareIcon } alt="Mock" />
-            <img src={ whiteHeartIcon } alt="Mock" />
-          </div>
-        </div>
-      </div>
-      {/* END MOCK */}
+      {
+        filteredFavorites && filteredFavorites.map((f, idx) => (<FavoriteCard
+          key={ f.name }
+          idx={ idx }
+          setFavorites={ setFavorites }
+          { ...f }
+        />))
+      }
     </div>
   );
 }

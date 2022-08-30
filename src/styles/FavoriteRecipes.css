@@ -39,10 +39,3 @@
 .favorite-recipes-card .util-buttons {
   width: 100%;
 }
-
-/* Necessário apenas para mock */
-.favorite-recipes-card .util-buttons img {
-  height: 40px;
-  padding: 5px;
-  width: 50%;
-}

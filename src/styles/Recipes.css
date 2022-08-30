@@ -2,9 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
-
-  /* Padding bottom igual a altura do footer para evitar esconder conteúdo */
-  padding-bottom: 46px;
+  padding-bottom: 76px;
 }
 
 .recipes-filter-buttons {

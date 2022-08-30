@@ -7,13 +7,6 @@ import oneMeal from '../../cypress/mocks/oneMeal';
 import oneDrink from '../../cypress/mocks/oneDrink';
 
 describe.only('Tests of RecipesInProgress component.', () => {
-//   delete global.window.location;
-//   global.window = Object.create(window);
-//   global.window.document.execCommand = jest.fn(()=>{})
-//   global.window.location = {
-//     reload: jest.fn(),
-//     pathname: '/foods/52785/in-progress',
-//   };
 Object.defineProperty(navigator, "clipboard", {
     value: {
       writeText: () => {},
@@ -21,7 +14,6 @@ Object.defineProperty(navigator, "clipboard", {
   });
 
   it('Teste da funcionalidade de favoritar', async () => {
-    // global.document.execCommand = jest.fn()
     jest.spyOn(global, "fetch").mockResolvedValue({
         json: jest.fn().mockResolvedValue(oneMeal)
     })
@@ -35,7 +27,6 @@ Object.defineProperty(navigator, "clipboard", {
   });
 
   it('Teste da funcionalidade de salvar os ingredientes de comidas', async () => {
-    // global.document.execCommand = jest.fn()
     jest.spyOn(global, "fetch").mockResolvedValue({
         json: jest.fn().mockResolvedValue(oneMeal)
     })
@@ -55,7 +46,6 @@ Object.defineProperty(navigator, "clipboard", {
   });
   it('Teste da funcionalidade de salvar os ingredientes de bebidas e iniciar localStorage pela rota de Drinks', async () => {
     localStorage.removeItem('inProgressRecipes')
-    // global.document.execCommand = jest.fn()
     jest.spyOn(global, "fetch").mockResolvedValue({
         json: jest.fn()
         .mockResolvedValue(oneDrink)
@@ -66,7 +56,6 @@ Object.defineProperty(navigator, "clipboard", {
     history.push('/drinks/178319/in-progress');
     await waitFor(()=> expect(fetch).toBeCalled())
     expect(screen.getByRole('heading', { level: 1})).toBeInTheDocument();
-    console.log(history.location.pathname);
     userEvent.click(screen.getByRole('checkbox', {
         name: /hpnotiq/i
       }))
@@ -78,7 +67,6 @@ Object.defineProperty(navigator, "clipboard", {
       userEvent.click(screen.getByTestId('share-btn'))
   });
   it('Teste da funcionalidade de salvar os ingredientes de bebidas', async () => {
-    // global.document.execCommand = jest.fn()
     jest.spyOn(global, "fetch").mockResolvedValue({
         json: jest.fn()
         .mockResolvedValue(oneDrink)
@@ -89,7 +77,7 @@ Object.defineProperty(navigator, "clipboard", {
     history.push('/drinks/178319/in-progress');
     await waitFor(()=> expect(fetch).toBeCalled())
     expect(screen.getByRole('heading', { level: 1})).toBeInTheDocument();
-    console.log(history.location.pathname);
+
     userEvent.click(screen.getByRole('checkbox', {
         name: /hpnotiq/i
       }))
