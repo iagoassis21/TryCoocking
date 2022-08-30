@@ -14,6 +14,7 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   min-height: 65px;
+  width: 360px;
 }
 
 .main-header h1 {
