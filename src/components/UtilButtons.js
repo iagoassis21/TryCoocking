@@ -63,6 +63,7 @@ function UtilButtons({ recipeObj, isDrink, copyText }) {
 
   useEffect(() => {
     checkFavorited();
+    // eslint-disable-next-line
   }, []);
 
   const handleCopy = () => {

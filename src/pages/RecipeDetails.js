@@ -81,6 +81,7 @@ function RecipeDetails({ pagePath }) {
       if (detailsPageType && !recommendations.length) getRecommendation();
     };
     loadPageType();
+    // eslint-disable-next-line
   }, [detailsPageType, recipeId]);
 
   return (
