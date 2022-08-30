@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { drinkRecipeList, mealRecipeList } from '../helpers/fetchRecipeListApi';
 import '../App.css';
 import setIngredientLocalStorage from '../helpers/localStorageIngredients';
-import FavoriteButton from '../components/FavoriteButton';
+import UtilButtons from '../components/UtilButtons';
 import FinishRecipeButton from '../components/FinishRecipeButton';
 
 const drinkTypes = (drink) => {
@@ -14,13 +14,10 @@ const drinkTypes = (drink) => {
   return { type, url, apiType };
 };
 
-const copy = require('clipboard-copy');
-
 function RecipeInProgress({ drink }) {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
   const [ingredient, setCheckedIngredient] = useState([]);
-  const [shareRecipe, setShareRecipe] = useState('');
 
   const { type, url, apiType } = drinkTypes(drink);
 
@@ -82,9 +79,6 @@ function RecipeInProgress({ drink }) {
     const checkFinishedIngredients = ingredient.length !== recipeIngredients.length;
     return checkFinishedIngredients;
   };
-  const clipBoardCopy = (
-    <span>Link copied!</span>
-  );
   const bodyRecipe = (
     <div>
       <img
@@ -94,22 +88,10 @@ function RecipeInProgress({ drink }) {
         width="150"
       />
       <h1 data-testid="recipe-title">{recipe[`str${type}`]}</h1>
-      <button
-        type="button"
-        data-testid="share-btn"
-        onClick={ () => {
-          setShareRecipe(true);
-          copy(`http://localhost:3000/${url}/${id}`);
-        } }
-      >
-        Share Recipe
-      </button>
-      {
-        shareRecipe ? clipBoardCopy : ''
-      }
-      <FavoriteButton
+      <UtilButtons
         recipeObj={ recipe }
         isDrink={ drink }
+        copyText={ `http://localhost:3000/${url}/${id}` }
       />
       <p data-testid="recipe-category">{recipe.strCategory}</p>
       <p data-testid="instructions">{recipe.strInstructions}</p>
@@ -120,7 +102,6 @@ function RecipeInProgress({ drink }) {
       />
     </div>
   );
-  console.log(recipe);
   return (
     <div>
       {

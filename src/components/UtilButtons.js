@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 
-function FavoriteButton({ recipeObj, isDrink }) {
+function UtilButtons({ recipeObj, isDrink, copyText }) {
+  const [copiedMessageTimer, setCopiedMessageTimer] = useState(0);
   const {
     strArea,
     idDrink,
@@ -60,10 +63,32 @@ function FavoriteButton({ recipeObj, isDrink }) {
 
   useEffect(() => {
     checkFavorited();
+    // eslint-disable-next-line
   }, []);
 
+  const handleCopy = () => {
+    const fiveSeconds = 5;
+    setCopiedMessageTimer(fiveSeconds);
+    copy(copyText);
+  };
+
+  useEffect(() => {
+    if (!copiedMessageTimer) return;
+    const aSecond = 1000;
+    const cooldown = setInterval(() => setCopiedMessageTimer(copiedMessageTimer - 1),
+      aSecond);
+    return () => clearInterval(cooldown);
+  }, [copiedMessageTimer]);
+
   return (
-    <div>
+    <div className="util-buttons">
+      <button
+        type="button"
+        data-testid="share-btn"
+        onClick={ () => handleCopy() }
+      >
+        <img src={ shareIcon } alt="Share icon." />
+      </button>
       <button
         type="button"
         onClick={ () => handleFavorite(favoritedRecipe) }
@@ -74,11 +99,20 @@ function FavoriteButton({ recipeObj, isDrink }) {
           alt="Favorited icon."
         />
       </button>
+
+      <p
+        className={ `copied-message ${copiedMessageTimer > 0
+          ? ''
+          : 'hidden'
+        }` }
+      >
+        Link copied!
+      </p>
     </div>
   );
 }
 
-FavoriteButton.propTypes = {
+UtilButtons.propTypes = {
   recipeObj: PropTypes.shape({
     strCategory: PropTypes.string.isRequired,
     idMeal: PropTypes.string,
@@ -91,6 +125,7 @@ FavoriteButton.propTypes = {
     strMealThumb: PropTypes.string,
   }).isRequired,
   isDrink: PropTypes.bool.isRequired,
+  copyText: PropTypes.string.isRequired,
 };
 
-export default FavoriteButton;
+export default UtilButtons;

@@ -1,0 +1,20 @@
+.profile-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding-top: 60px;
+  text-align: center;
+}
+
+.profile-buttons-container {
+  background-color: red;
+  display: flex;
+  flex-wrap: wrap;
+  width: 360px;
+}
+
+.profile-container button {
+  padding: 5px;
+  width: 360px;
+}

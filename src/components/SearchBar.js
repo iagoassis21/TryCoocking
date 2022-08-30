@@ -44,41 +44,44 @@ export default function SearchBar() {
 
   return (
     <form>
-      <label htmlFor="ingredient">
-        <input
-          data-testid="ingredient-search-radio"
-          type="radio"
-          name="search-section"
-          id="ingredient"
-          onChange={ (e) => setType(e.target.id) }
-        />
-        Ingredient
-      </label>
-      <label htmlFor="name">
-        <input
-          data-testid="name-search-radio"
-          type="radio"
-          name="search-section"
-          id="name"
-          onChange={ (e) => setType(e.target.id) }
-        />
-        Name
-      </label>
-      <label htmlFor="first-letter">
-        <input
-          data-testid="first-letter-search-radio"
-          type="radio"
-          name="search-section"
-          id="first-letter"
-          onChange={ (e) => setType(e.target.id) }
-        />
-        First letter
-      </label>
+      <div className="header-raidos">
+        <label htmlFor="ingredient">
+          <input
+            data-testid="ingredient-search-radio"
+            type="radio"
+            name="search-section"
+            id="ingredient"
+            onChange={ (e) => setType(e.target.id) }
+          />
+          Ingredient
+        </label>
+        <label htmlFor="name">
+          <input
+            data-testid="name-search-radio"
+            type="radio"
+            name="search-section"
+            id="name"
+            onChange={ (e) => setType(e.target.id) }
+          />
+          Name
+        </label>
+        <label htmlFor="first-letter">
+          <input
+            data-testid="first-letter-search-radio"
+            type="radio"
+            name="search-section"
+            id="first-letter"
+            onChange={ (e) => setType(e.target.id) }
+          />
+          First letter
+        </label>
+      </div>
       <button
         data-testid="exec-search-btn"
         type="button"
         onClick={ () => setSearch() }
         disabled={ !(searchValue && type) }
+        className="header-search-button"
       >
         Search
       </button>

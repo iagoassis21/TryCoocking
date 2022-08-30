@@ -20,13 +20,19 @@ function RecipeCard({ index, recipe, type }) {
     <Link
       data-testid={ `${index}-recipe-card` }
       to={ recipeUlr() }
+      className="recipe-card"
     >
-      <h2 data-testid={ `${index}-card-name` }>{ recipeName() }</h2>
+      <h2
+        data-testid={ `${index}-card-name` }
+        className="card-title"
+      >
+        { recipeName() }
+      </h2>
       <img
         src={ imgSrc() }
         data-testid={ `${index}-card-img` }
         alt="Recipe."
-        className="small-img"
+        className="card-image"
       />
     </Link>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import FavoriteCard from '../components/FavoriteCard';
 import Header from '../components/Header';
+import '../styles/FavoriteRecipes.css';
 
 export default function FavoriteRecipes() {
   const [favorites, setFavorites] = useState([]);
@@ -17,29 +18,32 @@ export default function FavoriteRecipes() {
   const filteredFavorites = applyFilter();
 
   return (
-    <div>
+    <div className="favorite-recipes-container">
       <Header title="Favorite Recipes" icons={ { profile: true, search: false } } />
-      <button
-        data-testid="filter-by-all-btn"
-        type="button"
-        onClick={ () => setFilter('all') }
-      >
-        All
-      </button>
-      <button
-        data-testid="filter-by-food-btn"
-        type="button"
-        onClick={ () => setFilter('food') }
-      >
-        Foods
-      </button>
-      <button
-        data-testid="filter-by-drink-btn"
-        type="button"
-        onClick={ () => setFilter('drink') }
-      >
-        Drinks
-      </button>
+      <div className="favorite-recipes-buttons">
+        <button
+          data-testid="filter-by-all-btn"
+          type="button"
+          onClick={ () => setFilter('all') }
+        >
+          All
+        </button>
+        <button
+          data-testid="filter-by-food-btn"
+          type="button"
+          onClick={ () => setFilter('food') }
+        >
+          Foods
+        </button>
+        <button
+          data-testid="filter-by-drink-btn"
+          type="button"
+          onClick={ () => setFilter('drink') }
+        >
+          Drinks
+        </button>
+      </div>
+
       {
         filteredFavorites && filteredFavorites.map((f, idx) => (<FavoriteCard
           key={ f.name }

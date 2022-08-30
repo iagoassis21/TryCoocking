@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import Context from '../context/Context';
+import '../styles/Recipes.css';
 
 function RecipesFilterButtons() {
   const {
@@ -10,7 +11,7 @@ function RecipesFilterButtons() {
   } = useContext(Context);
 
   return (
-    <div>
+    <div className="recipes-filter-buttons">
       {allFilters.length > 0 && allFilters.map(({ strCategory }) => (
         <button
           data-testid={ `${strCategory}-category-filter` }

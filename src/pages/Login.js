@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Context from '../context/Context';
+import '../styles/Login.css';
 
 function Login(props) {
   const [isValid, setValid] = useState(true);
@@ -44,9 +45,9 @@ function Login(props) {
   };
 
   return (
-    <>
+    <form className="login-form">
       <h4>Login</h4>
-      <form>
+      <div className="text-input-container">
         <input
           type="email"
           name="email"
@@ -63,16 +64,17 @@ function Login(props) {
           value={ pass }
           onChange={ changePass }
         />
-        <button
-          type="button"
-          data-testid="login-submit-btn"
-          disabled={ isValid }
-          onClick={ onClickLogin }
-        >
-          Enter
-        </button>
-      </form>
-    </>
+      </div>
+      <button
+        className="login-button"
+        type="button"
+        data-testid="login-submit-btn"
+        disabled={ isValid }
+        onClick={ onClickLogin }
+      >
+        Enter
+      </button>
+    </form>
   );
 }
 

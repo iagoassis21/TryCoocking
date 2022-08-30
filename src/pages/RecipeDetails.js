@@ -5,6 +5,7 @@ import RecipeDetailsCard from '../components/RecipeDetailsCard';
 import RecipeDetailsButtons from '../components/RecipeDetailsButtons';
 import RecipesCarousel from '../components/RecipesCarousel';
 import fetchRecipesApi, { fetchRecipesById } from '../helpers/fetchRecipesApi';
+import '../styles/RecipeDetails.css';
 
 function RecipeDetails({ pagePath }) {
   const [detailsPageType] = useState(pagePath);
@@ -80,14 +81,15 @@ function RecipeDetails({ pagePath }) {
       if (detailsPageType && !recommendations.length) getRecommendation();
     };
     loadPageType();
+    // eslint-disable-next-line
   }, [detailsPageType, recipeId]);
 
   return (
-    <div>
+    <div className="recipe-details-container">
       { loading
         ? <h1>Loading...</h1>
         : (
-          <div>
+          <>
             <RecipeDetailsCard
               recipeInfo={ {
                 recipeTitle,
@@ -97,12 +99,6 @@ function RecipeDetails({ pagePath }) {
                 recipeVideo,
                 recipeAlcohol,
                 ingredientList,
-              } }
-            />
-            <RecipesCarousel
-              carouselInfo={ {
-                detailsPageType,
-                recommendations,
               } }
             />
             <RecipeDetailsButtons
@@ -117,7 +113,13 @@ function RecipeDetails({ pagePath }) {
                 currRecipe,
               } }
             />
-          </div>
+            <RecipesCarousel
+              carouselInfo={ {
+                detailsPageType,
+                recommendations,
+              } }
+            />
+          </>
         )}
     </div>
   );

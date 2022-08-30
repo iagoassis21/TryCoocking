@@ -44,16 +44,15 @@ function FinishRecipeButton({ recipeObj, isDrink, doneIngredients }) {
   };
 
   return (
-    <div>
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-        disabled={ doneIngredients }
-        onClick={ handleDoneRecipes }
-      >
-        Finish Recipe
-      </button>
-    </div>
+    <button
+      type="button"
+      data-testid="finish-recipe-btn"
+      disabled={ doneIngredients }
+      onClick={ handleDoneRecipes }
+      className="finish-recipe-button"
+    >
+      Finish Recipe
+    </button>
   );
 }
 
