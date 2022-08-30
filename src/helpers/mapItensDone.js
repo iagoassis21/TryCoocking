@@ -11,13 +11,13 @@ const transform = (tags) => {
 };
 
 export const mapItensFood = (element, index, setShowCopy) => (
-  <div key={ element.id } className="done-recipes-card">
+  <div key={ element.id }>
     <Link to={ `foods/${element.id}` }>
       <img
         src={ element.image }
         alt=""
         data-testid={ `${index}-horizontal-image` }
-        className="recipe-image"
+        className="small-img"
       />
     </Link>
 
@@ -74,30 +74,25 @@ export const mapItensFood = (element, index, setShowCopy) => (
 );
 
 export const mapItensDrinks = (element, index, setShowCopy) => (
-  <div key={ element.id } div className="done-recipes-card">
+  <div key={ element.id }>
     <Link to={ `drinks/${element.id}` }>
       <img
         src={ element.image }
         alt=""
         data-testid={ `${index}-horizontal-image` }
-        className="recipe-image"
+        className="small-img"
       />
-    </Link>
-
-    <h4
-      data-testid={ `${index}-horizontal-top-text` }
-    >
-      { element.alcoholicOrNot }
-    </h4>
-
-    <Link to={ `drinks/${element.id}` }>
       <h2
         data-testid={ `${index}-horizontal-name` }
       >
         { element.name }
       </h2>
     </Link>
-
+    <h4
+      data-testid={ `${index}-horizontal-top-text` }
+    >
+      { element.alcoholicOrNot }
+    </h4>
     <h4
       data-testid={ `${index}-horizontal-done-date` }
     >
