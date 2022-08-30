@@ -43,6 +43,7 @@ export default function Header({ title, icons }) {
           onChange={ (e) => setSearchValue(e.target.value) }
           value={ searchValue }
           className="header-search-bar"
+          placeholder="Buscar por..."
         />
       }
     </header>

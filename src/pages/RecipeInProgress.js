@@ -73,7 +73,7 @@ function RecipeInProgress({ drink }) {
         key={ validIngredient }
         className={ ingredient.includes(validIngredient)
           ? 'used-ingredient'
-          : '' }
+          : 'unused-ingredient' }
       >
         <input
           id={ validIngredient }

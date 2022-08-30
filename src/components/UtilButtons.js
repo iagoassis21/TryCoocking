@@ -94,6 +94,7 @@ function UtilButtons({ recipeObj, isDrink, copyText }) {
       >
         <img
           data-testid="favorite-btn"
+          className="favorite-btn"
           src={ favoritedRecipe ? blackHeartIcon : whiteHeartIcon }
           alt="Favorited icon."
         />

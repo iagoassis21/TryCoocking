@@ -1,4 +1,21 @@
+:root {
+
+  --starbucks: #006341;
+
+  --orange: #bf926b;
+
+  --brown-A: #5c2a0d;
+
+  --brown-B: #401201;
+
+  --red: #bf2011;
+
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap') ;
+
 * {
+  font-family: Quicksand , sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -9,7 +26,10 @@
 }
 
 .main-header {
-  border-bottom: 1px solid black;
+  background-color: var(--starbucks);
+  border-bottom: 1px solid gray;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.158);
+  color: white;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -36,6 +56,10 @@
   width: 50%;
 }
 
+.selected img, .header-buttons-container button img {
+  filter: grayscale(1) invert(1);
+}
+
 .header-search-bar {
   padding: 5px;
   text-align: center;
@@ -57,9 +81,19 @@
   margin: 0;
 }
 
+.header-raidos input {
+  accent-color: var(--starbucks);
+}
+
 .header-search-button {
+  border: 1px solid gray;
   padding: 5px;
+  transition: 0.75s;
   width: 360px;
+}
+
+.header-search-button:enabled {
+  background-color: white;
 }
 
 .main-footer {
@@ -74,9 +108,13 @@
 .footer-button {
   background-color: transparent;
   border: none;
-  border-top: 1px solid black;
+  border-top: 1px solid var(--brown-B);
   padding: 5px 0;
   width: 50%;
+}
+
+.selected {
+  background-color: var(--brown-A);
 }
 
 .util-buttons {
@@ -91,9 +129,16 @@
   width: 50%;
 }
 
+.favorite-btn {
+  filter: invert(47%) sepia(16%) saturate(2500%)
+    hue-rotate(-50deg) brightness(100%) contrast(8001%);
+}
+
 .copied-message {
-  background-color: black;
+  background-color: var(--starbucks);
+  border-radius: 5px;
   color: white;
+  font-weight: 700;
   left: 50%;
   padding: 10px;
   position: fixed;

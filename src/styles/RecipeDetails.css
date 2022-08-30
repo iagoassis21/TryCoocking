@@ -8,7 +8,7 @@
 }
 
 .recipe-details-header .recipe-title {
-  background-image: linear-gradient(180deg, transparent 0%, white 100%);
+  background-image: linear-gradient(180deg, transparent 0%, white 85%);
   display: flex;
   flex-direction: column-reverse;
   height: 340px;
@@ -24,20 +24,24 @@
 }
 
 .recipe-details-instructions {
+  line-height: 1.6rem;
   padding: 15px;
+  text-align: justify;
 }
 
 .start-recipe-button {
-  background-color: white;
+  background-color: var(--brown-A);
   border: none;
   border-top: 1px solid black;
   bottom: 0;
+  color: white;
+  font-weight: 700;
   height: 50px;
   left: 0;
   padding: 10px;
   position: fixed;
   width: 360px;
-  z-index: 1;
+  z-index: 8001;
 }
 
 /* Carousel */

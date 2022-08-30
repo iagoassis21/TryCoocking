@@ -48,7 +48,7 @@ function RecipeDetailsButtons({ buttonsInfo }) {
             className="start-recipe-button"
             onClick={ () => history.push(`/${detailsPageType}/${recipeId}/in-progress`) }
           >
-            <p>{startedRecipe()}</p>
+            {startedRecipe()}
           </button>
         </div>
       )}

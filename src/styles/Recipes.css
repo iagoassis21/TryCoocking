@@ -8,12 +8,17 @@
 .recipes-filter-buttons {
   display: flex;
   flex-wrap: wrap;
+  gap: 2px;
   justify-content: center;
 }
 
 .recipes-filter-buttons button {
+  background-color: var(--brown-A);
+  border: 0;
+  color: white;
+  font-weight: 700;
   padding: 5px;
-  width: 120px;
+  width: 44%;
 }
 
 /* Card com degradê e texto em cima da imagem */
@@ -95,13 +100,15 @@
 
 .recipe-card {
   align-items: center;
-  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.308);
   display: flex;
   flex-direction: column;
 
   /* flex-direction: column-reverse; */
   height: 150px;
   justify-content: space-around;
+  overflow: hidden;
   position: relative;
   text-align: center;
   width: 150px;
@@ -110,10 +117,11 @@
 .card-title {
 
   /* background-image: linear-gradient(180deg, black 0%, transparent 100%); */
-  background-image: linear-gradient(180deg, transparent 0%, black 100%);
+  background-image: linear-gradient(180deg, transparent 0%, var(--brown-A) 125%);
+  border-radius: 5px;
   bottom: 0;
   color: white;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 
   /* height: 50%; */
   margin: 0;
@@ -125,5 +133,6 @@
 }
 
 .card-image {
+  border-radius: 5px;
   width: 150px;
 }

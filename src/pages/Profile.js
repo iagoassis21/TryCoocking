@@ -27,7 +27,7 @@ function Profile() {
     <>
       <Header title="Profile" icons={ { profile: true, search: false } } />
       <section className="profile-container">
-        <p data-testid="profile-email">{emailLocal}</p>
+        <h2 data-testid="profile-email">{emailLocal}</h2>
         <Link to="/done-recipes">
           <button type="button" data-testid="profile-done-btn">
             Done Recipes

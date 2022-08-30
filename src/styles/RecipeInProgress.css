@@ -8,7 +8,7 @@
 }
 
 .recipe-inprogress-header .recipe-title {
-  background-image: linear-gradient(180deg, transparent 0%, white 100%);
+  background-image: linear-gradient(180deg, transparent 0%, white 85%);
   display: flex;
   flex-direction: column-reverse;
   height: 340px;
@@ -19,8 +19,10 @@
 }
 
 .recipe-inprogress-instructions {
+  line-height: 1.6rem;
   padding: 15px;
   padding-top: 30px;
+  text-align: justify;
 }
 
 .recipe-inprogress-list {
@@ -41,6 +43,21 @@
   width: 360px;
 }
 
+.finish-recipe-button:disabled {
+  background-color: white;
+}
+
+.finish-recipe-button:enabled {
+  background-color: var(--brown-A);
+  border: none;
+  border-top: 1px solid black;
+  color: white;
+  font-weight: 700;
+  height: 50px;
+}
+
 .used-ingredient {
+  font-style: italic;
   text-decoration: line-through;
 }
+

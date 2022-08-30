@@ -11,19 +11,21 @@ function Footer() {
     window.location.reload();
   };
 
+  const { location: { pathname } } = history;
+
   return (
     <nav data-testid="footer" className="main-footer">
       <button
         type="button"
         onClick={ () => changePage('foods') }
-        className="footer-button"
+        className={ `footer-button ${pathname === '/foods' && 'selected'}` }
       >
         <img src={ mealIcon } alt={ mealIcon } data-testid="food-bottom-btn" />
       </button>
       <button
         type="button"
         onClick={ () => changePage('drinks') }
-        className="footer-button"
+        className={ `footer-button ${pathname === '/drinks' && 'selected'}` }
       >
         <img src={ drinkIcon } alt={ drinkIcon } data-testid="drinks-bottom-btn" />
       </button>

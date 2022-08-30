@@ -1,3 +1,34 @@
+.login-container {
+  background-image: url('https://images.pexels.com/photos/5720809/pexels-photo-5720809.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+  background-size: cover;
+  filter: saturate(1.4);
+}
+
+.logo {
+  align-items: center;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.4)
+    0 2px 4px , rgba(0, 0, 0, 0.3) 0 7px 13px -3px , rgba(0, 0, 0, 0.2) 0 -3px 0 inset;
+  color: black;
+  display: flex;
+  filter: saturate(0.7);
+  flex-direction: column;
+  font-size: 1.3rem;
+  font-weight: 700;
+  gap: 3px;
+  padding: 4px 8px;
+}
+
+.logo span {
+  color: var(--brown-A);
+}
+
+.logo-image {
+  padding-left: 6px;
+  width: 100px;
+}
+
 .login-form {
   align-items: center;
   display: flex;
@@ -16,12 +47,27 @@
 }
 
 .text-input-container input {
+  border: 0;
+  border-radius: 5px;
+  font-weight: 700;
   padding: 5px;
   text-align: center;
   width: 220px;
 }
 
 .login-button {
+  border: 0;
+  border-radius: 5px;
+  font-weight: 700;
   padding: 5px;
+  transition: 0.75s;
+  width: 102px;
+}
+
+.login-button:disabled {
+  background-color: var(--brown-B);
+  border: 1px solid white;
+  color: white;
+  opacity: 0.7;
   width: 100px;
 }

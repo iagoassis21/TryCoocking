@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Context from '../context/Context';
+import logo from '../images/logo.svg';
 import '../styles/Login.css';
 
 function Login(props) {
@@ -45,36 +46,44 @@ function Login(props) {
   };
 
   return (
-    <form className="login-form">
-      <h4>Login</h4>
-      <div className="text-input-container">
-        <input
-          type="email"
-          name="email"
-          data-testid="email-input"
-          placeholder="Insira o seu email..."
-          value={ email }
-          onChange={ changeEmail }
-        />
-        <input
-          type="password"
-          name="password"
-          data-testid="password-input"
-          placeholder="Insira sua senha..."
-          value={ pass }
-          onChange={ changePass }
-        />
-      </div>
-      <button
-        className="login-button"
-        type="button"
-        data-testid="login-submit-btn"
-        disabled={ isValid }
-        onClick={ onClickLogin }
-      >
-        Enter
-      </button>
-    </form>
+    <div className="login-container">
+      <form className="login-form">
+        <div className="logo">
+          <img src={ logo } alt="Logo" className="logo-image" />
+          <p>
+            <span>Try</span>
+            Cooking
+          </p>
+        </div>
+        <div className="text-input-container">
+          <input
+            type="email"
+            name="email"
+            data-testid="email-input"
+            placeholder="Insira o seu email..."
+            value={ email }
+            onChange={ changeEmail }
+          />
+          <input
+            type="password"
+            name="password"
+            data-testid="password-input"
+            placeholder="Insira sua senha..."
+            value={ pass }
+            onChange={ changePass }
+          />
+        </div>
+        <button
+          className="login-button"
+          type="button"
+          data-testid="login-submit-btn"
+          disabled={ isValid }
+          onClick={ onClickLogin }
+        >
+          Enter
+        </button>
+      </form>
+    </div>
   );
 }
 
