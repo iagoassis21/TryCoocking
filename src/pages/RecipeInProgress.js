@@ -6,16 +6,27 @@ import '../App.css';
 import setIngredientLocalStorage from '../helpers/localStorageIngredients';
 import UtilButtons from '../components/UtilButtons';
 import FinishRecipeButton from '../components/FinishRecipeButton';
-import '../styles/RecipeInProgress.css';
+
+const drinkTypes = (drink) => {
+  const type = drink ? 'Drink' : 'Meal';
+  const url = drink ? 'drinks' : 'foods';
+  const apiType = drink ? 'cocktails' : 'meals';
+  return { type, url, apiType };
+};
 
 function RecipeInProgress({ drink }) {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
   const [ingredient, setCheckedIngredient] = useState([]);
-  const type = drink ? 'Drink' : 'Meal';
-  const url = drink ? 'drinks' : 'foods';
+
+  const { type, url, apiType } = drinkTypes(drink);
 
   useEffect(() => {
+    if (!JSON.parse(localStorage.getItem('inProgressRecipes'))) {
+      localStorage.setItem('inProgressRecipes',
+        JSON.stringify({ cocktails: {}, meals: {} }));
+    }
+    const getChecked = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (drink) {
       const getDrinkRecipeList = async () => {
         const results = await drinkRecipeList(id);
@@ -23,34 +34,16 @@ function RecipeInProgress({ drink }) {
         setRecipe(getArrDrinks);
       };
       getDrinkRecipeList();
-      if (!JSON.parse(localStorage.getItem('inProgressRecipes'))) {
-        return localStorage.setItem('inProgressRecipes',
-          JSON.stringify({ cocktails: {}, meals: {} }));
-      }
-      const getCheckedDrinks = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      if (getCheckedDrinks.cocktails[id]) {
-        setCheckedIngredient(getCheckedDrinks.cocktails[id]);
-      }
-      return;
+    } else {
+      const getMealRecipeList = async () => {
+        const results = await mealRecipeList(id);
+        const getArrMeals = results.meals[0];
+        setRecipe(getArrMeals);
+      };
+      getMealRecipeList();
     }
-
-    const getMealRecipeList = async () => {
-      const results = await mealRecipeList(id);
-      const getArrMeals = results.meals[0];
-      setRecipe(getArrMeals);
-    };
-    getMealRecipeList();
-    if (!JSON.parse(localStorage.getItem('inProgressRecipes'))) {
-      return localStorage.setItem('inProgressRecipes',
-        JSON.stringify({ cocktails: {}, meals: {} }));
-    }
-    const getCheckedMeals = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    // if (getCheckedMeals.meals[id]) {
-    //   setCheckedIngredient();
-    // }
-    setCheckedIngredient([
-      ...(getCheckedMeals?.meals?.[id] || []),
-    ]);
+    setCheckedIngredient(getChecked[apiType][id] || []);
+    // eslint-disable-next-line
   }, []);
 
   const handleCheckIngredient = (e) => {
@@ -71,9 +64,7 @@ function RecipeInProgress({ drink }) {
       <label
         htmlFor={ validIngredient }
         key={ validIngredient }
-        className={ ingredient.includes(validIngredient)
-          ? 'used-ingredient'
-          : '' }
+        className={ ingredient.includes(validIngredient) ? 'usedIngredient' : null }
       >
         <input
           id={ validIngredient }
@@ -88,49 +79,44 @@ function RecipeInProgress({ drink }) {
     const checkFinishedIngredients = ingredient.length !== recipeIngredients.length;
     return checkFinishedIngredients;
   };
-  if (Object.keys(recipe).length === 0) return <p>Loading...</p>;
-  return (
+  const bodyRecipe = (
     <div>
-      <header className="recipe-inprogress-header">
-        <img
-          src={ recipe[`str${type}Thumb`] }
-          data-testid="recipe-photo"
-          alt="Foto da receita"
-          width="150"
-        />
-        <div className="recipe-title">
-          <p data-testid="recipe-category">{recipe.strCategory}</p>
-          <h2 data-testid="recipe-title">{recipe[`str${type}`]}</h2>
-        </div>
-      </header>
+      <img
+        src={ recipe[`str${type}Thumb`] }
+        data-testid="recipe-photo"
+        alt="Foto da receita"
+        width="150"
+      />
+      <h1 data-testid="recipe-title">{recipe[`str${type}`]}</h1>
       <UtilButtons
         recipeObj={ recipe }
         isDrink={ drink }
         copyText={ `http://localhost:3000/${url}/${id}` }
       />
-      <p
-        data-testid="instructions"
-        className="recipe-inprogress-instructions"
-      >
-        {recipe.strInstructions}
-      </p>
-      <ul className="recipe-inprogress-list">
-        {
-          recipeIngredients.map((ingredients, index) => (
-            <li
-              data-testid={ `${index}-ingredient-step` }
-              key={ index }
-            >
-              {ingredients}
-            </li>
-          ))
-        }
-      </ul>
+      <p data-testid="recipe-category">{recipe.strCategory}</p>
+      <p data-testid="instructions">{recipe.strInstructions}</p>
       <FinishRecipeButton
         recipeObj={ recipe }
         isDrink={ drink }
         doneIngredients={ handleDisableBtn() }
       />
+    </div>
+  );
+  return (
+    <div>
+      {
+        Object.keys(recipe).length === 0 ? <p>Loading...</p> : bodyRecipe
+      }
+      {
+        recipeIngredients.map((ingredients, index) => (
+          <p
+            data-testid={ `${index}-ingredient-step` }
+            key={ index }
+          >
+            {ingredients}
+          </p>
+        ))
+      }
     </div>
   );
 }
