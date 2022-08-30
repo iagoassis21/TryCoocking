@@ -42,6 +42,7 @@ function RecipesCarousel({ carouselInfo }) {
           type="button"
           onClick={ () => changePage(recipeUlr(recommendations[index])) }
           data-testid={ `${index}-recomendation-card` }
+          className="carousel-item-container"
         >
           <h3 data-testid={ `${index}-recomendation-title` }>
             { getRecommendationsNameKey(index) }
@@ -49,13 +50,13 @@ function RecipesCarousel({ carouselInfo }) {
           <img
             src={ recommendationsImgKey(index) }
             alt="Recommended recipe"
-            className="small-img"
           />
         </button>
         <button
           type="button"
           onClick={ () => changePage(recipeUlr(recommendations[index + 1])) }
           data-testid={ `${index + 1}-recomendation-card` }
+          className="carousel-item-container"
         >
           <h3 data-testid={ `${index + 1}-recomendation-title` }>
             { getRecommendationsNameKey(index + 1) }
@@ -63,7 +64,6 @@ function RecipesCarousel({ carouselInfo }) {
           <img
             src={ recommendationsImgKey(index + 1) }
             alt="Recommended recipe"
-            className="small-img"
           />
         </button>
       </div>
@@ -72,7 +72,6 @@ function RecipesCarousel({ carouselInfo }) {
 
   return (
     <div>
-      <h3>Receitas recomendadas</h3>
       {recommendations.length && (
 
         <Carousel

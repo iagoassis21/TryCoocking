@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
 import { mapItensFood, mapItensDrinks } from '../helpers/mapItensDone';
+import '../styles/DoneRecipes.css';
 
 function DoneRecipes() {
   const [filter, setFilter] = useState();
@@ -61,33 +62,35 @@ function DoneRecipes() {
   };
 
   return (
-    <div>
+    <div className="done-recipes-container">
       <Header title="Done Recipes" icons={ { profile: true, search: false } } />
       {/* Filters */}
-      <button
-        type="button"
-        name="all"
-        data-testid="filter-by-all-btn"
-        onClick={ filterButtons }
-      >
-        All
-      </button>
-      <button
-        type="button"
-        name="food"
-        data-testid="filter-by-food-btn"
-        onClick={ filterButtons }
-      >
-        Food
-      </button>
-      <button
-        type="button"
-        name="drinks"
-        data-testid="filter-by-drink-btn"
-        onClick={ filterButtons }
-      >
-        Drinks
-      </button>
+      <div className="done-recipes-buttons">
+        <button
+          type="button"
+          name="all"
+          data-testid="filter-by-all-btn"
+          onClick={ filterButtons }
+        >
+          All
+        </button>
+        <button
+          type="button"
+          name="food"
+          data-testid="filter-by-food-btn"
+          onClick={ filterButtons }
+        >
+          Food
+        </button>
+        <button
+          type="button"
+          name="drinks"
+          data-testid="filter-by-drink-btn"
+          onClick={ filterButtons }
+        >
+          Drinks
+        </button>
+      </div>
 
       {/* Map Itens */}
       {showItens(filter)}

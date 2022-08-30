@@ -4,17 +4,14 @@ import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { drinkRecipeList, mealRecipeList } from '../helpers/fetchRecipeListApi';
 import '../App.css';
 import setIngredientLocalStorage from '../helpers/localStorageIngredients';
-import FavoriteButton from '../components/FavoriteButton';
+import UtilButtons from '../components/UtilButtons';
 import FinishRecipeButton from '../components/FinishRecipeButton';
-
-const copy = require('clipboard-copy');
+import '../styles/RecipeInProgress.css';
 
 function RecipeInProgress({ drink }) {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
   const [ingredient, setCheckedIngredient] = useState([]);
-  const [shareRecipe, setShareRecipe] = useState('');
-
   const type = drink ? 'Drink' : 'Meal';
   const url = drink ? 'drinks' : 'foods';
 
@@ -74,7 +71,9 @@ function RecipeInProgress({ drink }) {
       <label
         htmlFor={ validIngredient }
         key={ validIngredient }
-        className={ ingredient.includes(validIngredient) ? 'usedIngredient' : null }
+        className={ ingredient.includes(validIngredient)
+          ? 'used-ingredient'
+          : '' }
       >
         <input
           id={ validIngredient }
@@ -89,55 +88,49 @@ function RecipeInProgress({ drink }) {
     const checkFinishedIngredients = ingredient.length !== recipeIngredients.length;
     return checkFinishedIngredients;
   };
-  const clipBoardCopy = (
-    <span>Link copied!</span>
-  );
   if (Object.keys(recipe).length === 0) return <p>Loading...</p>;
   return (
     <div>
-      <div>
+      <header className="recipe-inprogress-header">
         <img
           src={ recipe[`str${type}Thumb`] }
           data-testid="recipe-photo"
           alt="Foto da receita"
           width="150"
         />
-        <h1 data-testid="recipe-title">{recipe[`str${type}`]}</h1>
-        <button
-          type="button"
-          data-testid="share-btn"
-          onClick={ () => {
-            setShareRecipe(true);
-            copy(`http://localhost:3000/${url}/${id}`);
-          } }
-        >
-          Share Recipe
-        </button>
+        <div className="recipe-title">
+          <p data-testid="recipe-category">{recipe.strCategory}</p>
+          <h2 data-testid="recipe-title">{recipe[`str${type}`]}</h2>
+        </div>
+      </header>
+      <UtilButtons
+        recipeObj={ recipe }
+        isDrink={ drink }
+        copyText={ `http://localhost:3000/${url}/${id}` }
+      />
+      <p
+        data-testid="instructions"
+        className="recipe-inprogress-instructions"
+      >
+        {recipe.strInstructions}
+      </p>
+      <ul className="recipe-inprogress-list">
         {
-          shareRecipe ? clipBoardCopy : ''
+          recipeIngredients.map((ingredients, index) => (
+            <li
+              data-testid={ `${index}-ingredient-step` }
+              key={ index }
+            >
+              {ingredients}
+            </li>
+          ))
         }
-        <FavoriteButton
-          recipeObj={ recipe }
-          isDrink={ drink }
-        />
-        <p data-testid="recipe-category">{recipe.strCategory}</p>
-        <p data-testid="instructions">{recipe.strInstructions}</p>
-        <FinishRecipeButton
-          recipeObj={ recipe }
-          isDrink={ drink }
-          doneIngredients={ handleDisableBtn() }
-        />
-      </div>
-      {
-        recipeIngredients.map((ingredients, index) => (
-          <p
-            data-testid={ `${index}-ingredient-step` }
-            key={ index }
-          >
-            {ingredients}
-          </p>
-        ))
-      }
+      </ul>
+      <FinishRecipeButton
+        recipeObj={ recipe }
+        isDrink={ drink }
+        doneIngredients={ handleDisableBtn() }
+      />
     </div>
   );
 }

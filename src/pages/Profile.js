@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import '../styles/Profile.css';
 
 function Profile() {
   const [emailLocal, setEmailLocal] = useState('');
@@ -23,9 +24,9 @@ function Profile() {
   }, []);
 
   return (
-    <div>
+    <>
       <Header title="Profile" icons={ { profile: true, search: false } } />
-      <section>
+      <section className="profile-container">
         <p data-testid="profile-email">{emailLocal}</p>
         <Link to="/done-recipes">
           <button type="button" data-testid="profile-done-btn">
@@ -42,14 +43,14 @@ function Profile() {
             type="button"
             data-testid="profile-logout-btn"
             onClick={ clearLocalStorage }
+            className="logout-button"
           >
             Logout
           </button>
         </Link>
-
       </section>
       <Footer />
-    </div>
+    </>
   );
 }
 

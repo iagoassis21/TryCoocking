@@ -1,0 +1,30 @@
+.done-recipes-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 20px;
+  width: 360px;
+}
+
+.done-recipes-buttons {
+  padding: 30px 0;
+  width: 360px;
+}
+
+.done-recipes-buttons button {
+  padding: 10px;
+  width: 120px;
+}
+
+.done-recipes-card {
+  border: 1px solid black;
+  display: flex;
+  height: 122px;
+  width: 340px;
+}
+
+.done-recipes-card .recipe-image {
+  border-right: 1px solid black;
+  height: 120px;
+}

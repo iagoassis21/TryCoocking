@@ -13,19 +13,25 @@ function RecipeDetailsCard({ recipeInfo }) {
   } = recipeInfo;
 
   return (
-    <>
-      <h2 data-testid="recipe-title">{recipeTitle}</h2>
-      <p data-testid="recipe-category">
-        {recipeCategory}
-        {recipeAlcohol && <span>{` - ${recipeAlcohol}`}</span>}
-      </p>
-      <img
-        src={ recipeImage }
-        alt={ recipeTitle }
-        data-testid="recipe-photo"
-        className="small-img"
-      />
-      <ul>
+    <div>
+      <header className="recipe-details-header">
+        <img
+          src={ recipeImage }
+          alt={ recipeTitle }
+          data-testid="recipe-photo"
+          className="card-image"
+        />
+        <div className="recipe-title">
+          <p data-testid="recipe-category">
+            {recipeCategory}
+            {recipeAlcohol && <span>{` - ${recipeAlcohol}`}</span>}
+          </p>
+          <h2 data-testid="recipe-title">
+            {recipeTitle}
+          </h2>
+        </div>
+      </header>
+      <ul className="recipe-details-list">
         {ingredientList.map((ingredient, index) => (
           <li
             key={ ingredient }
@@ -34,7 +40,9 @@ function RecipeDetailsCard({ recipeInfo }) {
             {ingredient}
           </li>))}
       </ul>
-      <p data-testid="instructions">{recipeInstructions}</p>
+      <p data-testid="instructions" className="recipe-details-instructions">
+        {recipeInstructions}
+      </p>
       {recipeVideo && (
         <iframe
           width="360"
@@ -48,7 +56,7 @@ function RecipeDetailsCard({ recipeInfo }) {
           data-testid="video"
         />
       )}
-    </>
+    </div>
   );
 }
 

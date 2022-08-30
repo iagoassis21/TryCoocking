@@ -1,8 +1,3 @@
-body {
-  box-sizing: border-box;
-  margin: 0;
-}
-
 .meals {
   align-items: center;
   background: #0fa36b;
@@ -20,53 +15,6 @@ body {
   max-height: 80vh;
 }
 
-.screen-size {
-  width: 360px;
-}
-
-.small-img {
-  width: 100px;
-}
-
-.Carousel {
-  width: 100%;
-}
-
-.carousel-item div {
-  display: flex;
-}
-
-.carousel-item div button {
-  width: 50%;
-}
-
-.carousel-control-prev, .carousel-control-next {
-  text-shadow: 0 0 5px black;
-}
-
-.start-recipe-btn-container {
-  height: 50px;
-}
-
-.start-recipe-button {
-  bottom: 0;
-  left: 0;
-  padding: 10px;
-  position: fixed;
-  width: 100%;
-  z-index: 1;
-}
-
-.copied-message {
-  background-color: red;
-  bottom: 30px;
-  left: 0;
-  position: fixed;
-  text-align: center;
-  width: 100%;
-  z-index: 2;
-}
-
 /*
 #iceLeft {
   animation: clink .8s infinite ease;
@@ -80,19 +28,6 @@ body {
   transform-origin: 60px 78px;
 }
 */
-
-.footer {
-  bottom: 0;
-  display: flex;
-  justify-content: space-around;
-  left: 0;
-  position: fixed;
-  right: 0;
-}
-
-.usedIngredient {
-  text-decoration: line-through;
-}
 
 .meals > .logo {
   animation: shake 1.5s infinite ease;

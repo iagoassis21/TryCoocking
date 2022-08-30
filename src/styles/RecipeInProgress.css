@@ -1,0 +1,46 @@
+.recipe-inprogress-header {
+  position: relative;
+  width: 360px;
+}
+
+.recipe-inprogress-header img {
+  width: 100%;
+}
+
+.recipe-inprogress-header .recipe-title {
+  background-image: linear-gradient(180deg, transparent 0%, white 100%);
+  display: flex;
+  flex-direction: column-reverse;
+  height: 340px;
+  position: absolute;
+  text-align: center;
+  top: 20px;
+  width: 360px;
+}
+
+.recipe-inprogress-instructions {
+  padding: 15px;
+  padding-top: 30px;
+}
+
+.recipe-inprogress-list {
+  text-align: center;
+}
+
+.recipe-inprogress-list label {
+  padding: 5px;
+  width: 100%;
+}
+
+.recipe-inprogress-list label input {
+  opacity: 0;
+}
+
+.finish-recipe-button {
+  padding: 10px;
+  width: 360px;
+}
+
+.used-ingredient {
+  text-decoration: line-through;
+}

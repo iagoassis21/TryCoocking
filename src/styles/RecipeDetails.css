@@ -1,0 +1,74 @@
+.recipe-details-header {
+  position: relative;
+  width: 360px;
+}
+
+.recipe-details-header img {
+  width: 100%;
+}
+
+.recipe-details-header .recipe-title {
+  background-image: linear-gradient(180deg, transparent 0%, white 100%);
+  display: flex;
+  flex-direction: column-reverse;
+  height: 340px;
+  position: absolute;
+  text-align: center;
+  top: 20px;
+  width: 360px;
+}
+
+.recipe-details-list {
+  padding-top: 30px;
+  text-align: center;
+}
+
+.recipe-details-instructions {
+  padding: 15px;
+}
+
+.start-recipe-button {
+  background-color: white;
+  border: none;
+  border-top: 1px solid black;
+  bottom: 0;
+  height: 50px;
+  left: 0;
+  padding: 10px;
+  position: fixed;
+  width: 360px;
+  z-index: 1;
+}
+
+/* Carousel */
+.Carousel {
+  padding-bottom: 80px;
+  padding-top: 30px;
+  width: 360px;
+}
+
+.carousel-item-container {
+  height: 180px;
+  position: relative;
+  width: 180px;
+}
+
+.carousel-item-container h3 {
+  background-image: linear-gradient(180deg, black 0%, transparent 100%);
+  color: white;
+  height: 80px;
+  padding-top: 5px;
+  position: absolute;
+  text-align: center;
+  width: 180px;
+}
+
+.carousel-item-container img {
+  height: 180px;
+}
+
+.carousel-control-prev, .carousel-control-next {
+  opacity: 100%;
+  top: 30%;
+  width: 30%;
+}
