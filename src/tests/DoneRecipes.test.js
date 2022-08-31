@@ -42,7 +42,7 @@ describe('Page - Done Recipes', () => {
     history.push('/drinks/178319/in-progress');
     
     await waitFor(()=> expect(fetch).toBeCalled())
-    expect(screen.getByRole('heading', { level: 1})).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2})).toBeInTheDocument();
     const allItens = screen.getAllByRole('checkbox', /ingredient/i);
     expect(allItens.length).toBe(3);
     for (let index = 0; index < allItens.length; index += 1) {
@@ -54,8 +54,8 @@ describe('Page - Done Recipes', () => {
     
     const title = screen.getByRole('heading', {name: /Done Recipes/i});
     const drinkName = screen.getByRole('heading', {name: /Aquamarine/i});
-    const alcool = screen.getByRole('heading', {name: /Alcoholic/i});
-    const year = screen.getByRole('heading', {name: /2022/i});
+    const alcool = screen.getByText(/Alcoholic/i)
+    const year = screen.getByText(/2022/i)
     const copyBtn = screen.getByAltText(/share/i);
     
     expect(title).toBeInTheDocument();
@@ -95,7 +95,7 @@ describe('Page - Done Recipes', () => {
     history.push('/foods/53013/in-progress');
 
     await waitFor(()=> expect(fetch).toBeCalled())
-    expect(screen.getByRole('heading', { level: 1})).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2})).toBeInTheDocument();
     const itensMeal = screen.getAllByRole('checkbox', /ingredient/i);
     expect(itensMeal.length).toBe(8);
 
