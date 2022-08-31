@@ -40,6 +40,7 @@ function FinishRecipeButton({ recipeObj, isDrink, doneIngredients }) {
       const newArray = [...recuperedData, doneRecipeShape];
       localStorage.setItem('doneRecipes', JSON.stringify(newArray));
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     history.push('/done-recipes');
   };
 

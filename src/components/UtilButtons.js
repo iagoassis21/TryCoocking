@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import Context from '../context/Context';
 
 function UtilButtons({ recipeObj, isDrink, copyText }) {
-  const [copiedMessageTimer, setCopiedMessageTimer] = useState(0);
+  const {
+    copiedMessageTimer,
+    setCopiedMessageTimer,
+  } = useContext(Context);
   const {
     strArea,
     idDrink,
@@ -71,14 +75,6 @@ function UtilButtons({ recipeObj, isDrink, copyText }) {
     setCopiedMessageTimer(fiveSeconds);
     copy(copyText);
   };
-
-  useEffect(() => {
-    if (!copiedMessageTimer) return;
-    const aSecond = 1000;
-    const cooldown = setInterval(() => setCopiedMessageTimer(copiedMessageTimer - 1),
-      aSecond);
-    return () => clearInterval(cooldown);
-  }, [copiedMessageTimer]);
 
   return (
     <div className="util-buttons">

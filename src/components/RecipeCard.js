@@ -21,6 +21,7 @@ function RecipeCard({ index, recipe, type }) {
       data-testid={ `${index}-recipe-card` }
       to={ recipeUlr() }
       className="recipe-card"
+      onClick={ () => window.scrollTo({ top: 0, behavior: 'smooth' }) }
     >
       <h2
         data-testid={ `${index}-card-name` }

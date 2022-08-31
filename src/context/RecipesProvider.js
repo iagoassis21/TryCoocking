@@ -4,6 +4,7 @@ import Context from './Context';
 import fetchRecipesApi from '../helpers/fetchRecipesApi';
 
 function RecipesProvider({ children }) {
+  const [copiedMessageTimer, setCopiedMessageTimer] = useState(0);
   const [pageType, setPageType] = useState('');
   const [recipeloading, setRecipeloading] = useState(false);
   const [mainLoading, setMainLoading] = useState(true);
@@ -45,6 +46,14 @@ function RecipesProvider({ children }) {
     stopLoading();
   }, [allRecipes, allFilters]);
 
+  useEffect(() => {
+    if (!copiedMessageTimer) return;
+    const aSecond = 1000;
+    const cooldown = setInterval(() => setCopiedMessageTimer(copiedMessageTimer - 1),
+      aSecond);
+    return () => clearInterval(cooldown);
+  }, [copiedMessageTimer]);
+
   const filterRecipes = async (foodFilter) => {
     setRecipeloading(true);
     if (displayRecipes !== allRecipes && currFilter === foodFilter) {
@@ -68,12 +77,14 @@ function RecipesProvider({ children }) {
     recipeloading,
     allRecipes,
     searchValue,
+    copiedMessageTimer,
     setPageType,
     setAllRecipes,
     setAllFilters,
     filterRecipes,
     setDisplayRecipes,
     setSearchValue,
+    setCopiedMessageTimer,
   };
 
   return (

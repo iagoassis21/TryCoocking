@@ -33,6 +33,11 @@ function RecipeDetailsButtons({ buttonsInfo }) {
     return (alreadyFinished);
   };
 
+  const startRecipe = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    history.push(`/${detailsPageType}/${recipeId}/in-progress`);
+  };
+
   return (
     <>
       <UtilButtons
@@ -46,7 +51,7 @@ function RecipeDetailsButtons({ buttonsInfo }) {
             type="button"
             data-testid="start-recipe-btn"
             className="start-recipe-button"
-            onClick={ () => history.push(`/${detailsPageType}/${recipeId}/in-progress`) }
+            onClick={ startRecipe }
           >
             {startedRecipe()}
           </button>
