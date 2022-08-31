@@ -6,7 +6,6 @@ const copy = require('clipboard-copy');
 
 const transform = (tags) => {
   const arrTags = tags.toString().split(',');
-  console.log(arrTags);
   return arrTags;
 };
 

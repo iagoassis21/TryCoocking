@@ -58,7 +58,7 @@ function FinishRecipeButton({ recipeObj, isDrink, doneIngredients }) {
 
 FinishRecipeButton.propTypes = {
   recipeObj: PropTypes.shape({
-    strCategory: PropTypes.string.isRequired,
+    strCategory: PropTypes.string,
     idMeal: PropTypes.string,
     strArea: PropTypes.string,
     idDrink: PropTypes.string,

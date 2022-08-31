@@ -13,7 +13,7 @@ function RecipeDetailsCard({ recipeInfo }) {
   } = recipeInfo;
 
   return (
-    <div>
+    <>
       <header className="recipe-details-header">
         <img
           src={ recipeImage }
@@ -40,7 +40,7 @@ function RecipeDetailsCard({ recipeInfo }) {
             {ingredient}
           </li>))}
       </ul>
-      <p data-testid="instructions" className="recipe-details-instructions">
+      <p data-testid="instructions" className="recipe-inprogress-instructions">
         {recipeInstructions}
       </p>
       {recipeVideo && (
@@ -56,7 +56,7 @@ function RecipeDetailsCard({ recipeInfo }) {
           data-testid="video"
         />
       )}
-    </div>
+    </>
   );
 }
 

@@ -62,8 +62,8 @@ function RecipeInProgress({ drink }) {
     .filter((key) => key.includes('strIngredient') && (recipe[key]))
     .map((item) => recipe[item]).map((validIngredient) => (
       <label
-        htmlFor={ validIngredient }
         key={ validIngredient }
+        htmlFor={ validIngredient }
         className={ ingredient.includes(validIngredient)
           ? 'used-ingredient'
           : 'unused-ingredient' }
@@ -82,43 +82,67 @@ function RecipeInProgress({ drink }) {
     return checkFinishedIngredients;
   };
   const bodyRecipe = (
-    <div>
-      <img
-        src={ recipe[`str${type}Thumb`] }
-        data-testid="recipe-photo"
-        alt="Foto da receita"
-        width="150"
-      />
-      <h1 data-testid="recipe-title">{recipe[`str${type}`]}</h1>
+    <>
+      <div className="recipe-inprogress-header">
+        <img
+          src={ recipe[`str${type}Thumb`] }
+          data-testid="recipe-photo"
+          alt="Foto da receita"
+          width="150"
+        />
+        <div className="recipe-title">
+          <p data-testid="recipe-category">{recipe.strCategory}</p>
+          <h2 data-testid="recipe-title">{recipe[`str${type}`]}</h2>
+        </div>
+      </div>
       <UtilButtons
         recipeObj={ recipe }
         isDrink={ drink }
         copyText={ `http://localhost:3000/${url}/${id}` }
       />
-      <p data-testid="recipe-category">{recipe.strCategory}</p>
-      <p data-testid="instructions">{recipe.strInstructions}</p>
+      <p
+        data-testid="instructions"
+        className="recipe-inprogress-instructions"
+      >
+        {recipe.strInstructions}
+      </p>
+      <ul className="recipe-inprogress-list">
+        {
+          recipeIngredients.map((ingredients, index) => (
+            <li
+              data-testid={ `${index}-ingredient-step` }
+              key={ index }
+            >
+              {ingredients}
+            </li>
+          ))
+        }
+      </ul>
       <FinishRecipeButton
+        className=".finish-recipe-button"
         recipeObj={ recipe }
         isDrink={ drink }
         doneIngredients={ handleDisableBtn() }
       />
-    </div>
+    </>
   );
   return (
     <div>
       {
         Object.keys(recipe).length === 0 ? <p>Loading...</p> : bodyRecipe
       }
-      {
-        recipeIngredients.map((ingredients, index) => (
-          <p
-            data-testid={ `${index}-ingredient-step` }
-            key={ index }
-          >
-            {ingredients}
-          </p>
-        ))
-      }
+      {/* <ul className="recipe-inprogress-list">
+        {
+          recipeIngredients.map((ingredients, index) => (
+            <li
+              data-testid={ `${index}-ingredient-step` }
+              key={ index }
+            >
+              {ingredients}
+            </li>
+          ))
+        }
+      </ul> */}
     </div>
   );
 }

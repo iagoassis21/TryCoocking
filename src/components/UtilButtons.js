@@ -115,7 +115,7 @@ function UtilButtons({ recipeObj, isDrink, copyText }) {
 
 UtilButtons.propTypes = {
   recipeObj: PropTypes.shape({
-    strCategory: PropTypes.string.isRequired,
+    strCategory: PropTypes.string,
     idMeal: PropTypes.string,
     strArea: PropTypes.string,
     idDrink: PropTypes.string,
