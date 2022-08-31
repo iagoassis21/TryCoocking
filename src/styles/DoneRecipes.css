@@ -8,23 +8,49 @@
 }
 
 .done-recipes-buttons {
+  display: flex;
+  gap: 2px;
+  justify-content: center;
   padding: 30px 0;
   width: 360px;
 }
 
 .done-recipes-buttons button {
+  background-color: var(--brown-A);
+  border: 0;
+  color: white;
+  font-weight: 700;
   padding: 10px;
-  width: 120px;
+  width: 118px;
 }
 
-.done-recipes-card {
-  border: 1px solid black;
+.small-img {
+  height: 180px;
+}
+
+.card-info {
   display: flex;
-  height: 122px;
-  width: 340px;
 }
 
-.done-recipes-card .recipe-image {
-  border-right: 1px solid black;
-  height: 120px;
+.content-card {
+  box-shadow: 0 1px 3px gray;
+  text-align: center;
 }
+
+.content-card h2 {
+  color: var(--starbucks);
+  font-size: 1.5rem;
+  padding-top: 10px;
+}
+
+.content-card h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.copy-button {
+  border: 0;
+  padding: 5px;
+  width: 100%;
+}
+

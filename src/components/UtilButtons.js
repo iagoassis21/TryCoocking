@@ -71,8 +71,8 @@ function UtilButtons({ recipeObj, isDrink, copyText }) {
   }, []);
 
   const handleCopy = () => {
-    const fiveSeconds = 5;
-    setCopiedMessageTimer(fiveSeconds);
+    const twoSeconds = 2;
+    setCopiedMessageTimer(twoSeconds);
     copy(copyText);
   };
 

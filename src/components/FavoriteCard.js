@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import Context from '../context/Context';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 
@@ -8,7 +9,7 @@ const copy = require('clipboard-copy');
 export default function FavoriteCard(data) {
   const { id, idx, image, name, type, category,
     nationality, alcoholicOrNot, setFavorites } = data;
-  const [linkCopied, setLinkCopied] = useState(false);
+  const { copiedMessageTimer, setCopiedMessageTimer } = useContext(Context);
 
   const createDescription = () => {
     if (type === 'drink') return <p>{ alcoholicOrNot }</p>;
@@ -23,7 +24,8 @@ export default function FavoriteCard(data) {
 
   const copyItem = () => {
     copy(`http://localhost:3000/${type}s/${id}`);
-    setLinkCopied(true);
+    const twoSeconds = 2;
+    setCopiedMessageTimer(twoSeconds);
   };
 
   return (
@@ -49,6 +51,7 @@ export default function FavoriteCard(data) {
             onClick={ disfavorItem }
           >
             <img
+              className="favorite-btn"
               data-testid={ `${idx}-horizontal-favorite-btn` }
               src={ blackHeartIcon }
               alt="black-heart"
@@ -65,9 +68,14 @@ export default function FavoriteCard(data) {
             />
           </button>
         </div>
-        {
-          linkCopied && <span>Link copied!</span>
-        }
+        <p
+          className={ `copied-message ${copiedMessageTimer > 0
+            ? ''
+            : 'hidden'
+          }` }
+        >
+          Link copied!
+        </p>
       </div>
     </div>
   );

@@ -137,13 +137,13 @@
 .copied-message {
   background-color: var(--starbucks);
   border-radius: 5px;
+  bottom: 50px;
   color: white;
   font-weight: 700;
   left: 50%;
   padding: 10px;
   position: fixed;
   text-align: center;
-  top: 25px;
   transform: translateX(-50%);
   transition: 1s;
   width: 200px;
