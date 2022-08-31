@@ -127,22 +127,10 @@ function RecipeInProgress({ drink }) {
     </>
   );
   return (
-    <div>
+    <div className="recipe-inprogress-container">
       {
-        Object.keys(recipe).length === 0 ? <p>Loading...</p> : bodyRecipe
+        Object.keys(recipe).length === 0 ? <div className="loading" /> : bodyRecipe
       }
-      {/* <ul className="recipe-inprogress-list">
-        {
-          recipeIngredients.map((ingredients, index) => (
-            <li
-              data-testid={ `${index}-ingredient-step` }
-              key={ index }
-            >
-              {ingredients}
-            </li>
-          ))
-        }
-      </ul> */}
     </div>
   );
 }

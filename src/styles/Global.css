@@ -154,3 +154,21 @@
   opacity: 0;
   z-index: -1;
 }
+
+.loading {
+  animation: loading 0.9s both infinite;
+  border: 10px solid lightgray;
+  border-radius: 100%;
+  border-top-color: var(--brown-A);
+  height: 75px;
+  margin: auto;
+  transition: 1s;
+  width: 75px;
+}
+
+@keyframes loading {
+
+  to {
+    transform: rotate(2turn);
+  }
+}

@@ -87,7 +87,7 @@ function RecipeDetails({ pagePath }) {
   return (
     <div className="recipe-details-container">
       { loading
-        ? <h1>Loading...</h1>
+        ? <div className="loading" />
         : (
           <>
             <RecipeDetailsCard

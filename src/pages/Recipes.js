@@ -31,11 +31,11 @@ function Recipes({ pagePath }) {
       <div className="recipes-container">
         <SearchBar />
         {mainLoading
-          ? <h1>Loading...</h1>
+          ? <div className="loading" />
           : <RecipesFilterButtons />}
         <div className="recipe-cards-container">
           {recipeloading
-            ? <h2>Loading...</h2>
+            ? <div className="loading" />
             : (
               displayRecipes.map((recipe, index) => (
                 <RecipeCard
